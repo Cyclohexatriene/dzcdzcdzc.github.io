@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="文抑青年">
+<meta name="description" content="万里长征人未还">
 <meta property="og:type" content="website">
-<meta property="og:title" content="个人简介">
+<meta property="og:title" content="about">
 <meta property="og:url" content="http://example.com/about/index.html">
 <meta property="og:site_name" content="环己三烯的冬眠舱">
-<meta property="og:description" content="文抑青年">
+<meta property="og:description" content="万里长征人未还">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-08T04:36:59.927Z">
+<meta property="article:published_time" content="2022-04-08T06:00:18.000Z">
+<meta property="article:modified_time" content="2022-04-08T06:03:32.425Z">
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>个人简介 | 环己三烯的冬眠舱</title>
+  <title>about | 环己三烯的冬眠舱</title>
   
 
 
@@ -209,6 +209,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-comment-board">
+          <a href="/comment-board" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            Comment board
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -235,7 +245,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">个人简介</h1>
+	<h1 class="post-title" itemprop="name headline">about</h1>
 
 
 
@@ -247,8 +257,7 @@
       <div class="post-body">
         
         
-          <p><strong>文抑青年</strong></p>
-
+          
         
       </div>
       
@@ -266,10 +275,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -519,6 +524,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+        appKey: 'J83xwqE3YCKgWOy0dIBrad1s',
+        placeholder: '莫西莫西？',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
