@@ -243,6 +243,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/19/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/04/19/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/" itemprop="url">线段树（下）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-19T20:55:32+08:00">
+                2022-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>在上一篇文章中已经介绍了线段树的基本概念和实现方式。本文将介绍线段树的进阶技巧：<strong>懒标记（Lazy Tag）</strong> 。在不使用懒标记时，每次进行区间修改其实是进行了若干次单点修改，需要消耗大量的时间。为此，我们引入了懒标记，这样我们可以仅在需要时对节点的值进行更新，否则就给整个区间打上懒标记，表示这个区间所有的值都要加上这么多，只是我还懒得去改掉。如此操作，便可以在区间修改时节省大量时间。</p>
+<hr>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>同不带懒标记的线段树一样，我们需要预留 <code>3 ~ 4</code> 倍于原数组的储存空间。而不同点在于，由于我们需要存储每个节点的值和它对应的懒标记，所以我们不能简单地用一个int表示，而应该使用结构体。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> val = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> lazytag = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">vector&lt;node&gt; <span class="title">tree</span><span class="params">(n*<span class="number">4</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="构建线段树（不涉及懒标记）"><a href="#构建线段树（不涉及懒标记）" class="headerlink" title="构建线段树（不涉及懒标记）"></a>构建线段树（不涉及懒标记）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">buildtree</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">        tree[root].val = nums[start];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">buildtree</span>(leftroot, start, mid);</span><br><span class="line">    <span class="built_in">buildtree</span>(rightroot, mid + <span class="number">1</span>, end);</span><br><span class="line">    tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; end || r &lt; start) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &lt;= start &amp;&amp; r &gt;= end) <span class="keyword">return</span> tree[root].val;</span><br><span class="line">    <span class="keyword">if</span> (tree[root].lazytag != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//将lazytag向下推进</span></span><br><span class="line">        tree[leftroot].lazytag += tree[root].lazytag;</span><br><span class="line">        tree[leftroot].val += (<span class="type">long</span> <span class="type">long</span>)(mid - start + <span class="number">1</span>) * tree[root].lazytag;</span><br><span class="line">        tree[rightroot].lazytag += tree[root].lazytag;</span><br><span class="line">        tree[rightroot].val += (<span class="type">long</span> <span class="type">long</span>)(end-mid) * tree[root].lazytag;</span><br><span class="line">        tree[root].lazytag = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> res = <span class="built_in">query</span>(leftroot, start, mid, l, r) + <span class="built_in">query</span>(rightroot, mid + <span class="number">1</span>, end, l, r);</span><br><span class="line">    tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; end || r &lt; start) <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &lt;= start &amp;&amp; r &gt;= end) &#123;</span><br><span class="line">        <span class="comment">//如果需要修改的区间完全覆盖当前处理的区间，则整体打上lazytag留待以后处理。</span></span><br><span class="line">        tree[root].val += (end - start + <span class="number">1</span>) * k;</span><br><span class="line">        tree[root].lazytag += k;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[root].lazytag != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//将lazytag向下推进。</span></span><br><span class="line">        tree[leftroot].lazytag += tree[root].lazytag;</span><br><span class="line">        tree[leftroot].val += (mid - start + <span class="number">1</span>) * tree[root].lazytag;</span><br><span class="line">        tree[rightroot].lazytag += tree[root].lazytag;</span><br><span class="line">        tree[rightroot].val += (end-mid) * tree[root].lazytag;</span><br><span class="line">        tree[root].lazytag = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">update</span>(leftroot, start, mid, l, r, k);</span><br><span class="line">    <span class="built_in">update</span>(rightroot, mid + <span class="number">1</span>, end, l, r, k);</span><br><span class="line">    tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h3 id="题目请见《线段树（上）》的例题。"><a href="#题目请见《线段树（上）》的例题。" class="headerlink" title="题目请见《线段树（上）》的例题。"></a>题目请见《线段树（上）》的例题。</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; nums;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> val = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> lazytag = <span class="number">0</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    vector&lt;node&gt; tree;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">buildtree</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">            tree[root].val = nums[start];</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">buildtree</span>(leftroot, start, mid);</span><br><span class="line">        <span class="built_in">buildtree</span>(rightroot, mid + <span class="number">1</span>, end);</span><br><span class="line">        tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; end || r &lt; start) <span class="keyword">return</span>;</span><br><span class="line">        <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (l &lt;= start &amp;&amp; r &gt;= end) &#123;</span><br><span class="line">            <span class="comment">//如果需要修改的区间完全覆盖当前处理的区间，则整体打上lazytag留待以后处理。</span></span><br><span class="line">            tree[root].val += (end - start + <span class="number">1</span>) * k;</span><br><span class="line">            tree[root].lazytag += k;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tree[root].lazytag != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//将lazytag向下推进。</span></span><br><span class="line">            tree[leftroot].lazytag += tree[root].lazytag;</span><br><span class="line">            tree[leftroot].val += (mid - start + <span class="number">1</span>) * tree[root].lazytag;</span><br><span class="line">            tree[rightroot].lazytag += tree[root].lazytag;</span><br><span class="line">            tree[rightroot].val += (end-mid) * tree[root].lazytag;</span><br><span class="line">            tree[root].lazytag = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">update</span>(leftroot, start, mid, l, r, k);</span><br><span class="line">        <span class="built_in">update</span>(rightroot, mid + <span class="number">1</span>, end, l, r, k);</span><br><span class="line">        tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; end || r &lt; start) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (l &lt;= start &amp;&amp; r &gt;= end) <span class="keyword">return</span> tree[root].val;</span><br><span class="line">        <span class="keyword">if</span> (tree[root].lazytag != <span class="number">0</span>) &#123;</span><br><span class="line">            tree[leftroot].lazytag += tree[root].lazytag;</span><br><span class="line">            tree[leftroot].val += (<span class="type">long</span> <span class="type">long</span>)(mid - start + <span class="number">1</span>) * tree[root].lazytag;</span><br><span class="line">            tree[rightroot].lazytag += tree[root].lazytag;</span><br><span class="line">            tree[rightroot].val += (<span class="type">long</span> <span class="type">long</span>)(end-mid) * tree[root].lazytag;</span><br><span class="line">            tree[root].lazytag = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> res = <span class="built_in">query</span>(leftroot, start, mid, l, r) + <span class="built_in">query</span>(rightroot, mid + <span class="number">1</span>, end, l, r);</span><br><span class="line">        tree[root].val = tree[leftroot].val + tree[rightroot].val;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">corpFlightBookings</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; bookings, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        nums.<span class="built_in">resize</span>(n,<span class="number">0</span>);</span><br><span class="line">        tree.<span class="built_in">resize</span>(n * <span class="number">4</span>);</span><br><span class="line">        <span class="built_in">buildtree</span>(<span class="number">1</span>, <span class="number">0</span>, n<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; bookings.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, bookings[i][<span class="number">0</span>], bookings[i][<span class="number">1</span>], bookings[i][<span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(<span class="built_in">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, i, i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，代码真的非常非常长，而且效率也远不如直接用差分数组来得快。所以即便线段树可以高效地完成很多任务，我们也只在迫不得已时才写线段树。</p>
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="耶-复活了"><a href="#耶-复活了" class="headerlink" title="耶  复活了"></a>耶  复活了</h2><p>前一阵子GitHub账号被封了，导致Blog直接上不来了。发了邮件申诉，刚好赶上周末美帝不上班，今晚刚解封，火速更新。不过其实GitHub被封并不影响我更新，前一阵子是忙着打CSGO去了…昨天掉大分，进入贤者模式，刚好今天解封了就更了一手。希望GitHub以后不要抽风了。</p>
+<h2 id="关于国际化模块"><a href="#关于国际化模块" class="headerlink" title="关于国际化模块"></a>关于国际化模块</h2><p>犹豫再三还是把定性研究方法导论退掉了，屁事太多了。要是周萍能把经典文献阅读搞成国际化，她就是我的永远的女神。如果不行的话就试试看选计院的国际化模块吧。</p>
+<h2 id="没事听点歌（陈奕迅-红玫瑰）"><a href="#没事听点歌（陈奕迅-红玫瑰）" class="headerlink" title="没事听点歌（陈奕迅 - 红玫瑰）"></a>没事听点歌（陈奕迅 - 红玫瑰）</h2><p>外链还没搞定，暂时听不了…<br><audio id="audio" controls="" preload="none"><br>    <source id="m4a" src="F:\HexoBlog\blog\source\_posts\线段树（下）\红玫瑰.m4a"><br></audio></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -348,7 +484,7 @@
 </blockquote>
 <p>依然看不太懂，但是感受到了一丝触动和共鸣。也许是因为我也自诩蔑视世俗和伪信，立志做最真实的自己。人在夜来非的时候就是这么矫情吧。</p>
 <h2 id="没事听点歌（飞儿乐团-月牙湾）"><a href="#没事听点歌（飞儿乐团-月牙湾）" class="headerlink" title="没事听点歌（飞儿乐团 - 月牙湾）"></a>没事听点歌（飞儿乐团 - 月牙湾）</h2><audio id="audio" controls="" preload="none">
-    <source id="mp3" src="https://nsj.tipian01.cn/audio/2022/04/12/fae926980967318427d841d4375ddbd9.H_1080.mp3?sign=28992080f688595effdec96c43d961cb&t=6255ab10">
+    <source id="mp3" src="https://wx.mail.qq.com/ftn/preview?bizid=2&fileid=/84f44793-fc18-46c1-9685-6702e88657fe&name=%E6%9C%88%E7%89%99%E6%B9%BE.mp3&sid=zatyaoyydkYu701aACc3YgAA">
 </audio>
 
           
@@ -517,7 +653,7 @@
 <center><b>启真湖边的小鸭鸭</b></center>
 
 <h2 id="没事听点歌（Taylor-Swift-Forever-amp-Always）"><a href="#没事听点歌（Taylor-Swift-Forever-amp-Always）" class="headerlink" title="没事听点歌（Taylor Swift - Forever &amp; Always）"></a>没事听点歌（Taylor Swift - Forever &amp; Always）</h2><audio id="audio" controls="" preload="none">
-    <source id="mp3" src="https://nsj.tipian01.cn/audio/2022/04/10/17b3e5c0bccd878bc15cde3653c779fe.H_1080.mp3?sign=6cd6ac8f964bd68b1e6890fd44856bed&t=625301b4">
+    <source id="mp3" src="https://wx.mail.qq.com/ftn/preview?bizid=2&fileid=/c9b99133-a899-45ae-849b-03b6c4e45925&name=11%20-%20Forever%20%26%20Always.mp3&sid=zat3aIyyU18u70haACcxcwAA">
 </audio>
 
           
@@ -869,7 +1005,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
