@@ -312,7 +312,7 @@
       
         
           
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>在上一篇文章中已经介绍了线段树的基本概念和实现方式。本文将介绍线段树的进阶技巧：<strong>懒标记（Lazy Tag）</strong> 。在不使用懒标记时，每次进行区间修改其实是进行了若干次单点修改，需要消耗大量的时间。为此，我们引入了懒标记，这样我们可以仅在需要时对节点的值进行更新，否则就给整个区间打上懒标记，表示这个区间所有的值都要加上这么多，只是我还懒得去改掉。如此操作，便可以在区间修改时节省大量时间。</p>
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>上一篇文章已经介绍了线段树的基本概念和实现方式。本文将介绍线段树的进阶技巧：<strong>懒标记（Lazy Tag）</strong> 。在不使用懒标记时，每次进行区间修改其实是进行了若干次单点修改，需要消耗大量的时间。为此，我们引入了懒标记，这样我们可以仅在需要时对节点的值进行更新，否则就给整个区间打上懒标记，表示这个区间所有的值都要加上这么多，只是我还懒得去改掉。如此操作，便可以在区间修改时节省大量时间。</p>
 <hr>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>同不带懒标记的线段树一样，我们需要预留 <code>3 ~ 4</code> 倍于原数组的储存空间。而不同点在于，由于我们需要存储每个节点的值和它对应的懒标记，所以我们不能简单地用一个int表示，而应该使用结构体。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> val = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> lazytag = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">vector&lt;node&gt; <span class="title">tree</span><span class="params">(n*<span class="number">4</span>)</span></span>;</span><br></pre></td></tr></table></figure>
