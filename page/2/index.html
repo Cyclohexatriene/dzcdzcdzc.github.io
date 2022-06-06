@@ -243,6 +243,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/07/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/04/07/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" itemprop="url">树状数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-07T21:26:28+08:00">
+                2022-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>树状数组是用数组来模拟树型结构的一种数据结构，它的优势在于它可以以 <code>O(log n)</code> 的时间复杂度对一个数组进行单点修改和区间求和。普通的数组单点修改的时间复杂度是 <code>O(1)</code> ，区间求和的时间复杂度是 <code>O(n)</code> ，差分数组单点修改的时间复杂度是 <code>O(n)</code>，区间求和的复杂度是 <code>O(1)</code> 。树状数组则将单点修改和区间求和的复杂度都限制在了可以接受的范围内，平均意义上效率更高。</p>
+<hr>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>对于原数组 <code>A[i]</code> ，维护一个辅助数组（也就是树状数组） <code>C[i]</code> ，使 <code>C[i] = A[i-2^k+1] + A[i-2^k+2] + ... + A[i]</code> ，其中 <code>k</code> 是 <code>i</code> 的二进制中最低位到最高位连续零的长度。</p>
+<p>例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C[<span class="number">1</span>] = A[<span class="number">1</span>];</span><br><span class="line">C[<span class="number">2</span>] = A[<span class="number">1</span>] + A[<span class="number">2</span>];</span><br><span class="line">C[<span class="number">3</span>] = A[<span class="number">3</span>];</span><br><span class="line">C[<span class="number">4</span>] = A[<span class="number">1</span>] + A[<span class="number">2</span>] + A[<span class="number">3</span>] + A[<span class="number">4</span>];</span><br><span class="line">C[<span class="number">5</span>] = A[<span class="number">5</span>];</span><br><span class="line">C[<span class="number">6</span>] = A[<span class="number">5</span>] + A[<span class="number">6</span>];</span><br><span class="line">C[<span class="number">7</span>] = A[<span class="number">7</span>];</span><br><span class="line">C[<span class="number">8</span>] = A[<span class="number">1</span>] + A[<span class="number">2</span>] + A[<span class="number">3</span>] + A[<span class="number">4</span>] + A[<span class="number">5</span>] + A[<span class="number">6</span>] + A[<span class="number">7</span>] + A[<span class="number">8</span>];</span><br></pre></td></tr></table></figure>
+
+<p>通过这种方法我们可以把数组中若干个单点的和集中起来访问和维护，以达到更高的效率。</p>
+<hr>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="lowbit：找到一个数的二进制表示中最低位的1"><a href="#lowbit：找到一个数的二进制表示中最低位的1" class="headerlink" title="lowbit：找到一个数的二进制表示中最低位的1"></a>lowbit：找到一个数的二进制表示中最低位的1</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">lowbit</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> index,<span class="type">int</span> val)</span></span>&#123;</span><br><span class="line">    <span class="comment">//为下标为index的元素增加val的值</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=index;i&lt;=n;i+=<span class="built_in">lowbit</span>(i))&#123;</span><br><span class="line">        c[index] += val;</span><br><span class="line">    &#125;</span><br><span class="line">    a[index] += val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="区间求和"><a href="#区间求和" class="headerlink" title="区间求和"></a>区间求和</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">getsum</span><span class="params">(<span class="type">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="comment">//求A[1]到A[index]的和</span></span><br><span class="line">    <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=index;i&gt;<span class="number">0</span>;i-=<span class="built_in">lowbit</span>(i))&#123;</span><br><span class="line">        res += c[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-307-区间和检索-数组可修改"><a href="#LeetCode-307-区间和检索-数组可修改" class="headerlink" title="LeetCode 307. 区间和检索 - 数组可修改"></a>LeetCode 307. 区间和检索 - 数组可修改</h2><h3 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h3><p>给你一个数组 <code>nums</code> ，请你完成两类查询。</p>
+<p>    1. 其中一类查询要求 <strong>更新</strong> 数组 <code>nums</code> 下标对应的值</p>
+<p>    2. 另一类查询要求返回数组 <code>nums</code> 中索引 <code>left</code> 和索引 <code>right</code> 之间 （<strong>包含</strong>） 的 <code>nums</code> 元素的和，其中 <code>left &lt;= right</code> </p>
+<p>实现 <code>NumArray</code> 类：</p>
+<ul>
+<li><p><code>NumArray(int[] nums)</code>用整数数组 <code>nums</code> 初始化对象</p>
+</li>
+<li><p><code>void update(int index, int val)</code> 将 <code>nums[index]</code> 的值 <strong>更新</strong> 为 <code>val</code></p>
+</li>
+<li><p><code>int sumRange(int left, int right)</code> 返回数组 <code>nums</code> 中索引 <code>left</code> 和索引 <code>right</code> 之间 （<strong>包含</strong>）的 <code>nums</code> 元素的 <strong>和</strong> (即, <code>nums[left] + nums[left + 1] + ... + nums[right]</code>)</p>
+</li>
+</ul>
+<h4 id="示例1："><a href="#示例1：" class="headerlink" title="示例1："></a>示例1：</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输出：</span><br><span class="line">[null, <span class="number">9</span>, null, <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = <span class="keyword">new</span> <span class="built_in">NumArray</span>([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]);</span><br><span class="line">numArray.<span class="built_in">sumRange</span>(<span class="number">0</span>, <span class="number">2</span>); <span class="comment">// 返回 1 + 3 + 5 = 9</span></span><br><span class="line">numArray.<span class="built_in">update</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// nums = [1,2,5]</span></span><br><span class="line">numArray.<span class="built_in">sumRange</span>(<span class="number">0</span>, <span class="number">2</span>); <span class="comment">// 返回 1 + 2 + 5 = 8</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NumArray</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; tree;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; nums;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">lowbit</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x;i&gt;<span class="number">0</span>;i-=<span class="built_in">lowbit</span>(i)) ans+=tree[i];</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=x;i&lt;tree.<span class="built_in">size</span>();i+=<span class="built_in">lowbit</span>(i)) tree[i]+=num;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;nums=nums;</span><br><span class="line">        <span class="type">int</span> n=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;tree.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++) <span class="built_in">add</span>(i+<span class="number">1</span>,nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">add</span>(index+<span class="number">1</span>,val-nums[index]);</span><br><span class="line">        nums[index]=val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">sumRange</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">query</span>(right+<span class="number">1</span>)-<span class="built_in">query</span>(left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/06/Hello/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -402,7 +549,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
