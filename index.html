@@ -243,6 +243,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="url">并查集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-08T15:44:33+08:00">
+                2022-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：</p>
+<ul>
+<li><p>查询某个节点的根节点</p>
+</li>
+<li><p>合并两个集合</p>
+</li>
+</ul>
+<hr>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先定义一个 <code>vector</code> 来表示并查集。在初始化时，我们将其中每个元素设为其对应下标的值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line"><span class="comment">//初始化代码</span></span><br><span class="line">vec.<span class="built_in">resize</span>(n, <span class="number">0</span>);<span class="comment">//n代表元素的数量</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) vec[i] = i;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>查询指查询给定节点的根节点。若两个节点的根节点相同，则表示这两个节点在同一个集合里。在代码中，如果某个节点不是根节点（表现为元素与其对应的下标不相等），则递归地查找其父节点的根节点，并将其父节点直接修改为根节点以减少下次查找所需要的时间（称为“路径压缩”）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">    <span class="keyword">return</span> vec[root];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>合并指将给定两个节点所在的集合合并为一个集合。在代码中通过将其中一个集合的根节点的父节点设置成另一个节点的根节点，这样两个集合就有了共同的根节点，即合并为同一个集合了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">    vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-765-情侣牵手"><a href="#LeetCode-765-情侣牵手" class="headerlink" title="LeetCode 765. 情侣牵手"></a>LeetCode 765. 情侣牵手</h2><p><code>n</code> 对情侣坐在连续排列的 <code>2n</code> 个座位上，想要牵到对方的手。</p>
+<p>人和座位由一个整数数组 <code>row</code> 表示，其中 <code>row[i]</code> 是坐在第 <code>i</code> 个座位上的人的 <strong>ID</strong>。情侣们按顺序编号，第一对是 <code>(0, 1)</code>，第二对是 <code>(2, 3)</code>，以此类推，最后一对是 <code>(2n-2, 2n-1)</code>。</p>
+<p>返回 <em>最少交换座位的次数，以便每对情侣可以并肩坐在一起。</em> 每次交换可选择任意两人，让他们站起来交换座位。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: row = [<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出: <span class="number">1</span></span><br><span class="line">解释: 只需要交换row[<span class="number">1</span>]和row[<span class="number">2</span>]的位置即可。</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: row = [<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">输出: <span class="number">0</span></span><br><span class="line">解释: 无需交换座位，所有的情侣都已经可以手牵手了。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>通过观察我们可以发现：</p>
+<ul>
+<li><p>如果有 <code>2</code> 对情侣彼此坐错了位置，则需要进行 <code>1</code> 次交换。</p>
+</li>
+<li><p>如果有 <code>3</code> 对情侣彼此坐错了位置，则需要进行 <code>2</code> 次交换。</p>
+</li>
+<li><p>如果有 <code>4</code> 对情侣彼此坐错了位置，则需要进行 <code>3</code> 次交换。</p>
+</li>
+<li><p>如果有 <code>n</code> 对情侣彼此坐错了位置，则需要进行 <code>n-1</code> 次交换。</p>
+</li>
+</ul>
+<p>那么我们可以采用并查集的数据结构，将彼此坐错的情侣放进同一个集合，记并查集森林中有 <code>cnt</code> 棵树，共有 <code>n</code> 对情侣，那么需要交换的次数就是 <code>n-cnt</code> 。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">        <span class="keyword">return</span> vec[root];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">        vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minSwapsCouples</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; row)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = row.<span class="built_in">size</span>(); <span class="type">int</span> m = n / <span class="number">2</span>;</span><br><span class="line">        vec.<span class="built_in">resize</span>(m, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) vec[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="built_in">union_root</span>(row[<span class="number">2</span> * i - <span class="number">2</span>] / <span class="number">2</span>, row[<span class="number">2</span> * i - <span class="number">1</span>] / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(i) == i) cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m - cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在代码中，我们用某个人的 <strong>ID</strong> 除以 <code>2</code> 来表示ta和ta对象共同的 <strong>情侣ID</strong>，然后把实际上挨着坐的人都 <code>union</code> 起来。如果他们本来就是情侣，则最终他们所在集合就只会有一个元素，表示这个集合中的人不需要交换。 <code>union</code> 到最后，我们得到的并查集中每个集合的情侣都坐混了，需要互相发生交换；而不同集合中的情侣之间则不需要发生交换。</p>
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="速通《空洞骑士》"><a href="#速通《空洞骑士》" class="headerlink" title="速通《空洞骑士》"></a>速通《空洞骑士》</h2><p>这游戏很简单的，两个多小时就通关了(狗头)。</p>
+<p><img src="/images/hk.png"></p>
+<h2 id="没事听点歌（莫文蔚-这世界那么多人）"><a href="#没事听点歌（莫文蔚-这世界那么多人）" class="headerlink" title="没事听点歌（莫文蔚 - 这世界那么多人）"></a>没事听点歌（莫文蔚 - 这世界那么多人）</h2><audio controls>
+    <source src="music/这世界那么多人.mp3" type="audio/mpeg">
+</audio>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E5%BF%AB%E9%80%9F%E9%80%89%E6%8B%A9-%E4%B8%89%E5%90%91%E5%88%87%E5%88%86%E5%BF%AB%E6%8E%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1466,161 +1630,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/" itemprop="url">线段树（上）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-12T22:37:03+08:00">
-                2022-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>线段树是树状数组的进阶版。说是进阶版，其实效率并没有提高，只是泛用性更广。线段树支持高效的单点查询、单点修改、区间查询、区间修改，但是代码比树状数组更复杂，所以只有迫不得已的时候才写线段树。</p>
-<p>线段树就是一层一层地将原数据相加合并，最后形成一棵树的数据结构。用语言可能难以描述，但是看图就懂了：</p>
-<img title="" src="https://s3.bmp.ovh/imgs/2022/04/12/74f30d4cfd73e415.png" alt="" align="center" width="349">
-
-<p>如此组织数据，就可以将区间查询的时间复杂度降低到 <code>O(log n)</code> ，而单点查询、单点修改的时间复杂度也被限制在可以接受的 <code>O(log n)</code> ，所以在数据量很大时可以有理想的效果。</p>
-<p><strong>做题时发现的一个缺点：由于要存储所以数据加起来的和，所以在数据较大时可能溢出。</strong></p>
-<hr>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>由于线段树是类似完美二叉树的形式，所以我们可以使用数组来存储整棵树。对于某个下标为 <code>root</code> 的节点，它的左孩子节点下标为 <code>root*2</code> ，右孩子节点下边为 <code>root*2+1</code> 。由于我们需要在原数组的基础上多储存若干个节点的和，所以线段树需要使用数倍于原数组的空间。一般上来说，我们在初始化线段树时，预留 <code>3 ~ 4</code> 倍于原数组的储存空间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">tree</span><span class="params">(n*<span class="number">4</span>,<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">buildtree</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] = num[start];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//递归地创建左右子树</span></span><br><span class="line">    <span class="built_in">buildtree</span>(leftroot,start,mid);</span><br><span class="line">    <span class="built_in">buildtree</span>(rightroot,mid+<span class="number">1</span>,end);</span><br><span class="line">    <span class="comment">//左右子树创建完毕，根据左右子树根节点的值给当前的根赋值</span></span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询[l,r]区间的和。当l==r时即为单点查询。</span></span><br><span class="line">    <span class="keyword">if</span>(l &lt;= start &amp;&amp; r &gt;= end) <span class="keyword">return</span> tree[root];</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) sum += <span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) sum += <span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改（低配版）"><a href="#修改（低配版）" class="headerlink" title="修改（低配版）"></a>修改（低配版）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//将区间[l,r]内全部元素加上k。当l==r时即为单点修改。</span></span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] += k;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-1109-航班预订统计"><a href="#LeetCode-1109-航班预订统计" class="headerlink" title="LeetCode 1109. 航班预订统计"></a>LeetCode 1109. 航班预订统计</h2><p>这里有 <code>n</code> 个航班，它们分别从 <code>1</code> 到 <code>n</code> 进行编号。</p>
-<p>有一份航班预订表 <code>bookings</code> ，表中第 i 条预订记录 <code>bookings[i] = [firstᵢ, lastᵢ, seatsᵢ]</code> 意味着在从 <code>firstᵢ</code> 到 <code>lastᵢ</code> （<strong>包含</strong> <code>firstᵢ</code> 和 <code>lastᵢ</code> ）的 <strong>每个航班</strong> 上预订了 <code>seatsᵢ</code> 个座位。</p>
-<p>请你返回一个长度为 <code>n</code> 的数组 <code>answer</code>，里面的元素是每个航班预定的座位总数。</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入：bookings = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">10</span>],[<span class="number">2</span>,<span class="number">3</span>,<span class="number">20</span>],[<span class="number">2</span>,<span class="number">5</span>,<span class="number">25</span>]], n = <span class="number">5</span></span><br><span class="line">输出：[<span class="number">10</span>,<span class="number">55</span>,<span class="number">45</span>,<span class="number">25</span>,<span class="number">25</span>]</span><br><span class="line">解释：</span><br><span class="line">航班编号        <span class="number">1</span>   <span class="number">2</span>   <span class="number">3</span>   <span class="number">4</span>   <span class="number">5</span></span><br><span class="line">预订记录 <span class="number">1</span> ：   <span class="number">10</span>  <span class="number">10</span></span><br><span class="line">预订记录 <span class="number">2</span> ：       <span class="number">20</span>  <span class="number">20</span></span><br><span class="line">预订记录 <span class="number">3</span> ：       <span class="number">25</span>  <span class="number">25</span>  <span class="number">25</span>  <span class="number">25</span></span><br><span class="line">总座位数：      <span class="number">10</span>  <span class="number">55</span>  <span class="number">45</span>  <span class="number">25</span>  <span class="number">25</span></span><br><span class="line">因此，answer = [<span class="number">10</span>,<span class="number">55</span>,<span class="number">45</span>,<span class="number">25</span>,<span class="number">25</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：bookings = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">10</span>],[<span class="number">2</span>,<span class="number">2</span>,<span class="number">15</span>]], n = <span class="number">2</span></span><br><span class="line">输出：[<span class="number">10</span>,<span class="number">25</span>]</span><br><span class="line">解释：</span><br><span class="line">航班编号        <span class="number">1</span>   <span class="number">2</span></span><br><span class="line">预订记录 <span class="number">1</span> ：   <span class="number">10</span>  <span class="number">10</span></span><br><span class="line">预订记录 <span class="number">2</span> ：       <span class="number">15</span></span><br><span class="line">总座位数：      <span class="number">10</span>  <span class="number">25</span></span><br><span class="line">因此，answer = [<span class="number">10</span>,<span class="number">25</span>]</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>本题最合适的解法是差分数组（区间修改、单点查询）。但是也可以用线段树（虽然有些杀鸡用牛刀）。</p>
-<p><strong>注意：真正使用线段树的方法解出本题还需要线段树的进阶写法（Lazy Tag，懒标记），我将会在《线段树（下）》中介绍 <del>（如果你还看不到这篇文章，说明我还没写）</del>。以下提供的代码只可以通过约三分之二的测试用例，剩余会超时，原因是目前使用的区间修改方法时间复杂度很高（如果没算错的话，应该是 <code>O(nlog n)</code> ，还没真正达到 <code>O(log n)</code> 的级别。</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">long</span> <span class="type">long</span>&gt; tree;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=start &amp;&amp; r&gt;=end) <span class="keyword">return</span> tree[root];</span><br><span class="line">        <span class="type">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) sum+=<span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) sum+=<span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start==end)&#123;</span><br><span class="line">            tree[root]+=k;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">        tree[root]=tree[leftroot]+tree[rightroot];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">corpFlightBookings</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; bookings, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        tree.<span class="built_in">resize</span>(<span class="number">4</span>*n,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;bookings.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>,<span class="number">1</span>,n,bookings[i][<span class="number">0</span>],bookings[i][<span class="number">1</span>],bookings[i][<span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(<span class="built_in">query</span>(<span class="number">1</span>,<span class="number">1</span>,n,i,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="在考试中才学到的一些东西"><a href="#在考试中才学到的一些东西" class="headerlink" title="在考试中才学到的一些东西"></a>在考试中才学到的一些东西</h2><p>昨天晚上考了《诗歌与哲学》这门课的结课考试，就两道题，都跟尼采有关。老师讲了一个学期的尼采，可惜我一个字没听，考到一半才意识到原来尼采不是古希腊的人。翻了半天书，看不太懂，但是看到了一段文字：</p>
-<blockquote>
-<p>孤独者，有两种基本的性格类型：一是强者的孤独，一是弱者的孤独。前者源于个体的精神强大与体能强大，因这种强大和勇猛而傲视他人，保持个体的生存意志和生存原则，振奋自我的创造力，完成命定的事业；后者源于个体的精神强大与体能虚弱，对世界心怀仇恨与怨愤，与现实原则保持心灵的抗争，蔑视世俗者、伪信者和成功者。前者因内心与外力强大，虽孤独而勇于出击；后者因外力虚弱，虽自尊而怯于行动。孤独者善于吟唱孤独之歌，每个人在特殊的时刻，皆会有孤独的体验，但并非每个人皆能战胜孤独，迎接沸腾的生活。—— 李咏吟《文学批评学》</p>
-</blockquote>
-<p>依然看不太懂，但是感受到了一丝触动和共鸣。也许是因为我也自诩蔑视世俗和伪信，立志做最真实的自己。人在夜来非的时候就是这么矫情吧。</p>
-<h2 id="没事听点歌（飞儿乐团-月牙湾）"><a href="#没事听点歌（飞儿乐团-月牙湾）" class="headerlink" title="没事听点歌（飞儿乐团 - 月牙湾）"></a>没事听点歌（飞儿乐团 - 月牙湾）</h2><audio controls>
-  <source src="music/月牙湾.mp3" type="audio/mpeg">
-</audio>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1675,7 +1684,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
