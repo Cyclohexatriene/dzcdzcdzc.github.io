@@ -243,6 +243,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/LFU-%E7%BC%93%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/04/28/LFU-%E7%BC%93%E5%AD%98/" itemprop="url">LFU 缓存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-28T20:23:17+08:00">
+                2022-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>LFU（Least Frequently Used）缓存是另一种TLB中的数据调度策略。它的思想是当缓存中没有多余空间时，踢出缓存中<strong>使用次数最少</strong>的数据。</p>
+<hr>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-460-LFU-缓存"><a href="#LeetCode-460-LFU-缓存" class="headerlink" title="LeetCode 460. LFU 缓存"></a>LeetCode 460. LFU 缓存</h2><p>请你为 最不经常使用（LFU）缓存算法设计并实现数据结构。</p>
+<p>实现 <code>LFUCache</code> 类：</p>
+<ul>
+<li><p><code>LFUCache(int capacity)</code> - 用数据结构的容量 <code>capacity</code> 初始化对象。</p>
+</li>
+<li><p><code>int get(int key)</code> - 如果键 <code>key</code> 存在于缓存中，则获取键的值，否则返回 <code>-1</code> 。</p>
+</li>
+<li><p><code>void put(int key, int value)</code> - 如果键 <code>key</code> 已存在，则变更其值；如果键不存在，请插入键值对。当缓存达到其容量 <code>capacity</code> 时，则应该在插入新项之前，移除最不经常使用的项。在此问题中，当存在平局（即两个或更多个键具有相同使用频率）时，应该去除 <strong>最近最久未使用</strong> 的键。</p>
+</li>
+</ul>
+<p>为了确定最不常使用的键，可以为缓存中的每个键维护一个 <strong>使用计数器</strong> 。使用计数最小的键是最久未使用的键。</p>
+<p>当一个键首次插入到缓存中时，它的使用计数器被设置为 <code>1</code> (由于 put 操作)。对缓存中的键执行 <code>get</code> 或 <code>put</code> 操作，使用计数器的值将会递增。</p>
+<p>函数 <code>get</code> 和 <code>put</code> 必须以 <code>O(1)</code> 的平均时间复杂度运行。</p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="string">&quot;LFUCache&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;get&quot;</span>]</span><br><span class="line">[[<span class="number">2</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>], [<span class="number">1</span>], [<span class="number">3</span>, <span class="number">3</span>], [<span class="number">2</span>], [<span class="number">3</span>], [<span class="number">4</span>, <span class="number">4</span>], [<span class="number">1</span>], [<span class="number">3</span>], [<span class="number">4</span>]]</span><br><span class="line">输出：</span><br><span class="line">[null, null, null, <span class="number">1</span>, null, <span class="number">-1</span>, <span class="number">3</span>, null, <span class="number">-1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line"><span class="comment">// cnt(x) = 键 x 的使用计数</span></span><br><span class="line"><span class="comment">// cache=[] 将显示最后一次使用的顺序（最左边的元素是最近的）</span></span><br><span class="line">LFUCache lfu = <span class="keyword">new</span> <span class="built_in">LFUCache</span>(<span class="number">2</span>);</span><br><span class="line">lfu.<span class="built_in">put</span>(<span class="number">1</span>, <span class="number">1</span>);   <span class="comment">// cache=[1,_], cnt(1)=1</span></span><br><span class="line">lfu.<span class="built_in">put</span>(<span class="number">2</span>, <span class="number">2</span>);   <span class="comment">// cache=[2,1], cnt(2)=1, cnt(1)=1</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">1</span>);      <span class="comment">// 返回 1</span></span><br><span class="line">                 <span class="comment">// cache=[1,2], cnt(2)=1, cnt(1)=2</span></span><br><span class="line">lfu.<span class="built_in">put</span>(<span class="number">3</span>, <span class="number">3</span>);   <span class="comment">// 去除键 2 ，因为 cnt(2)=1 ，使用计数最小</span></span><br><span class="line">                 <span class="comment">// cache=[3,1], cnt(3)=1, cnt(1)=2</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">2</span>);      <span class="comment">// 返回 -1（未找到）</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">3</span>);      <span class="comment">// 返回 3</span></span><br><span class="line">                 <span class="comment">// cache=[3,1], cnt(3)=2, cnt(1)=2</span></span><br><span class="line">lfu.<span class="built_in">put</span>(<span class="number">4</span>, <span class="number">4</span>);   <span class="comment">// 去除键 1 ，1 和 3 的 cnt 相同，但 1 最久未使用</span></span><br><span class="line">                 <span class="comment">// cache=[4,3], cnt(4)=1, cnt(3)=2</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">1</span>);      <span class="comment">// 返回 -1（未找到）</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">3</span>);      <span class="comment">// 返回 3</span></span><br><span class="line">                 <span class="comment">// cache=[3,4], cnt(4)=1, cnt(3)=3</span></span><br><span class="line">lfu.<span class="built_in">get</span>(<span class="number">4</span>);      <span class="comment">// 返回 4</span></span><br><span class="line">                 <span class="comment">// cache=[3,4], cnt(4)=2, cnt(3)=3</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="哈希表-双向链表"><a href="#哈希表-双向链表" class="headerlink" title="哈希表+双向链表"></a>哈希表+双向链表</h2><p>与LRU缓存相同，我们使用哈希表来将键值映射为对应节点。LRU那题我蠢蠢地把 <code>head</code> 和 <code>end</code> 都标记为链表中的有效节点，这样处理起来会很麻烦。今天这题我选择使用“哨兵节点”，即在链表之外设置两个独立的、不储存任何数据的节点作为 <code>head</code> 和 <code>end</code>，并将更新操作独立成函数，方便后续调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LFUCache</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> cap;</span><br><span class="line">    <span class="type">int</span> now;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="type">int</span> val;</span><br><span class="line">        <span class="type">int</span> key;</span><br><span class="line">        <span class="type">int</span> cnt;</span><br><span class="line">        Node* prev;</span><br><span class="line">        Node* next;</span><br><span class="line">        <span class="built_in">Node</span>(<span class="type">int</span> v, <span class="type">int</span> k) :<span class="built_in">val</span>(v), <span class="built_in">key</span>(k), <span class="built_in">cnt</span>(<span class="number">1</span>), <span class="built_in">prev</span>(<span class="literal">nullptr</span>), <span class="built_in">next</span>(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, Node* &gt; map;</span><br><span class="line">    Node* head;</span><br><span class="line">    Node* end;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">refresh</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(node-&gt;cnt &gt;= node-&gt;next-&gt;cnt) &#123;</span><br><span class="line">            Node* ed = node-&gt;next-&gt;next;</span><br><span class="line">            Node* pre = node-&gt;prev;</span><br><span class="line">            Node* cur = node;</span><br><span class="line">            Node* nxt = node-&gt;next;</span><br><span class="line">            pre-&gt;next = nxt;</span><br><span class="line">            nxt-&gt;next = cur;</span><br><span class="line">            cur-&gt;next = ed;</span><br><span class="line">            ed-&gt;prev = cur;</span><br><span class="line">            cur-&gt;prev = nxt;</span><br><span class="line">            nxt-&gt;prev = pre;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LFUCache</span>(<span class="type">int</span> capacity) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;cap = capacity;</span><br><span class="line">        <span class="keyword">this</span>-&gt;now = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>-&gt;head = <span class="keyword">new</span> <span class="built_in">Node</span>(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">this</span>-&gt;end = <span class="keyword">new</span> <span class="built_in">Node</span>(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">this</span>-&gt;head-&gt;cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>-&gt;end-&gt;cnt = INT_MAX;</span><br><span class="line">        <span class="keyword">this</span>-&gt;head-&gt;next = end;</span><br><span class="line">        <span class="keyword">this</span>-&gt;end-&gt;prev = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(<span class="type">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* cur = map[key];</span><br><span class="line">            cur-&gt;cnt++;</span><br><span class="line">            <span class="type">int</span> res = cur-&gt;val;</span><br><span class="line">            <span class="built_in">refresh</span>(cur);</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cap == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* cur = map[key];</span><br><span class="line">            cur-&gt;cnt++;</span><br><span class="line">            cur-&gt;val = value;</span><br><span class="line">            <span class="built_in">refresh</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Node* newnode = <span class="keyword">new</span> <span class="built_in">Node</span>(value, key);</span><br><span class="line">            <span class="keyword">if</span> (now == cap) &#123;</span><br><span class="line">                map.<span class="built_in">erase</span>(head-&gt;next-&gt;key);</span><br><span class="line">                newnode-&gt;next = head-&gt;next-&gt;next;</span><br><span class="line">                head-&gt;next = newnode;</span><br><span class="line">                newnode-&gt;prev = head;</span><br><span class="line">                newnode-&gt;next-&gt;prev = newnode;</span><br><span class="line">                map[key] = newnode;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                newnode-&gt;next = head-&gt;next;</span><br><span class="line">                head-&gt;next = newnode;</span><br><span class="line">                newnode-&gt;prev = head;</span><br><span class="line">                newnode-&gt;next-&gt;prev = newnode;</span><br><span class="line">                map[key] = newnode;</span><br><span class="line">                now++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">refresh</span>(newnode);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的一点是，由于同样调用次数的节点，我们要踢出最早调用过的（即 <code>cnt</code> 相同的若干个节点内部采用LRU算法），所以我们在更新的时候要将操作过的节点放到 <code>cnt+1</code> 的若干个节点中最靠后的位置，而找到这个位置当然是使用遍历的方法。所以喜闻乐见地<strong>超时</strong>了（最差的情况下时间复杂度到达平方级别）。</p>
+<h2 id="哈希表-二维双向链表"><a href="#哈希表-二维双向链表" class="headerlink" title="哈希表+二维双向链表"></a>哈希表+二维双向链表</h2><p>为了解决超时问题，我们可以借助桶排序的思想，把链表扩充为二维链表。其中一个链表使用链表储存某 <code>cnt</code> 值的所有节点，并按最早调用时间排序，即链表套链表。在更新时，我们只需取出调用过的节点，将这个节点取出放到包括了所有 <code>cnt+1</code> 的节点的那个链表的最后一位就可以了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LFUCache</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> cap;</span><br><span class="line">    <span class="type">int</span> now;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="type">int</span> val;</span><br><span class="line">        <span class="type">int</span> key;</span><br><span class="line">        <span class="type">int</span> cnt;</span><br><span class="line">        Node* prev;</span><br><span class="line">        Node* next;</span><br><span class="line">        <span class="built_in">Node</span>(<span class="type">int</span> v, <span class="type">int</span> k) :<span class="built_in">val</span>(v), <span class="built_in">key</span>(k), <span class="built_in">cnt</span>(<span class="number">1</span>), <span class="built_in">prev</span>(<span class="literal">nullptr</span>), <span class="built_in">next</span>(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Bucket</span> &#123;</span><br><span class="line">        <span class="type">int</span> cnt;</span><br><span class="line">        Node* head;</span><br><span class="line">        Node* end;</span><br><span class="line">        <span class="built_in">Bucket</span>(<span class="type">int</span> c) &#123;</span><br><span class="line">            head = <span class="keyword">new</span> <span class="built_in">Node</span>(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">            end = <span class="keyword">new</span> <span class="built_in">Node</span>(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">            head-&gt;cnt = <span class="number">0</span>;</span><br><span class="line">            end-&gt;cnt = INT_MAX;</span><br><span class="line">            head-&gt;next = end;</span><br><span class="line">            end-&gt;prev = head;</span><br><span class="line">            cnt = c;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, Node* &gt; map;</span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, Bucket* &gt; buckets;</span><br><span class="line">    Bucket* buck1;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">refresh</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (buckets.<span class="built_in">count</span>(node-&gt;cnt) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            Bucket* buck = <span class="keyword">new</span> <span class="built_in">Bucket</span>(node-&gt;cnt);</span><br><span class="line">            buckets[node-&gt;cnt] = buck;</span><br><span class="line">        &#125;</span><br><span class="line">        node-&gt;next-&gt;prev = node-&gt;prev;</span><br><span class="line">        node-&gt;prev-&gt;next = node-&gt;next;</span><br><span class="line">        Bucket* buck = buckets[node-&gt;cnt];</span><br><span class="line">        buck-&gt;end-&gt;prev-&gt;next = node;</span><br><span class="line">        node-&gt;next = buck-&gt;end;</span><br><span class="line">        node-&gt;prev = buck-&gt;end-&gt;prev;</span><br><span class="line">        buck-&gt;end-&gt;prev = node;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LFUCache</span>(<span class="type">int</span> capacity) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;cap = capacity;</span><br><span class="line">        <span class="keyword">this</span>-&gt;now = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>-&gt;buck1 = <span class="keyword">new</span> <span class="built_in">Bucket</span>(<span class="number">1</span>);</span><br><span class="line">        buckets[<span class="number">1</span>] = buck1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(<span class="type">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* cur = map[key];</span><br><span class="line">            cur-&gt;cnt++;</span><br><span class="line">            <span class="type">int</span> res = cur-&gt;val;</span><br><span class="line">            <span class="built_in">refresh</span>(cur);</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cap == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* cur = map[key];</span><br><span class="line">            cur-&gt;cnt++;</span><br><span class="line">            cur-&gt;val = value;</span><br><span class="line">            <span class="built_in">refresh</span>(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Node* newnode = <span class="keyword">new</span> <span class="built_in">Node</span>(value, key);</span><br><span class="line">            <span class="keyword">if</span> (now == cap) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= buckets.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">                    Bucket* buck = buckets[i];</span><br><span class="line">                    <span class="keyword">if</span> (buck-&gt;head-&gt;next != buck-&gt;end) &#123;</span><br><span class="line">                        map.<span class="built_in">erase</span>(buck-&gt;head-&gt;next-&gt;key);</span><br><span class="line">                        buck-&gt;head-&gt;next-&gt;next-&gt;prev = buck-&gt;head;</span><br><span class="line">                        buck-&gt;head-&gt;next = buck-&gt;head-&gt;next-&gt;next;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                now--;</span><br><span class="line">            &#125;</span><br><span class="line">            newnode-&gt;prev = buck1-&gt;end-&gt;prev;</span><br><span class="line">            buck1-&gt;end-&gt;prev-&gt;next = newnode;</span><br><span class="line">            newnode-&gt;next = buck1-&gt;end;</span><br><span class="line">            buck1-&gt;end-&gt;prev = newnode;</span><br><span class="line">            map[key] = newnode;</span><br><span class="line">            now++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="为什么是冬眠舱"><a href="#为什么是冬眠舱" class="headerlink" title="为什么是冬眠舱"></a>为什么是冬眠舱</h2><p>“冬眠”是《三体》中的设定。人可以通过“冬眠”来跨越漫长的时间。</p>
+<blockquote>
+<p>重逢的欢喜中，他们交换了自己的经历。罗辑得知史强是两个月前苏醒的，他的白血病已经治好了，医生还发现他的肝脏病变的几率很高，可能是喝酒的原因，也顺便处理好了。其实，在他们的感觉中，两人分别到时间并不是太长，就是四五年的样子，冬眠中是没有时间感的，但在两个世纪后的新时代相遇，还是多了一层亲切感。——《三体 II · 黑暗森林》</p>
+</blockquote>
+<p>我现在正处于一个人生的岔路口，无论是向左走还是向右走都会后悔，而且都是无法接受的后悔。所以我选择逃避，把自己的灵魂封印起来，以此度过漫长的煎熬时光，也称之为“冬眠”。我讨厌所谓的“顺其自然”，但遗憾的是我现在只能顺其自然。也许我永远没法做出选择，也许选择的权利根本不在我手上，也许未来以上帝视角回忆这段时光的我也许会觉得很可笑，但现在的我能做的也只有继续冬眠而已。</p>
+<h2 id="没事听点歌（李荣浩-不将就）"><a href="#没事听点歌（李荣浩-不将就）" class="headerlink" title="没事听点歌（李荣浩 - 不将就）"></a>没事听点歌（李荣浩 - 不将就）</h2><audio controls>
+    <source src="music/不将就.mp3" type="audio/mpeg">
+</audio>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/26/LRU-%E7%BC%93%E5%AD%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1158,7 +1309,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
