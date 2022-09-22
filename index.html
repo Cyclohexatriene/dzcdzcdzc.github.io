@@ -243,6 +243,147 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" itemprop="url">字符串哈希</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-22T19:50:04+08:00">
+                2022-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>哈希化是一种常见的数据存储方式，可以把一堆数据存到一起，并在<code>O(1)</code>复杂度下检索其中的任意一项。而对于字符串来说，普通的<code>unordered_set&lt;string&gt;</code>在哈希的时候会对整个字符串进行遍历，今天做到的这道题会因此TLE。</p>
+<p>在需要对某个字符串的子字符串进行哈希时，可以对整个字符串进行一个预处理，使后续的哈希从伪<code>O(1)</code>实<code>O(n)</code>降低为真正的<code>O(1)</code>。</p>
+<hr>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>字符串哈希将整个字符串看作一个<code>base</code>进制的数，这个<code>base</code>一般会取一个足够大的质数，例如<code>1331</code>、<code>13331</code>等。为方便理解，我们先取<code>base</code>为10，并取字符串<code>s = &quot;123456&quot;</code>。</p>
+<p>如果我想得到<code>s[1:2]</code>的哈希值（即<code>23</code>)，我们可以先取得<code>s[0:2]</code>的哈希值(记为<code>h[2]</code>)，即<code>123</code>，再减去多余的<code>100</code>即可。那这个100怎么来的呢？只需要将<code>s[0]</code>的值乘以若干次方（此处为2次）的<code>base</code>就可以了。根据这个原理，我们就可以得到一个通用的公式：<code>h[l:r] = h[r] - h[l-1] * p[r - l + 1]</code>，其中<code>h[l:r]</code>表示字符串<code>s</code><strong>下标从1开始数</strong>第<code>l</code>为和第<code>r</code>位之间的子串的哈希值，<code>h[idx]</code>表示字符串<code>s</code>前<code>idx</code>位的哈希值，<code>p</code>数组是次方数组，其内容为<code>&#123;1,base,base²,base³,...&#125;</code>。</p>
+<p>由此，我们可以做到一次预处理，无数次<code>O(1)</code>哈希其子字符串，节省大量时间。</p>
+<hr>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-1044-最长重复子串"><a href="#LeetCode-1044-最长重复子串" class="headerlink" title="LeetCode 1044. 最长重复子串"></a>LeetCode 1044. 最长重复子串</h2><p>给你一个字符串 <code>s</code> ，考虑其所有 <em>重复子串</em> ：即 <code>s</code> 的（连续）子串，在 <code>s</code> 中出现 2 次或更多次。这些出现之间可能存在重叠。</p>
+<p>返回 <strong>任意一个</strong> 可能具有最长长度的重复子串。如果 <code>s</code> 不含重复子串，那么答案为 <code>&quot;&quot;</code> 。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;banana&quot;</span></span><br><span class="line">输出：<span class="string">&quot;ana&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;abcd&quot;</span></span><br><span class="line">输出：<span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>刚看到这道题的时候就傻眼了，除了暴力想不到什么可行的办法。一看评论区，<code>&quot;温馨提示, 今天这个打卡题出自136场周赛第四题, 当时国服只有6个人做出来，所以不会做很正常哦&quot;</code>，原来大家都不会做，那我就放心了呀！</p>
+<p>不过其实知道怎么做之后，这题还是没那么难的。虽然本题暴力验证每一个长度的子字符串存不存在重复非常的蠢，但是有了字符串哈希的技巧，验证其中某一个长度的子字符串存不存在重复却可以在<code>O(n)</code>的时间复杂度下完成。而且出现重复的可能性是单调递减的， 即待验证的子字符串长度越长，子字符串出现重复的可能性越小。所以我们可以对答案空间进行二分搜索，免去了大量的无用功。虽然不是第一次见这种技巧了，但有时就差这么tingle一下，想不到可以这么解。</p>
+<p>还有一个技巧就是使用<code>unsigned long long</code>来储存哈希值，这样超过了<code>2^64</code>的时候就会自动取模，省的再做大数处理。（回忆起了周赛做了一个小时大数处理没做出来的恐惧[ac01]）</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; h;</span><br><span class="line">    vector&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; p;</span><br><span class="line">    <span class="function"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="title">getHash</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h[r] - h[l - <span class="number">1</span>] * p[r - l + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">longestDupSubstring</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> l = <span class="number">0</span>; <span class="type">int</span> r = n - <span class="number">1</span>;</span><br><span class="line">        <span class="type">const</span> <span class="type">int</span> base = <span class="number">1331</span>;</span><br><span class="line">        h.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        h[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            h[i] = h[i - <span class="number">1</span>] * base + s[i - <span class="number">1</span>] - <span class="string">&#x27;a&#x27;</span> + <span class="number">1</span>;</span><br><span class="line">            p[i] = p[i - <span class="number">1</span>] * base;</span><br><span class="line">        &#125;</span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="type">int</span> len = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            unordered_set&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; set;</span><br><span class="line">            <span class="type">bool</span> find = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - len + <span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> hash = <span class="built_in">getHash</span>(i + <span class="number">1</span>, i + len);</span><br><span class="line">                <span class="keyword">if</span> (set.<span class="built_in">count</span>(hash)) &#123;</span><br><span class="line">                    find = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">if</span> (len &gt; res.<span class="built_in">length</span>()) res = s.<span class="built_in">substr</span>(i, len);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                set.<span class="built_in">insert</span>(hash);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (find) l = len + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (l == r) <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span> r = len;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="没事听点歌（不才-夜航星"><a href="#没事听点歌（不才-夜航星" class="headerlink" title="没事听点歌（不才 - 夜航星)"></a>没事听点歌（不才 - 夜航星)</h2><audio controls>
+    <source src="music/夜航星.mp3">
+</audio>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/18/%E6%AF%8F%E6%97%A5Hard-Day-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1504,170 +1645,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="url">并查集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-08T15:44:33+08:00">
-                2022-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：</p>
-<ul>
-<li><p>查询某个节点的根节点</p>
-</li>
-<li><p>合并两个集合</p>
-</li>
-</ul>
-<hr>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先定义一个 <code>vector</code> 来表示并查集。在初始化时，我们将其中每个元素设为其对应下标的值。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line"><span class="comment">//初始化代码</span></span><br><span class="line">vec.<span class="built_in">resize</span>(n, <span class="number">0</span>);<span class="comment">//n代表元素的数量</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) vec[i] = i;</span><br></pre></td></tr></table></figure>
-
-<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>查询指查询给定节点的根节点。若两个节点的根节点相同，则表示这两个节点在同一个集合里。在代码中，如果某个节点不是根节点（表现为元素与其对应的下标不相等），则递归地查找其父节点的根节点，并将其父节点直接修改为根节点以减少下次查找所需要的时间（称为“路径压缩”）。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">    <span class="keyword">return</span> vec[root];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>合并指将给定两个节点所在的集合合并为一个集合。在代码中通过将其中一个集合的根节点的父节点设置成另一个节点的根节点，这样两个集合就有了共同的根节点，即合并为同一个集合了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">    vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-765-情侣牵手"><a href="#LeetCode-765-情侣牵手" class="headerlink" title="LeetCode 765. 情侣牵手"></a>LeetCode 765. 情侣牵手</h2><p><code>n</code> 对情侣坐在连续排列的 <code>2n</code> 个座位上，想要牵到对方的手。</p>
-<p>人和座位由一个整数数组 <code>row</code> 表示，其中 <code>row[i]</code> 是坐在第 <code>i</code> 个座位上的人的 <strong>ID</strong>。情侣们按顺序编号，第一对是 <code>(0, 1)</code>，第二对是 <code>(2, 3)</code>，以此类推，最后一对是 <code>(2n-2, 2n-1)</code>。</p>
-<p>返回 <em>最少交换座位的次数，以便每对情侣可以并肩坐在一起。</em> 每次交换可选择任意两人，让他们站起来交换座位。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: row = [<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出: <span class="number">1</span></span><br><span class="line">解释: 只需要交换row[<span class="number">1</span>]和row[<span class="number">2</span>]的位置即可。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: row = [<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">输出: <span class="number">0</span></span><br><span class="line">解释: 无需交换座位，所有的情侣都已经可以手牵手了。</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>通过观察我们可以发现：</p>
-<ul>
-<li><p>如果有 <code>2</code> 对情侣彼此坐错了位置，则需要进行 <code>1</code> 次交换。</p>
-</li>
-<li><p>如果有 <code>3</code> 对情侣彼此坐错了位置，则需要进行 <code>2</code> 次交换。</p>
-</li>
-<li><p>如果有 <code>4</code> 对情侣彼此坐错了位置，则需要进行 <code>3</code> 次交换。</p>
-</li>
-<li><p>如果有 <code>n</code> 对情侣彼此坐错了位置，则需要进行 <code>n-1</code> 次交换。</p>
-</li>
-</ul>
-<p>那么我们可以采用并查集的数据结构，将彼此坐错的情侣放进同一个集合，记并查集森林中有 <code>cnt</code> 棵树，共有 <code>n</code> 对情侣，那么需要交换的次数就是 <code>n-cnt</code> 。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">        <span class="keyword">return</span> vec[root];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">        vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minSwapsCouples</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; row)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = row.<span class="built_in">size</span>(); <span class="type">int</span> m = n / <span class="number">2</span>;</span><br><span class="line">        vec.<span class="built_in">resize</span>(m, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) vec[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="built_in">union_root</span>(row[<span class="number">2</span> * i - <span class="number">2</span>] / <span class="number">2</span>, row[<span class="number">2</span> * i - <span class="number">1</span>] / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(i) == i) cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m - cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在代码中，我们用某个人的 <strong>ID</strong> 除以 <code>2</code> 来表示ta和ta对象共同的 <strong>情侣ID</strong>，然后把实际上挨着坐的人都 <code>union</code> 起来。如果他们本来就是情侣，则最终他们所在集合就只会有一个元素，表示这个集合中的人不需要交换。 <code>union</code> 到最后，我们得到的并查集中每个集合的情侣都坐混了，需要互相发生交换；而不同集合中的情侣之间则不需要发生交换。</p>
-<hr>
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="速通《空洞骑士》"><a href="#速通《空洞骑士》" class="headerlink" title="速通《空洞骑士》"></a>速通《空洞骑士》</h2><p>这游戏很简单的，两个多小时就通关了(狗头)。</p>
-<p><img src="/images/hk.png"></p>
-<h2 id="没事听点歌（莫文蔚-这世界那么多人）"><a href="#没事听点歌（莫文蔚-这世界那么多人）" class="headerlink" title="没事听点歌（莫文蔚 - 这世界那么多人）"></a>没事听点歌（莫文蔚 - 这世界那么多人）</h2><audio controls>
-    <source src="music/这世界那么多人.mp3" type="audio/mpeg">
-</audio>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1722,7 +1699,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
