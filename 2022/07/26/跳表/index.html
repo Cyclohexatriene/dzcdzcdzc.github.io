@@ -86,13 +86,13 @@
 <meta property="og:site_name" content="环己三烯的冬眠舱">
 <meta property="og:description" content="概述今天LeetCode的每日一题是设计一个跳表。跳表是一种类似链表的数据结构，可以实现时间复杂度为 O(log n) 的查找和插入，效率堪比红黑树。 常规的链表可以实现常数级时间复杂度的插入，但是查找某一个特定元素的元素却是线性的。而诸如数组和vector之类的简单线性的数据结构，虽然可以通过二分查找来实现 O(log n) 时间复杂度的查找，但是在某个特定位置插入一个元素需要把其后面所有元素都">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/skiplist.gif">
-<meta property="og:image" content="http://example.com/images/kfc.jpg">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/skiplist.gif">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/kfc.jpg">
 <meta property="article:published_time" content="2022-07-26T13:21:21.000Z">
-<meta property="article:modified_time" content="2022-07-27T04:03:48.995Z">
+<meta property="article:modified_time" content="2022-10-08T11:36:12.620Z">
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/skiplist.gif">
+<meta name="twitter:image" content="https://cyclohexatriene.github.io/images/skiplist.gif">
 
 
 
@@ -319,7 +319,7 @@
 <p>后来还是看不懂红黑树是什么原理。但是跳表就好理解多了。在LeetCode评论区里看到一条，“想了半天要如何确定一个值应该占用几层的链表，然后你给我来个coin filp，我遭不住了，底层逻辑基于随机数，怪不得STL里没你”，笑死我了。</p>
 </blockquote>
 <p>扯了这么多，那么跳表到底是什么原理呢？用LeetCode上的一张图就可以看懂了。</p>
-<p><img src="/images/skiplist.gif"></p>
+<p><img src="https://cyclohexatriene.github.io/images/skiplist.gif"></p>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>查找时从上往下依次找到每层小于目标值的最大的节点，然后依次往下查找，中间可以跳过很多个节点。因为可以有可以跳过节点这个性质，跳表查找的平均时间复杂度是<code>O(log n)</code> ，这个有大佬证明了，而我不是大佬所以我不会证明。</p>
 <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>插入时也依次从上往下找插入的节点，第<code>0</code>层包含跳表内的所有元素，然后每个元素在插入时有<code>p</code>的概率可以加入到上面那层，<code>p</code> 一般被设置为 <code>1/2</code> 。没错，跳表的结构是随机出来的，就是这么草率。</p>
 <hr>
@@ -331,10 +331,11 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="暑假生活"><a href="#暑假生活" class="headerlink" title="暑假生活"></a>暑假生活</h2><p>暑假在家真的宅烂了，今天跟两个初中同学去南虹吃了一整天。吃了臭豆腐、老长沙手工肠、颜记排骨、虾滑、两杯茶百道、KFC、炸串串，饱死了。</p>
-<p><img src="/images/kfc.jpg"></p>
+<p><img src="https://cyclohexatriene.github.io/images/kfc.jpg"></p>
 <h2 id="没事听点歌（胡歌-忘记时间）"><a href="#没事听点歌（胡歌-忘记时间）" class="headerlink" title="没事听点歌（胡歌 - 忘记时间）"></a>没事听点歌（胡歌 - 忘记时间）</h2><audio controls>
-    <source src="music/忘记时间.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/忘记时间.mp3" type="audio/mpeg">
 </audio>
+
 
       
     </div>

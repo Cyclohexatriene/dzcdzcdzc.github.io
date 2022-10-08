@@ -546,7 +546,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="type">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>而使用有限状态自动机就可以让代码非常清晰。我们可以定义如下的状态：</p>
-<img src="images/FSM.png" width=500 />
+<img src="https://cyclohexatriene.github.io/images/FSM.png" width=500 />
 
 <center><font size="2">图源：LeetCode @Krahets 前辈的题解</font></center>
 
@@ -555,14 +555,15 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="天才操作"><a href="#天才操作" class="headerlink" title="天才操作"></a>天才操作</h2><p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
-<img src="images/ticket.png" width=400/>
+<img src="https://cyclohexatriene.github.io/images/ticket.png" width=400/>
 
 <h2 id="新生要来报到了"><a href="#新生要来报到了" class="headerlink" title="新生要来报到了"></a>新生要来报到了</h2><p>明天新生就陆续要来报到了，我也该读大三了。没有人永远年轻，但永远有人年轻。</p>
-<img src="images/freshman.jpg" width=400/>
+<img src="https://cyclohexatriene.github.io/images/freshman.jpg" width=400/>
 
 <h2 id="没事听点歌（Neck-Deep-Serpent）"><a href="#没事听点歌（Neck-Deep-Serpent）" class="headerlink" title="没事听点歌（Neck Deep - Serpent）"></a>没事听点歌（Neck Deep - Serpent）</h2><audio controls>
-    <source src="music/Serpent.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/Serpent.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -687,7 +688,7 @@
 <p>后来还是看不懂红黑树是什么原理。但是跳表就好理解多了。在LeetCode评论区里看到一条，“想了半天要如何确定一个值应该占用几层的链表，然后你给我来个coin filp，我遭不住了，底层逻辑基于随机数，怪不得STL里没你”，笑死我了。</p>
 </blockquote>
 <p>扯了这么多，那么跳表到底是什么原理呢？用LeetCode上的一张图就可以看懂了。</p>
-<p><img src="/images/skiplist.gif"></p>
+<p><img src="https://cyclohexatriene.github.io/images/skiplist.gif"></p>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>查找时从上往下依次找到每层小于目标值的最大的节点，然后依次往下查找，中间可以跳过很多个节点。因为可以有可以跳过节点这个性质，跳表查找的平均时间复杂度是<code>O(log n)</code> ，这个有大佬证明了，而我不是大佬所以我不会证明。</p>
 <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>插入时也依次从上往下找插入的节点，第<code>0</code>层包含跳表内的所有元素，然后每个元素在插入时有<code>p</code>的概率可以加入到上面那层，<code>p</code> 一般被设置为 <code>1/2</code> 。没错，跳表的结构是随机出来的，就是这么草率。</p>
 <hr>
@@ -699,10 +700,11 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="暑假生活"><a href="#暑假生活" class="headerlink" title="暑假生活"></a>暑假生活</h2><p>暑假在家真的宅烂了，今天跟两个初中同学去南虹吃了一整天。吃了臭豆腐、老长沙手工肠、颜记排骨、虾滑、两杯茶百道、KFC、炸串串，饱死了。</p>
-<p><img src="/images/kfc.jpg"></p>
+<p><img src="https://cyclohexatriene.github.io/images/kfc.jpg"></p>
 <h2 id="没事听点歌（胡歌-忘记时间）"><a href="#没事听点歌（胡歌-忘记时间）" class="headerlink" title="没事听点歌（胡歌 - 忘记时间）"></a>没事听点歌（胡歌 - 忘记时间）</h2><audio controls>
-    <source src="music/忘记时间.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/忘记时间.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -863,10 +865,11 @@
 <p>在代码中，我们用某个人的 <strong>ID</strong> 除以 <code>2</code> 来表示ta和ta对象共同的 <strong>情侣ID</strong>，然后把实际上挨着坐的人都 <code>union</code> 起来。如果他们本来就是情侣，则最终他们所在集合就只会有一个元素，表示这个集合中的人不需要交换。 <code>union</code> 到最后，我们得到的并查集中每个集合的情侣都坐混了，需要互相发生交换；而不同集合中的情侣之间则不需要发生交换。</p>
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="速通《空洞骑士》"><a href="#速通《空洞骑士》" class="headerlink" title="速通《空洞骑士》"></a>速通《空洞骑士》</h2><p>这游戏很简单的，两个多小时就通关了(狗头)。</p>
-<p><img src="/images/hk.png"></p>
+<p><img src="https://cyclohexatriene.github.io/images/hk.png"></p>
 <h2 id="没事听点歌（莫文蔚-这世界那么多人）"><a href="#没事听点歌（莫文蔚-这世界那么多人）" class="headerlink" title="没事听点歌（莫文蔚 - 这世界那么多人）"></a>没事听点歌（莫文蔚 - 这世界那么多人）</h2><audio controls>
-    <source src="music/这世界那么多人.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/这世界那么多人.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -1032,7 +1035,7 @@
 <p>其中，快速选择找到的中位数是后面三向切分的基准数。由于三向切分只进行了一轮，所以时间复杂度是 <code>O(n)</code> ，而快速选择的时间复杂度是 <code>O(n)</code> ，所以整个算法的时间复杂度也是 <code>O(n)</code> 。</p>
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="在学Linux"><a href="#在学Linux" class="headerlink" title="在学Linux"></a>在学Linux</h2><p>开始学Linux了，没有闲置的设备就在电脑里装了虚拟机。每次从Linux回到Windows都有一种如释重负的轻松的感觉，刚开始转换操作系统真别扭。但是在Shell里敲指令还是很带感的！</p>
-<p><img src="/images/linux.png"></p>
+<p><img src="https://cyclohexatriene.github.io/images/linux.png"></p>
 <h2 id="放暑假了"><a href="#放暑假了" class="headerlink" title="放暑假了"></a>放暑假了</h2><p>19号就考完了，24号交了论文之后就正式开始暑假了。看大家的去向，好多人都找了实习，而我暑假除了社会调查的作业以外剩下的时间都能自己安排。这个暑假是这辈子过的最长的暑假了，接近三个月。要好好珍惜最后的闲暇了，退休前是不可能再有这么长的空闲了。在这里立一些暑期flag，也不追求全部都能完成，能认真地做完一两项都是好的，就是希望能好好利用这个暑假吧。</p>
 <ul>
 <li><p>《鸟哥的Linux私房菜 基础学习篇》</p>
@@ -1050,8 +1053,9 @@
 </ul>
 <p>暂时就想到这些。8说了，开卷！</p>
 <h2 id="没事听点歌（Jam-七月上）"><a href="#没事听点歌（Jam-七月上）" class="headerlink" title="没事听点歌（Jam - 七月上）"></a>没事听点歌（Jam - 七月上）</h2><audio controls>
-    <source src="music/七月上.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/七月上.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -1352,8 +1356,9 @@
 <img src="https://s3.bmp.ovh/imgs/2022/05/26/cece515aff8ac3e8.jpg" title="" alt="" width="269">
 
 <h2 id="没事听点歌（赵雷-鼓楼）"><a href="#没事听点歌（赵雷-鼓楼）" class="headerlink" title="没事听点歌（赵雷 - 鼓楼）"></a>没事听点歌（赵雷 - 鼓楼）</h2><audio controls>
-    <source src="music/鼓楼.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/鼓楼.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -1506,14 +1511,15 @@
 <img title="" src="https://s3.bmp.ovh/imgs/2022/05/21/a60678eeb4545409.jpg" alt="" width="261">
 
 <h2 id="校庆日"><a href="#校庆日" class="headerlink" title="校庆日"></a>校庆日</h2><p>5月21日是浙江大学的校庆日，<del>学校为了纪念，特地为大家放了一天假</del> 。在这美好的一天，我喝了心心念念已久的芝士椰椰。虽然再一次喝到了椰椰，但是我再也回不到那个第一次喝到椰椰的夏天了。最美好的时代永远是在过去，我一直在怀念曾经无数次想要逃离的生活。然后我在寝室里写了一整天的代码。花了数小时手搓了大数据分析的Apriori算法，虽然在4条测试数据时表现良好，但在面对9000+条的数据集时它卡死了，白忙活，最后还是老老实实地用R语言调包。</p>
-<img title="" src="images/yeye.jpg" alt="" width="301">
+<img title="" src="https://cyclohexatriene.github.io/images/yeye.jpg" alt="" width="301">
 
 <h2 id="那年今日"><a href="#那年今日" class="headerlink" title="那年今日"></a>那年今日</h2><p>去年520我一个人去电影院看了《情书》的重映。第一次接触《情书》是在高中语文书附带的读本上，看到了寻找藤井树的片段。然后就跟同学借来了书，晚上睡觉前在寝室点上灯读个两章，那段时间可能是我最文艺青年的一段时间了。</p>
 <img src="https://s3.bmp.ovh/imgs/2022/05/21/86a4c14560810638.png">
 
 <h2 id="没事听点歌（李荣浩-王牌冤家）"><a href="#没事听点歌（李荣浩-王牌冤家）" class="headerlink" title="没事听点歌（李荣浩 - 王牌冤家）"></a>没事听点歌（李荣浩 - 王牌冤家）</h2><audio controls>
-    <source src="music/王牌冤家.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/王牌冤家.mp3" type="audio/mpeg">
 </audio>
+
 
           
         
@@ -1665,8 +1671,9 @@
 <p>我的情感生活真是过得稀烂。 ——节选自1019事变</p>
 </blockquote>
 <h2 id="网抑云（孙燕姿-我怀念的）"><a href="#网抑云（孙燕姿-我怀念的）" class="headerlink" title="网抑云（孙燕姿 - 我怀念的）"></a>网抑云（孙燕姿 - 我怀念的）</h2><audio controls>
-    <source src="music/我怀念的.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/我怀念的.mp3" type="audio/mpeg">
 </audio>
+
 
           
         

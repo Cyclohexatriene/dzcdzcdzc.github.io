@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="环己三烯的冬眠舱">
 <meta property="og:description" content="概述听名字就能大概猜出“有限状态自动机”是干嘛的了。  有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题剑指 Offer 20. 表示数值的字符串请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/images/FSM.png">
-<meta property="og:image" content="http://example.com/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/images/ticket.png">
-<meta property="og:image" content="http://example.com/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/images/freshman.jpg">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/FSM.png">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/ticket.png">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/freshman.jpg">
 <meta property="article:published_time" content="2022-08-18T12:13:41.000Z">
-<meta property="article:modified_time" content="2022-09-07T07:48:58.660Z">
+<meta property="article:modified_time" content="2022-10-08T11:29:51.441Z">
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/images/FSM.png">
+<meta name="twitter:image" content="https://cyclohexatriene.github.io/images/FSM.png">
 
 
 
@@ -379,7 +379,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="type">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>而使用有限状态自动机就可以让代码非常清晰。我们可以定义如下的状态：</p>
-<img src="images/FSM.png" width=500 />
+<img src="https://cyclohexatriene.github.io/images/FSM.png" width=500 />
 
 <center><font size="2">图源：LeetCode @Krahets 前辈的题解</font></center>
 
@@ -388,14 +388,15 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="天才操作"><a href="#天才操作" class="headerlink" title="天才操作"></a>天才操作</h2><p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
-<img src="images/ticket.png" width=400/>
+<img src="https://cyclohexatriene.github.io/images/ticket.png" width=400/>
 
 <h2 id="新生要来报到了"><a href="#新生要来报到了" class="headerlink" title="新生要来报到了"></a>新生要来报到了</h2><p>明天新生就陆续要来报到了，我也该读大三了。没有人永远年轻，但永远有人年轻。</p>
-<img src="images/freshman.jpg" width=400/>
+<img src="https://cyclohexatriene.github.io/images/freshman.jpg" width=400/>
 
 <h2 id="没事听点歌（Neck-Deep-Serpent）"><a href="#没事听点歌（Neck-Deep-Serpent）" class="headerlink" title="没事听点歌（Neck Deep - Serpent）"></a>没事听点歌（Neck Deep - Serpent）</h2><audio controls>
-    <source src="music/Serpent.mp3" type="audio/mpeg">
+    <source src="https://cyclohexatriene.github.io/music/Serpent.mp3" type="audio/mpeg">
 </audio>
+
 
       
     </div>
