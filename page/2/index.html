@@ -243,6 +243,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/" itemprop="url">每日Hard - Day 3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-14T12:19:17+08:00">
+                2022-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
+    <tr>
+        <td>日期</td>
+        <td>2022年9月14日</td>
+    </tr>
+    <tr>
+        <td>是否独立完成</td>
+        <td>否</td>
+    </tr>
+    <tr>
+        <td>涉及算法</td>
+        <td>暴力枚举、几何</td>
+    </tr>
+</table>
+
+<hr>
+<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-149-直线上最多的点数"><a href="#LeetCode-149-直线上最多的点数" class="headerlink" title="LeetCode 149. 直线上最多的点数"></a>LeetCode 149. 直线上最多的点数</h2><p>给你一个数组 <code>points</code> ，其中 <code>points[i] = [xi, yi]</code> 表示 <strong>X-Y</strong> 平面上的一个点。求最多有多少个点在同一条直线上。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">3</span>]]</span><br><span class="line">输出：<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">5</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">4</span>]]</span><br><span class="line">输出：<span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="暴力枚举"><a href="#暴力枚举" class="headerlink" title="暴力枚举"></a>暴力枚举</h2><p>对于点a,b,c，如果其中任意两点构成的直线斜率相同，则三点共线。我们可以枚举所有的点对，用哈希表记录斜率，则可以判断有多少个点出现在同一条直线上。</p>
+<p>本题难点在于计算斜率需要用到除法，而浮点数的除法是存在误差的。为了避免这个误差，一共有两种思路：</p>
+<ol>
+<li>利用乘法来避免除法（把两个斜率相等的表达式用对角相乘法则化为两个乘法表达式相等）。</li>
+<li>用字符串来哈希。</li>
+</ol>
+<p>本题我选择用第二个思路解。在计算斜率时通过最大公约数把分式约分为最间，保证相同斜率的直线能全部哈希在一起。</p>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">gcd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">0</span> ? a : <span class="built_in">gcd</span>(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxPoints</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; points.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            unordered_map&lt;string, <span class="type">int</span>&gt; map;</span><br><span class="line">            <span class="type">int</span> mx = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; points.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="type">int</span> x1 = points[i][<span class="number">0</span>], y1 = points[i][<span class="number">1</span>];</span><br><span class="line">                <span class="type">int</span> x2 = points[j][<span class="number">0</span>], y2 = points[j][<span class="number">1</span>];</span><br><span class="line">                <span class="type">int</span> a = x1 - x2;</span><br><span class="line">                <span class="type">int</span> b = y1 - y2;</span><br><span class="line">                <span class="type">int</span> g = <span class="built_in">gcd</span>(a, b);</span><br><span class="line">                string key = <span class="built_in">to_string</span>(a / g) + <span class="string">&quot;_&quot;</span> + <span class="built_in">to_string</span>(b / g);</span><br><span class="line">                map[key]++;</span><br><span class="line">                mx = <span class="built_in">max</span>(mx, map[key]);</span><br><span class="line">            &#125;</span><br><span class="line">            res = <span class="built_in">max</span>(res, mx + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/13/%E6%AF%8F%E6%97%A5Hard-Day-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1543,167 +1697,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/05/21/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" itemprop="url">状态压缩</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-21T22:55:27+08:00">
-                2022-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>状态压缩就是通过位运算来将字符串、数组等数据压缩进一个32位的整数型变量。例如，对于一个只包含小写字母的字符串，我们可以用一个32位整数的低26位表示，其中1代表该字符串包含对应的小写字母，0表示该字符串不包括对应的小写字母，即字符串”ac”可以被压缩为整数5（0101）。通过状态压缩，我们可以节省内存、加快运算过程。</p>
-<hr>
-<h1 id="例题-1"><a href="#例题-1" class="headerlink" title="例题 1"></a>例题 1</h1><h2 id="LeetCode-318-最大单词长度乘积"><a href="#LeetCode-318-最大单词长度乘积" class="headerlink" title="LeetCode 318. 最大单词长度乘积"></a>LeetCode 318. 最大单词长度乘积</h2><p>给你一个字符串数组 <code>words</code> ，找出并返回 <code>length(words[i]) * length(words[j])</code> 的最大值，并且这两个单词不含有公共字母。如果不存在这样的两个单词，返回 <code>0</code> 。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：words = [<span class="string">&quot;abcw&quot;</span>,<span class="string">&quot;baz&quot;</span>,<span class="string">&quot;foo&quot;</span>,<span class="string">&quot;bar&quot;</span>,<span class="string">&quot;xtfn&quot;</span>,<span class="string">&quot;abcdef&quot;</span>]</span><br><span class="line">输出：<span class="number">16</span> </span><br><span class="line">解释：这两个单词为 <span class="string">&quot;abcw&quot;</span>, <span class="string">&quot;xtfn&quot;</span>。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：words = [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;ab&quot;</span>,<span class="string">&quot;abc&quot;</span>,<span class="string">&quot;d&quot;</span>,<span class="string">&quot;cd&quot;</span>,<span class="string">&quot;bcd&quot;</span>,<span class="string">&quot;abcd&quot;</span>]</span><br><span class="line">输出：<span class="number">4</span> </span><br><span class="line">解释：这两个单词为 <span class="string">&quot;ab&quot;</span>, <span class="string">&quot;cd&quot;</span>。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：words = [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;aa&quot;</span>,<span class="string">&quot;aaa&quot;</span>,<span class="string">&quot;aaaa&quot;</span>]</span><br><span class="line">输出：<span class="number">0</span> </span><br><span class="line">解释：不存在这样的两个单词。</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解-1"><a href="#题解-1" class="headerlink" title="题解 1"></a>题解 1</h1><p>我们可以通过上文提到的状态压缩方法将 <code>words</code> 中的所有字符串都压缩为一个int。由于题目只需返回最大的乘积，对于多个字符串压缩为同一个int的情况，我们只需要储存长度最长的一个。然后我们两两组合得到的int，如果对他们进行或运算得到的结果为0的话，就代表他们没有重复的字母。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxProduct</span><span class="params">(vector&lt;string&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; map;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; conditions;</span><br><span class="line">        <span class="keyword">for</span> (string str : words) &#123;</span><br><span class="line">            <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">char</span> c : str) &#123;</span><br><span class="line">                i |= <span class="number">1</span> &lt;&lt; (c - <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (map.<span class="built_in">count</span>(i) &lt;= <span class="number">0</span>) conditions.<span class="built_in">push_back</span>(i);</span><br><span class="line">            map[i] = <span class="built_in">max</span>(map[i], (<span class="type">int</span>)str.<span class="built_in">length</span>());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; conditions.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="type">int</span> num1 = conditions[i];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; conditions.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="type">int</span> num2 = conditions[j];</span><br><span class="line">                <span class="keyword">if</span> ((num1 &amp; num2) == <span class="number">0</span>) &#123;</span><br><span class="line">                    res = <span class="built_in">max</span>(res, map[num1] * map[num2]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong> 在C++中，位运算的优先级是低于判断的。所以<code>if ((num1 &amp; num2) == 0)</code> 不可以写为<code>if (num1 &amp; num2 == 0)</code> 。</p>
-<hr>
-<h1 id="例题-2"><a href="#例题-2" class="headerlink" title="例题 2"></a>例题 2</h1><h2 id="LeetCode-464-我能赢吗"><a href="#LeetCode-464-我能赢吗" class="headerlink" title="LeetCode 464. 我能赢吗"></a>LeetCode 464. 我能赢吗</h2><p>在 “100 game” 这个游戏中，两名玩家轮流选择从 1 到 10 的任意整数，累计整数和，先使得累计整数和 <strong>达到或超过</strong>  100 的玩家，即为胜者。</p>
-<p>如果我们将游戏规则改为 “玩家 <strong>不能</strong> 重复使用整数” 呢？</p>
-<p>例如，两个玩家可以轮流从公共整数池中抽取从 1 到 15 的整数（不放回），直到累计整数和 &gt;&#x3D; 100。</p>
-<p>给定两个整数 <code>maxChoosableInteger</code> （整数池中可选择的最大数）和 <code>desiredTotal</code>（累计和），若先出手的玩家是否能稳赢则返回 <code>true</code> ，否则返回 <code>false</code> 。假设两位玩家游戏时都表现 <strong>最佳</strong> 。</p>
-<h3 id="示例-1：-1"><a href="#示例-1：-1" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：maxChoosableInteger = <span class="number">10</span>, desiredTotal = <span class="number">11</span></span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：</span><br><span class="line">无论第一个玩家选择哪个整数，他都会失败。</span><br><span class="line">第一个玩家可以选择从 <span class="number">1</span> 到 <span class="number">10</span> 的整数。</span><br><span class="line">如果第一个玩家选择 <span class="number">1</span>，那么第二个玩家只能选择从 <span class="number">2</span> 到 <span class="number">10</span> 的整数。</span><br><span class="line">第二个玩家可以通过选择整数 <span class="number">10</span>（那么累积和为 <span class="number">11</span> &gt;= desiredTotal），从而取得胜利.</span><br><span class="line">同样地，第一个玩家选择任意其他整数，第二个玩家都会赢。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2：-1"><a href="#示例-2：-1" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：maxChoosableInteger = <span class="number">10</span>, desiredTotal = <span class="number">0</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-3：-1"><a href="#示例-3：-1" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：maxChoosableInteger = <span class="number">10</span>, desiredTotal = <span class="number">1</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解-2"><a href="#题解-2" class="headerlink" title="题解 2"></a>题解 2</h1><p>状态压缩往往和一些别的编程技巧配合使用，比如记忆化搜索、动态规划等。由于待搜索的状态被压缩进了一个int里，我们就可以很容易地储存和查找该状态对应的结果。本题就是一个例子，我们可以将所有可取的整数（题目规定不超过20）压缩进一个int中，然后进行记忆化搜索。如果当前状态此前已经搜索过了，则可以直接从字典中查找其搜索结果并返回，无需重复搜索。记忆化搜索是基于深度优先搜索的，如果当前状态未搜索过，就进行常规的深度优先搜索。</p>
-<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, <span class="type">bool</span>&gt; map;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> state, <span class="type">int</span> cursum, <span class="type">int</span> maxnum, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(state) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">bool</span> res = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; maxnum; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (((state &gt;&gt; i) &amp; <span class="number">1</span>) == <span class="number">0</span>) &#123;  </span><br><span class="line">                    <span class="comment">//当前数字未被取到</span></span><br><span class="line">                    <span class="keyword">if</span> (cursum + i + <span class="number">1</span> &gt;= target) &#123;</span><br><span class="line">                        <span class="comment">//取了当前数字就可以达到target</span></span><br><span class="line">                        res = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="built_in">dfs</span>(state | (<span class="number">1</span> &lt;&lt; i), cursum + i + <span class="number">1</span>, maxnum, target)) &#123;</span><br><span class="line">                        <span class="comment">//取了当前数字无法达到target，则继续进行深度优先搜索。</span></span><br><span class="line">                        <span class="comment">//如果取了该数字下家无论如何都赢不了，则代表必胜，返回true.</span></span><br><span class="line">                        res = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            map[state] = res;<span class="comment">//记录当前状态的胜负结果，以便后续直接查询。</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map[state];</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">canIWin</span><span class="params">(<span class="type">int</span> maxChoosableInteger, <span class="type">int</span> desiredTotal)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//如果全部数字加起来都不能到达desiredTotal，则两个人都不能赢，返回false.</span></span><br><span class="line">        <span class="keyword">if</span> ((<span class="number">1</span> + maxChoosableInteger) * maxChoosableInteger / <span class="number">2</span> &lt; desiredTotal) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">0</span>, maxChoosableInteger, desiredTotal);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="为什么这么久没更新"><a href="#为什么这么久没更新" class="headerlink" title="为什么这么久没更新"></a>为什么这么久没更新</h2><p>最近在忙一些别的事情。具体地说，是在忙着当优秀学长（确实准备的很辛苦！就允许我臭屁一下吧），嘿嘿。一个丹青学生会的同学邀请我去给学弟学妹们  <del>（主要是学妹）</del> 分享一些Python的考试技巧，作为一位热心水友 <del>（好为人师）</del> ，我当然不会推辞了。于是花了一个多星期准备，一边准备一边焦虑怕自己舌头捋不顺或者讲的内容大家不爱听。还好顺利搞定了。临近期末了，可能又有一阵子要肝大作业没闲工夫来更新了。</p>
-<img title="" src="https://s3.bmp.ovh/imgs/2022/05/21/a60678eeb4545409.jpg" alt="" width="261">
-
-<h2 id="校庆日"><a href="#校庆日" class="headerlink" title="校庆日"></a>校庆日</h2><p>5月21日是浙江大学的校庆日，<del>学校为了纪念，特地为大家放了一天假</del> 。在这美好的一天，我喝了心心念念已久的芝士椰椰。虽然再一次喝到了椰椰，但是我再也回不到那个第一次喝到椰椰的夏天了。最美好的时代永远是在过去，我一直在怀念曾经无数次想要逃离的生活。然后我在寝室里写了一整天的代码。花了数小时手搓了大数据分析的Apriori算法，虽然在4条测试数据时表现良好，但在面对9000+条的数据集时它卡死了，白忙活，最后还是老老实实地用R语言调包。</p>
-<img title="" src="https://cyclohexatriene.github.io/images/yeye.jpg" alt="" width="301">
-
-<h2 id="那年今日"><a href="#那年今日" class="headerlink" title="那年今日"></a>那年今日</h2><p>去年520我一个人去电影院看了《情书》的重映。第一次接触《情书》是在高中语文书附带的读本上，看到了寻找藤井树的片段。然后就跟同学借来了书，晚上睡觉前在寝室点上灯读个两章，那段时间可能是我最文艺青年的一段时间了。</p>
-<img src="https://s3.bmp.ovh/imgs/2022/05/21/86a4c14560810638.png">
-
-<h2 id="没事听点歌（李荣浩-王牌冤家）"><a href="#没事听点歌（李荣浩-王牌冤家）" class="headerlink" title="没事听点歌（李荣浩 - 王牌冤家）"></a>没事听点歌（李荣浩 - 王牌冤家）</h2><audio controls>
-    <source src="https://cyclohexatriene.github.io/music/王牌冤家.mp3" type="audio/mpeg">
-</audio>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1758,7 +1751,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
