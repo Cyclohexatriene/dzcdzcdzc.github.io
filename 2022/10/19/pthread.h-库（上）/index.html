@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="Tags              日期         2022年9月14日                   是否独立完成         否                   涉及算法         暴力枚举、几何         题面LeetCode 149. 直线上最多的点数给你一个数组 points ，其中 points[i] &#x3D; [xi, yi] 表示 X-Y 平面上的一个点。">
+<meta name="description" content="#include &lt;pthread.h&gt;创建线程：pthread_create() 定义：int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr, void*(*start_rtn)(void*), void *restrict arg);  好长一段定义，咱们一个参数一个参数看。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="每日Hard - Day 3">
-<meta property="og:url" content="http://example.com/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/index.html">
+<meta property="og:title" content="pthread.h 库（上）">
+<meta property="og:url" content="http://example.com/2022/10/19/pthread.h-%E5%BA%93%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
 <meta property="og:site_name" content="环己三烯的冬眠舱">
-<meta property="og:description" content="Tags              日期         2022年9月14日                   是否独立完成         否                   涉及算法         暴力枚举、几何         题面LeetCode 149. 直线上最多的点数给你一个数组 points ，其中 points[i] &#x3D; [xi, yi] 表示 X-Y 平面上的一个点。">
+<meta property="og:description" content="#include &lt;pthread.h&gt;创建线程：pthread_create() 定义：int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr, void*(*start_rtn)(void*), void *restrict arg);  好长一段定义，咱们一个参数一个参数看。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-09-14T04:19:17.000Z">
-<meta property="article:modified_time" content="2022-09-14T04:29:56.238Z">
+<meta property="article:published_time" content="2022-10-19T15:05:47.000Z">
+<meta property="article:modified_time" content="2022-10-19T15:11:13.689Z">
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2022/09/14/每日Hard-Day-3/"/>
+  <link rel="canonical" href="http://example.com/2022/10/19/pthread.h-库（上）/"/>
 
 
 
 
 
-  <title>每日Hard - Day 3 | 环己三烯的冬眠舱</title>
+  <title>pthread.h 库（上） | 环己三烯的冬眠舱</title>
   
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/19/pthread.h-%E5%BA%93%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -261,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">每日Hard - Day 3</h1>
+          <h1 class="post-title" itemprop="name headline">pthread.h 库（上）</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-14T12:19:17+08:00">
-                2022-09-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-19T23:05:47+08:00">
+                2022-10-19
               </time>
             
 
@@ -309,43 +309,73 @@
       
 
       
-        <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
-    <tr>
-        <td>日期</td>
-        <td>2022年9月14日</td>
-    </tr>
-    <tr>
-        <td>是否独立完成</td>
-        <td>否</td>
-    </tr>
-    <tr>
-        <td>涉及算法</td>
-        <td>暴力枚举、几何</td>
-    </tr>
-</table>
-
-<hr>
-<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-149-直线上最多的点数"><a href="#LeetCode-149-直线上最多的点数" class="headerlink" title="LeetCode 149. 直线上最多的点数"></a>LeetCode 149. 直线上最多的点数</h2><p>给你一个数组 <code>points</code> ，其中 <code>points[i] = [xi, yi]</code> 表示 <strong>X-Y</strong> 平面上的一个点。求最多有多少个点在同一条直线上。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">3</span>]]</span><br><span class="line">输出：<span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">5</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">4</span>]]</span><br><span class="line">输出：<span class="number">4</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="暴力枚举"><a href="#暴力枚举" class="headerlink" title="暴力枚举"></a>暴力枚举</h2><p>对于点a,b,c，如果其中任意两点构成的直线斜率相同，则三点共线。我们可以枚举所有的点对，用哈希表记录斜率，则可以判断有多少个点出现在同一条直线上。</p>
-<p>本题难点在于计算斜率需要用到除法，而浮点数的除法是存在误差的。为了避免这个误差，一共有两种思路：</p>
+        <h1 id="include-lt-pthread-h-gt"><a href="#include-lt-pthread-h-gt" class="headerlink" title="#include &lt;pthread.h&gt;"></a>#include &lt;pthread.h&gt;</h1><h2 id="创建线程：pthread-create"><a href="#创建线程：pthread-create" class="headerlink" title="创建线程：pthread_create()"></a>创建线程：pthread_create()</h2><ul>
+<li>定义：<code>int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr, void*(*start_rtn)(void*), void *restrict arg);</code></li>
+</ul>
+<p>好长一段定义，咱们一个参数一个参数看。</p>
+<ul>
+<li><code>pthread_t *restrict tidp</code>：成功创建线程后会把新建线程的ID存在这个指针指向的地址空间里。</li>
+<li><code>const pthread_attr_t *restrict attr</code>：用于定制不同的线程属性。attr&#x3D;attribute</li>
+<li><code>void*(*start_rtn)(void*)</code>：看不太懂啥意思，反正用来指定新线程运行的函数，传函数名就行。</li>
+<li><code>void *restrict arg</code>：用来指定函数的参数。如果有多个参数，需要用结构体打包传进去。</li>
+</ul>
+<p>成功返回0，否则返回错误编号。</p>
+<blockquote>
+<p>restrict是C99标准引入的关键字，用于限定和约束指针，表示这个指针是访问对应地址空间的唯一方式。它可以帮助编译器更好地优化代码，生成更有效率的汇编代码。</p>
+</blockquote>
+<h2 id="线程终止：pthread-exit-amp-pthread-join-amp-pthread-cancel"><a href="#线程终止：pthread-exit-amp-pthread-join-amp-pthread-cancel" class="headerlink" title="线程终止：pthread_exit() &amp; pthread_join() &amp; pthread_cancel()"></a>线程终止：pthread_exit() &amp; pthread_join() &amp; pthread_cancel()</h2><ul>
+<li><code>pthread_exit()</code>的定义：<code>void pthread_exit(void *rval_ptr);</code></li>
+</ul>
+<p>这个函数只有一个参数，用于指定线程退出时的退出码。调用这个函数之后，线程就会退出。和主线程的<code>exit()</code>差不多道理，但是线程里调用<code>exit()</code>会终止整个进程。</p>
+<ul>
+<li><code>pthread_join()</code>的定义：<code>int pthread_join(pthread_t thread, void **rval_ptr);</code></li>
+</ul>
+<p>第一个参数用来指定一个线程，第二个参数用于接收该线程的退出码。这个函数被调用后会一直被阻塞，直到前面指定的线程退出、返回或被取消了。</p>
+<p>成功返回0，否则返回错误编号。</p>
+<ul>
+<li><code>pthread_cancel()</code>的定义：<code>int pthread_cancel(pthread_t tid);</code></li>
+</ul>
+<p>指定一个线程，强行把它取消了。成功返回0，否则返回错误编号。</p>
+<p>一个未被<code>pthread_detach(pthread_t tid)</code>过的线程执行结束后会保存终止状态，知道这个线程被另一个线程<code>join</code>。</p>
+<h2 id="线程清理：pthread-cleanup-push-amp-pthread-cleanup-pop"><a href="#线程清理：pthread-cleanup-push-amp-pthread-cleanup-pop" class="headerlink" title="线程清理：pthread_cleanup_push() &amp; pthread_cleanup_pop()"></a>线程清理：pthread_cleanup_push() &amp; pthread_cleanup_pop()</h2><ul>
+<li><code>pthread_cleanup_push()</code>的定义：<code>void pthread_cleanup_push(void (*rtn)(void *), void *arg);</code></li>
+</ul>
+<p>第一个参数用于指定清理函数，填函数名；第二个参数前面那个函数执行需要的参数。当线程执行以下动作时会调用清理函数：</p>
 <ol>
-<li>利用乘法来避免除法（把两个斜率相等的表达式用对角相乘法则化为两个乘法表达式相等）。</li>
-<li>用字符串来哈希。</li>
+<li>调用<code>pthread_exit</code>时；</li>
+<li>响应取消请求时；</li>
+<li>用非零<code>execute</code>参数调用<code>pthread_cleanup_pop()</code>时。</li>
 </ol>
-<p>本题我选择用第二个思路解。在计算斜率时通过最大公约数把分式约分为最间，保证相同斜率的直线能全部哈希在一起。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">gcd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">0</span> ? a : <span class="built_in">gcd</span>(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxPoints</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; points.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            unordered_map&lt;string, <span class="type">int</span>&gt; map;</span><br><span class="line">            <span class="type">int</span> mx = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; points.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="type">int</span> x1 = points[i][<span class="number">0</span>], y1 = points[i][<span class="number">1</span>];</span><br><span class="line">                <span class="type">int</span> x2 = points[j][<span class="number">0</span>], y2 = points[j][<span class="number">1</span>];</span><br><span class="line">                <span class="type">int</span> a = x1 - x2;</span><br><span class="line">                <span class="type">int</span> b = y1 - y2;</span><br><span class="line">                <span class="type">int</span> g = <span class="built_in">gcd</span>(a, b);</span><br><span class="line">                string key = <span class="built_in">to_string</span>(a / g) + <span class="string">&quot;_&quot;</span> + <span class="built_in">to_string</span>(b / g);</span><br><span class="line">                map[key]++;</span><br><span class="line">                mx = <span class="built_in">max</span>(mx, map[key]);</span><br><span class="line">            &#125;</span><br><span class="line">            res = <span class="built_in">max</span>(res, mx + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
+<ul>
+<li><code>pthread_cleanup_pop()</code>的定义：<code>void pthread_cleanup_pop(int execute);</code></li>
+</ul>
+<p>如果将execute参数设置为0，则清理函数不会被调用。无论被发生什么情况，<code>pthread_cleanup_pop()</code>都会删除上次<code>pthread_cleanup_push()</code>调用建立的清理处理程序。可以把<code>push</code>和<code>pop</code>想象成在一个储存“清理函数”的栈上操作。</p>
+<h2 id="线程同步：pthread-mutex系列"><a href="#线程同步：pthread-mutex系列" class="headerlink" title="线程同步：pthread_mutex系列"></a>线程同步：pthread_mutex系列</h2><ul>
+<li><code>int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);</code></li>
+</ul>
+<p>初始化一个互斥量，即第一个参数指向的<code>mutex</code>。一个互斥量必须初始化了之后才能用。</p>
+<ul>
+<li><code>int pthread_mutex_destroy(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>顾名思义，就是删除一个互斥量，释放它的内存。</p>
+<ul>
+<li><code>int pthread_mutex_lock(pthread_mutex_t *mutex);</code></li>
+<li><code>int pthread_mutex_unlock(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>给互斥量上锁和解锁。如果需要上锁的互斥量已经被别的线程锁住了，那调用<code>pthread_mutex_lock()</code>的线程就会一直被阻塞直到那个互斥量被解锁，然后这个线程再获得锁。上面三个函数都是成功返回0，否则返回错误编号。如果不希望线程被阻塞，那可以用下面这个函数：</p>
+<ul>
+<li><code>int pthread_mutex_trylock(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>这个函数会尝试对互斥量加锁，如果锁没被锁上，它就锁上这个锁；如果锁已经被锁住了，那么这个函数就会返回<code>EBUSY</code>。这个函数在避免死锁这件事上有很大帮助（如果不能取得全部的一系列锁，不是干等着而是把已经取得的锁都释放掉，避免跟另一个线程死锁）。</p>
+<ul>
+<li><code>int pthread_mutex_timedlock(pthread_mutex_t *restrict mutex, const struct timespec *restrict tsptr);</code></li>
+</ul>
+<p>在某个时间前阻塞等待获得锁，超过这个时间就返回错误码<code>ETIMEDOUT</code>。</p>
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="网抑云（告五人-爱人错过）"><a href="#网抑云（告五人-爱人错过）" class="headerlink" title="网抑云（告五人 - 爱人错过）"></a>网抑云（告五人 - 爱人错过）</h2><p>今天是一个特别的日子，可以网抑云。</p>
+<audio controls>
+    <source src="https://cyclohexatriene.github.io/music/somewhere-in-time.mp3"
+</audio>
 
       
     </div>
@@ -370,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/09/13/%E6%AF%8F%E6%97%A5Hard-Day-2/" rel="next" title="每日Hard - Day 2">
-                <i class="fa fa-chevron-left"></i> 每日Hard - Day 2
+              <a href="/2022/10/13/%E6%AF%8F%E6%97%A5Hard-Day-11/" rel="next" title="每日Hard Day 11">
+                <i class="fa fa-chevron-left"></i> 每日Hard Day 11
               </a>
             
           </div>
@@ -379,10 +409,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2022/09/15/%E6%AF%8F%E6%97%A5Hard-Day-4/" rel="prev" title="每日Hard - Day 4">
-                每日Hard - Day 4 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -496,7 +522,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tags"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">题面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-149-%E7%9B%B4%E7%BA%BF%E4%B8%8A%E6%9C%80%E5%A4%9A%E7%9A%84%E7%82%B9%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 149. 直线上最多的点数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E6%9E%9A%E4%B8%BE"><span class="nav-number">3.1.</span> <span class="nav-text">暴力枚举</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#include-lt-pthread-h-gt"><span class="nav-number">1.</span> <span class="nav-text">#include &lt;pthread.h&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%EF%BC%9Apthread-create"><span class="nav-number">1.1.</span> <span class="nav-text">创建线程：pthread_create()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%BB%88%E6%AD%A2%EF%BC%9Apthread-exit-amp-pthread-join-amp-pthread-cancel"><span class="nav-number">1.2.</span> <span class="nav-text">线程终止：pthread_exit() &amp; pthread_join() &amp; pthread_cancel()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B8%85%E7%90%86%EF%BC%9Apthread-cleanup-push-amp-pthread-cleanup-pop"><span class="nav-number">1.3.</span> <span class="nav-text">线程清理：pthread_cleanup_push() &amp; pthread_cleanup_pop()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%EF%BC%9Apthread-mutex%E7%B3%BB%E5%88%97"><span class="nav-number">1.4.</span> <span class="nav-text">线程同步：pthread_mutex系列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%8A%91%E4%BA%91%EF%BC%88%E5%91%8A%E4%BA%94%E4%BA%BA-%E7%88%B1%E4%BA%BA%E9%94%99%E8%BF%87%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">网抑云（告五人 - 爱人错过）</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -243,6 +243,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/19/pthread.h-%E5%BA%93%EF%BC%88%E4%B8%8A%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/10/19/pthread.h-%E5%BA%93%EF%BC%88%E4%B8%8A%EF%BC%89/" itemprop="url">pthread.h 库（上）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-19T23:05:47+08:00">
+                2022-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="include-lt-pthread-h-gt"><a href="#include-lt-pthread-h-gt" class="headerlink" title="#include &lt;pthread.h&gt;"></a>#include &lt;pthread.h&gt;</h1><h2 id="创建线程：pthread-create"><a href="#创建线程：pthread-create" class="headerlink" title="创建线程：pthread_create()"></a>创建线程：pthread_create()</h2><ul>
+<li>定义：<code>int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr, void*(*start_rtn)(void*), void *restrict arg);</code></li>
+</ul>
+<p>好长一段定义，咱们一个参数一个参数看。</p>
+<ul>
+<li><code>pthread_t *restrict tidp</code>：成功创建线程后会把新建线程的ID存在这个指针指向的地址空间里。</li>
+<li><code>const pthread_attr_t *restrict attr</code>：用于定制不同的线程属性。attr&#x3D;attribute</li>
+<li><code>void*(*start_rtn)(void*)</code>：看不太懂啥意思，反正用来指定新线程运行的函数，传函数名就行。</li>
+<li><code>void *restrict arg</code>：用来指定函数的参数。如果有多个参数，需要用结构体打包传进去。</li>
+</ul>
+<p>成功返回0，否则返回错误编号。</p>
+<blockquote>
+<p>restrict是C99标准引入的关键字，用于限定和约束指针，表示这个指针是访问对应地址空间的唯一方式。它可以帮助编译器更好地优化代码，生成更有效率的汇编代码。</p>
+</blockquote>
+<h2 id="线程终止：pthread-exit-amp-pthread-join-amp-pthread-cancel"><a href="#线程终止：pthread-exit-amp-pthread-join-amp-pthread-cancel" class="headerlink" title="线程终止：pthread_exit() &amp; pthread_join() &amp; pthread_cancel()"></a>线程终止：pthread_exit() &amp; pthread_join() &amp; pthread_cancel()</h2><ul>
+<li><code>pthread_exit()</code>的定义：<code>void pthread_exit(void *rval_ptr);</code></li>
+</ul>
+<p>这个函数只有一个参数，用于指定线程退出时的退出码。调用这个函数之后，线程就会退出。和主线程的<code>exit()</code>差不多道理，但是线程里调用<code>exit()</code>会终止整个进程。</p>
+<ul>
+<li><code>pthread_join()</code>的定义：<code>int pthread_join(pthread_t thread, void **rval_ptr);</code></li>
+</ul>
+<p>第一个参数用来指定一个线程，第二个参数用于接收该线程的退出码。这个函数被调用后会一直被阻塞，直到前面指定的线程退出、返回或被取消了。</p>
+<p>成功返回0，否则返回错误编号。</p>
+<ul>
+<li><code>pthread_cancel()</code>的定义：<code>int pthread_cancel(pthread_t tid);</code></li>
+</ul>
+<p>指定一个线程，强行把它取消了。成功返回0，否则返回错误编号。</p>
+<p>一个未被<code>pthread_detach(pthread_t tid)</code>过的线程执行结束后会保存终止状态，知道这个线程被另一个线程<code>join</code>。</p>
+<h2 id="线程清理：pthread-cleanup-push-amp-pthread-cleanup-pop"><a href="#线程清理：pthread-cleanup-push-amp-pthread-cleanup-pop" class="headerlink" title="线程清理：pthread_cleanup_push() &amp; pthread_cleanup_pop()"></a>线程清理：pthread_cleanup_push() &amp; pthread_cleanup_pop()</h2><ul>
+<li><code>pthread_cleanup_push()</code>的定义：<code>void pthread_cleanup_push(void (*rtn)(void *), void *arg);</code></li>
+</ul>
+<p>第一个参数用于指定清理函数，填函数名；第二个参数前面那个函数执行需要的参数。当线程执行以下动作时会调用清理函数：</p>
+<ol>
+<li>调用<code>pthread_exit</code>时；</li>
+<li>响应取消请求时；</li>
+<li>用非零<code>execute</code>参数调用<code>pthread_cleanup_pop()</code>时。</li>
+</ol>
+<ul>
+<li><code>pthread_cleanup_pop()</code>的定义：<code>void pthread_cleanup_pop(int execute);</code></li>
+</ul>
+<p>如果将execute参数设置为0，则清理函数不会被调用。无论被发生什么情况，<code>pthread_cleanup_pop()</code>都会删除上次<code>pthread_cleanup_push()</code>调用建立的清理处理程序。可以把<code>push</code>和<code>pop</code>想象成在一个储存“清理函数”的栈上操作。</p>
+<h2 id="线程同步：pthread-mutex系列"><a href="#线程同步：pthread-mutex系列" class="headerlink" title="线程同步：pthread_mutex系列"></a>线程同步：pthread_mutex系列</h2><ul>
+<li><code>int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);</code></li>
+</ul>
+<p>初始化一个互斥量，即第一个参数指向的<code>mutex</code>。一个互斥量必须初始化了之后才能用。</p>
+<ul>
+<li><code>int pthread_mutex_destroy(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>顾名思义，就是删除一个互斥量，释放它的内存。</p>
+<ul>
+<li><code>int pthread_mutex_lock(pthread_mutex_t *mutex);</code></li>
+<li><code>int pthread_mutex_unlock(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>给互斥量上锁和解锁。如果需要上锁的互斥量已经被别的线程锁住了，那调用<code>pthread_mutex_lock()</code>的线程就会一直被阻塞直到那个互斥量被解锁，然后这个线程再获得锁。上面三个函数都是成功返回0，否则返回错误编号。如果不希望线程被阻塞，那可以用下面这个函数：</p>
+<ul>
+<li><code>int pthread_mutex_trylock(pthread_mutex_t *mutex);</code></li>
+</ul>
+<p>这个函数会尝试对互斥量加锁，如果锁没被锁上，它就锁上这个锁；如果锁已经被锁住了，那么这个函数就会返回<code>EBUSY</code>。这个函数在避免死锁这件事上有很大帮助（如果不能取得全部的一系列锁，不是干等着而是把已经取得的锁都释放掉，避免跟另一个线程死锁）。</p>
+<ul>
+<li><code>int pthread_mutex_timedlock(pthread_mutex_t *restrict mutex, const struct timespec *restrict tsptr);</code></li>
+</ul>
+<p>在某个时间前阻塞等待获得锁，超过这个时间就返回错误码<code>ETIMEDOUT</code>。</p>
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="网抑云（告五人-爱人错过）"><a href="#网抑云（告五人-爱人错过）" class="headerlink" title="网抑云（告五人 - 爱人错过）"></a>网抑云（告五人 - 爱人错过）</h2><p>今天是一个特别的日子，可以网抑云。</p>
+<audio controls>
+    <source src="https://cyclohexatriene.github.io/music/somewhere-in-time.mp3"
+</audio>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/13/%E6%AF%8F%E6%97%A5Hard-Day-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1446,180 +1630,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/15/%E6%AF%8F%E6%97%A5Hard-Day-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/09/15/%E6%AF%8F%E6%97%A5Hard-Day-4/" itemprop="url">每日Hard - Day 4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-15T21:45:01+08:00">
-                2022-09-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
-    <tr>
-        <td>日期</td>
-        <td>2022年9月15日</td>
-    </tr>
-    <tr>
-        <td>是否独立完成</td>
-        <td>否（差一点点！）</td>
-    </tr>
-    <tr>
-        <td>涉及算法</td>
-        <td>动态规划Again</td>
-    </tr>
-</table>
-
-<hr>
-<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-1771-由子序列构造的最长回文串的长度"><a href="#LeetCode-1771-由子序列构造的最长回文串的长度" class="headerlink" title="LeetCode 1771. 由子序列构造的最长回文串的长度"></a>LeetCode 1771. 由子序列构造的最长回文串的长度</h2><p>给你两个字符串 <code>word1</code> 和 <code>word2</code> ，请你按下述方法构造一个字符串：</p>
-<ul>
-<li>从 <code>word1</code> 中选出某个 <strong>非空</strong> 子序列 <code>subsequence1</code> 。</li>
-<li>从 <code>word2</code> 中选出某个 <strong>非空</strong> 子序列 <code>subsequence2</code> 。</li>
-<li>连接两个子序列 <code>subsequence1 + subsequence2</code> ，得到字符串。</li>
-</ul>
-<p>返回可按上述方法构造的最长 <strong>回文串</strong> 的 <strong>长度</strong> 。如果无法构造回文串，返回 <code>0</code> 。</p>
-<p>字符串 <code>s</code> 的一个 <strong>子序列</strong> 是通过从 <code>s</code> 中删除一些（也可能不删除）字符而不更改其余字符的顺序生成的字符串。</p>
-<p><strong>回文串</strong> 是正着读和反着读结果一致的字符串。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = <span class="string">&quot;cacb&quot;</span>, word2 = <span class="string">&quot;cbba&quot;</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：从 word1 中选出 <span class="string">&quot;ab&quot;</span> ，从 word2 中选出 <span class="string">&quot;cba&quot;</span> ，得到回文串 <span class="string">&quot;abcba&quot;</span> 。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = <span class="string">&quot;ab&quot;</span>, word2 = <span class="string">&quot;ab&quot;</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：从 word1 中选出 <span class="string">&quot;ab&quot;</span> ，从 word2 中选出 <span class="string">&quot;a&quot;</span> ，得到回文串 <span class="string">&quot;aba&quot;</span> 。</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = <span class="string">&quot;aa&quot;</span>, word2 = <span class="string">&quot;bb&quot;</span></span><br><span class="line">输出：<span class="number">0</span></span><br><span class="line">解释：无法按题面所述方法构造回文串，所以返回 <span class="number">0</span> 。</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>怎么Hard题这么多动态规划啊。而且与回文串有关的题题号也恰好是回文的，有点巧妙。</p>
-<p>一开始的思路是把<code>word2</code>给reverse一下，然后通过动态规划算<code>word1</code>和<code>word2</code>的最长公共子序列，就可以得到答案了。但是遇到了下面这个测试用例WA了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string word1 = <span class="string">&quot;afaaadacb&quot;</span>;</span><br><span class="line">string word2 = <span class="string">&quot;ca&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>WA后初步认为是两个串不一样长导致的，所以添加了平衡字符串长度的代码，然后发现并不是长度的原因。还是得把两个串合在一起dp，并只在两个子串都不为空时更新答案。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">longestPalindrome</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n1 = word1.<span class="built_in">length</span>(), n2 = word2.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> n = n1 + n2;</span><br><span class="line">        string word = word1 + word2;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">        <span class="type">int</span> res = (word[n1 - <span class="number">1</span>] == word[n1]) ? <span class="number">2</span> : <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) dp[i][i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) dp[i][i + <span class="number">1</span>] = (word[i] == word[i + <span class="number">1</span>]) ? <span class="number">2</span> : <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> l = <span class="number">2</span>; l &lt; n; l++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i + l &lt; n; i++) &#123;</span><br><span class="line">                <span class="type">int</span> j = i + l;</span><br><span class="line">                <span class="keyword">if</span> (word[i] == word[j]) &#123;</span><br><span class="line">                    dp[i][j] = dp[i + <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">if</span> (i &lt; n1 &amp;&amp; j &gt;= n1) res = <span class="built_in">max</span>(res, dp[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> dp[i][j] = <span class="built_in">max</span>(dp[i][j - <span class="number">1</span>], dp[i + <span class="number">1</span>][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="没事听点歌（Knock-2-dashstar-）"><a href="#没事听点歌（Knock-2-dashstar-）" class="headerlink" title="没事听点歌（Knock 2 - dashstar*）"></a>没事听点歌（Knock 2 - dashstar*）</h2><audio controls>
-    <source src="https://cyclohexatriene.github.io/music/dashstar.mp3">
-</audio>
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1669,7 +1684,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
