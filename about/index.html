@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"Valine","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="环己三烯：浙江大学公共管理学院2020级本科生、自学转码选手、CC98论坛活跃用户、2020年《炉石传说》黄金公开赛杭州站战棋组257强、《炉石传说》2021年8月赛季国服狂野天梯186名、LeetCode全站排名32266名、精神丽水人、互联网考古学家、资深网抑云选手、文抑青年、擅长在一棵树上吊死的人、一个（自认为）有趣的人、正在精神世界冬眠的人、万里长征未还人、一个（自认为）很有">
 <meta property="og:type" content="website">
@@ -72,14 +72,13 @@
 
   <div class="site-meta">
 
-
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
       <p class="site-title">环己三烯的冬眠舱</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-    
+
   </div>
 
   <div class="site-nav-right">
@@ -243,7 +242,7 @@
 document.addEventListener('page:loaded', () => {
   NexT.utils.loadComments(CONFIG.valine.el)
     .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
       { condition: window.Valine }
     ))
     .then(() => {

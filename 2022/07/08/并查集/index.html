@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"Valine","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="概述并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：  查询某个节点的根节点  合并两个集合    代码实现初始化首先定义一个 vect">
 <meta property="og:type" content="article">
@@ -71,14 +71,13 @@
 
   <div class="site-meta">
 
-
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
       <p class="site-title">环己三烯的冬眠舱</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-    
+
   </div>
 
   <div class="site-nav-right">
@@ -350,7 +349,7 @@
 document.addEventListener('page:loaded', () => {
   NexT.utils.loadComments(CONFIG.valine.el)
     .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
       { condition: window.Valine }
     ))
     .then(() => {
