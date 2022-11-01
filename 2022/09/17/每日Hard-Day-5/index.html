@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="Tags              日期         2022年9月17日                   是否独立完成         否                   涉及算法         动态规划 Again &amp; Again         题面LeetCode 940. 不同的子序列 II给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回">
+  <meta name="description" content="Tags              日期         2022年9月17日                   是否独立完成         否                   涉及算法         动态规划 Again &amp; Again         题面LeetCode 940. 不同的子序列 II给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每日Hard - Day 5">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/09/17/%E6%AF%8F%E6%97%A5Hard-Day-5/index.html">
@@ -32,15 +32,20 @@
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/09/17/%E6%AF%8F%E6%97%A5Hard-Day-5/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/09/17/%E6%AF%8F%E6%97%A5Hard-Day-5/","path":"2022/09/17/每日Hard-Day-5/","title":"每日Hard - Day 5"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>每日Hard - Day 5 | 环己三烯的冬眠舱</title>
+  <title>每日Hard - Day 5 | 环己三烯的冬眠舱</title>
   
 
 
@@ -49,33 +54,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -86,8 +110,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -95,121 +140,57 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tags"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">题面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-940-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97-II"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 940. 不同的子序列 II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">3.1.</span> <span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/09/17/%E6%AF%8F%E6%97%A5Hard-Day-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="每日Hard - Day 5 | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           每日Hard - Day 5
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-      <time title="创建时间：2022-09-17 12:49:05 / 修改时间：14:11:03" itemprop="dateCreated datePublished" datetime="2022-09-17T12:49:05+08:00">2022-09-17</time>
-    </span>
+              <time title="创建时间：2022-09-17 12:49:05 / 修改时间：14:11:03" itemprop="dateCreated datePublished" datetime="2022-09-17T12:49:05+08:00">2022-09-17</time>
+            </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -218,6 +199,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
     <tr>
         <td>日期</td>
@@ -248,7 +231,7 @@
 <hr>
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>如果<code>s</code>中的字符是无重复的就很简单了，针对每个字符“取”或者“不取”都有两种可能，定义<code>dp[i]</code>为<code>s</code>前<code>i</code>个字母的不同非空子序列的个数，就可以引出转移公式<code>dp[i+1]=dp[i]*2</code>。</p>
 <p>但是<code>s</code>中的字符是有重复的，所以要考虑去重的事。例如<code>s=&quot;abb&quot;</code>，其中的a和两个b均能分别组成一次’ab’，所以要去掉一次，即<code>dp[i+1]=dp[i]*2-dp[last]</code></p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">distinctSubseqII</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> mod = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        unordered_map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; map;</span><br><span class="line">        dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i+<span class="number">1</span>]=dp[i]*<span class="number">2</span> % mod;</span><br><span class="line">            <span class="keyword">if</span>(map.<span class="built_in">count</span>(s[i])) dp[i+<span class="number">1</span>]-=dp[map[s[i]]];</span><br><span class="line">            dp[i+<span class="number">1</span>]%=mod;</span><br><span class="line">            map[s[i]]=i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (dp[n]<span class="number">-1</span>+mod) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">distinctSubseqII</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> mod = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        unordered_map&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; map;</span><br><span class="line">        dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i+<span class="number">1</span>]=dp[i]*<span class="number">2</span> % mod;</span><br><span class="line">            <span class="keyword">if</span>(map.<span class="built_in">count</span>(s[i])) dp[i+<span class="number">1</span>]-=dp[map[s[i]]];</span><br><span class="line">            dp[i+<span class="number">1</span>]%=mod;</span><br><span class="line">            map[s[i]]=i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (dp[n]<span class="number">-1</span>+mod) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -257,39 +240,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/09/15/%E6%AF%8F%E6%97%A5Hard-Day-4/" rel="prev" title="每日Hard - Day 4">
-                  <i class="fa fa-chevron-left"></i> 每日Hard - Day 4
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/09/18/%E6%AF%8F%E6%97%A5Hard-Day-6/" rel="next" title="每日Hard - Day 6">
-                  每日Hard - Day 6 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/15/%E6%AF%8F%E6%97%A5Hard-Day-4/" rel="prev" title="每日Hard - Day 4">
+      <i class="fa fa-chevron-left"></i> 每日Hard - Day 4
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/18/%E6%AF%8F%E6%97%A5Hard-Day-6/" rel="next" title="每日Hard - Day 6">
+      每日Hard - Day 6 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tags"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">题面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-940-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97-II"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 940. 不同的子序列 II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">3.1.</span> <span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -297,15 +363,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -313,24 +403,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/09/17/%E6%AF%8F%E6%97%A5Hard-Day-5/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 

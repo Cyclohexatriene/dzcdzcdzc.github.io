@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="概述并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：  查询某个节点的根节点  合并两个集合    代码实现初始化首先定义一个 vect">
+  <meta name="description" content="概述并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：  查询某个节点的根节点  合并两个集合    代码实现初始化首先定义一个 vect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并查集">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">
@@ -34,15 +34,20 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cyclohexatriene.github.io/images/hk.png">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/","path":"2022/07/08/并查集/","title":"并查集"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>并查集 | 环己三烯的冬眠舱</title>
+  <title>并查集 | 环己三烯的冬眠舱</title>
   
 
 
@@ -51,33 +56,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -88,8 +112,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -97,127 +142,63 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.2.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">2.3.</span> <span class="nav-text">合并</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-765-%E6%83%85%E4%BE%A3%E7%89%B5%E6%89%8B"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 765. 情侣牵手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E9%80%9A%E3%80%8A%E7%A9%BA%E6%B4%9E%E9%AA%91%E5%A3%AB%E3%80%8B"><span class="nav-number">5.1.</span> <span class="nav-text">速通《空洞骑士》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E8%8E%AB%E6%96%87%E8%94%9A-%E8%BF%99%E4%B8%96%E7%95%8C%E9%82%A3%E4%B9%88%E5%A4%9A%E4%BA%BA%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">没事听点歌（莫文蔚 - 这世界那么多人）</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="并查集 | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           并查集
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-07-08 15:44:33" itemprop="dateCreated datePublished" datetime="2022-07-08T15:44:33+08:00">2022-07-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-08 19:32:29" itemprop="dateModified" datetime="2022-10-08T19:32:29+08:00">2022-10-08</time>
-    </span>
+              <time title="创建时间：2022-07-08 15:44:33" itemprop="dateCreated datePublished" datetime="2022-07-08T15:44:33+08:00">2022-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:32:29" itemprop="dateModified" datetime="2022-10-08T19:32:29+08:00">2022-10-08</time>
+              </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -226,6 +207,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>并查集是用来处理一些不相交集合的合并和查询问题，开始时每个元素都是一个集合，然后在处理中会依据一些规则来进行集合的合并。在逻辑上，并查集是由很多树组成的森林，而在实际的代码中，我们往往使用数组来储存，数组的下标表示树的节点，下标对应的元素表示该节点的父节点。另外，我们定义根节点的父节点是它自己。并查集的操作有：</p>
 <ul>
 <li><p>查询某个节点的根节点</p>
@@ -235,13 +218,13 @@
 </ul>
 <hr>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先定义一个 <code>vector</code> 来表示并查集。在初始化时，我们将其中每个元素设为其对应下标的值。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line"><span class="comment">//初始化代码</span></span><br><span class="line">vec.<span class="built_in">resize</span>(n, <span class="number">0</span>);<span class="comment">//n代表元素的数量</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) vec[i] = i;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line"><span class="comment">//初始化代码</span></span><br><span class="line">vec.<span class="built_in">resize</span>(n, <span class="number">0</span>);<span class="comment">//n代表元素的数量</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) vec[i] = i;</span><br></pre></td></tr></table></figure>
 
 <h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>查询指查询给定节点的根节点。若两个节点的根节点相同，则表示这两个节点在同一个集合里。在代码中，如果某个节点不是根节点（表现为元素与其对应的下标不相等），则递归地查找其父节点的根节点，并将其父节点直接修改为根节点以减少下次查找所需要的时间（称为“路径压缩”）。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">    <span class="keyword">return</span> vec[root];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">    <span class="keyword">return</span> vec[root];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>合并指将给定两个节点所在的集合合并为一个集合。在代码中通过将其中一个集合的根节点的父节点设置成另一个节点的根节点，这样两个集合就有了共同的根节点，即合并为同一个集合了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">    vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">union_root</span><span class="params">(<span class="keyword">int</span> r1, <span class="keyword">int</span> r2)</span> </span>&#123;</span><br><span class="line">    vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-765-情侣牵手"><a href="#LeetCode-765-情侣牵手" class="headerlink" title="LeetCode 765. 情侣牵手"></a>LeetCode 765. 情侣牵手</h2><p><code>n</code> 对情侣坐在连续排列的 <code>2n</code> 个座位上，想要牵到对方的手。</p>
@@ -264,7 +247,7 @@
 </li>
 </ul>
 <p>那么我们可以采用并查集的数据结构，将彼此坐错的情侣放进同一个集合，记并查集森林中有 <code>cnt</code> 棵树，共有 <code>n</code> 对情侣，那么需要交换的次数就是 <code>n-cnt</code> 。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">        <span class="keyword">return</span> vec[root];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">union_root</span><span class="params">(<span class="type">int</span> r1, <span class="type">int</span> r2)</span> </span>&#123;</span><br><span class="line">        vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minSwapsCouples</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; row)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = row.<span class="built_in">size</span>(); <span class="type">int</span> m = n / <span class="number">2</span>;</span><br><span class="line">        vec.<span class="built_in">resize</span>(m, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) vec[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="built_in">union_root</span>(row[<span class="number">2</span> * i - <span class="number">2</span>] / <span class="number">2</span>, row[<span class="number">2</span> * i - <span class="number">1</span>] / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(i) == i) cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m - cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (vec[root] != root) vec[root] = <span class="built_in">find</span>(vec[root]);</span><br><span class="line">        <span class="keyword">return</span> vec[root];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">union_root</span><span class="params">(<span class="keyword">int</span> r1, <span class="keyword">int</span> r2)</span> </span>&#123;</span><br><span class="line">        vec[<span class="built_in">find</span>(r1)] = vec[<span class="built_in">find</span>(r2)];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minSwapsCouples</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; row)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = row.<span class="built_in">size</span>(); <span class="keyword">int</span> m = n / <span class="number">2</span>;</span><br><span class="line">        vec.<span class="built_in">resize</span>(m, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) vec[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="built_in">union_root</span>(row[<span class="number">2</span> * i - <span class="number">2</span>] / <span class="number">2</span>, row[<span class="number">2</span> * i - <span class="number">1</span>] / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(i) == i) cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m - cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>在代码中，我们用某个人的 <strong>ID</strong> 除以 <code>2</code> 来表示ta和ta对象共同的 <strong>情侣ID</strong>，然后把实际上挨着坐的人都 <code>union</code> 起来。如果他们本来就是情侣，则最终他们所在集合就只会有一个元素，表示这个集合中的人不需要交换。 <code>union</code> 到最后，我们得到的并查集中每个集合的情侣都坐混了，需要互相发生交换；而不同集合中的情侣之间则不需要发生交换。</p>
 <hr>
@@ -281,39 +264,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/06/28/%E5%BF%AB%E9%80%9F%E9%80%89%E6%8B%A9-%E4%B8%89%E5%90%91%E5%88%87%E5%88%86%E5%BF%AB%E6%8E%92/" rel="prev" title="快速选择 & 三向切分快排">
-                  <i class="fa fa-chevron-left"></i> 快速选择 & 三向切分快排
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/07/26/%E8%B7%B3%E8%A1%A8/" rel="next" title="跳表">
-                  跳表 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/28/%E5%BF%AB%E9%80%9F%E9%80%89%E6%8B%A9-%E4%B8%89%E5%90%91%E5%88%87%E5%88%86%E5%BF%AB%E6%8E%92/" rel="prev" title="快速选择 & 三向切分快排">
+      <i class="fa fa-chevron-left"></i> 快速选择 & 三向切分快排
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/26/%E8%B7%B3%E8%A1%A8/" rel="next" title="跳表">
+      跳表 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.2.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">2.3.</span> <span class="nav-text">合并</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-765-%E6%83%85%E4%BE%A3%E7%89%B5%E6%89%8B"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 765. 情侣牵手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E9%80%9A%E3%80%8A%E7%A9%BA%E6%B4%9E%E9%AA%91%E5%A3%AB%E3%80%8B"><span class="nav-number">5.1.</span> <span class="nav-text">速通《空洞骑士》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E8%8E%AB%E6%96%87%E8%94%9A-%E8%BF%99%E4%B8%96%E7%95%8C%E9%82%A3%E4%B9%88%E5%A4%9A%E4%BA%BA%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">没事听点歌（莫文蔚 - 这世界那么多人）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -321,15 +387,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -337,24 +427,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/07/08/%E5%B9%B6%E6%9F%A5%E9%9B%86/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 

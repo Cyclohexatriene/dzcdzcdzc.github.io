@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="概述听名字就能大概猜出“有限状态自动机”是干嘛的了。  有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题剑指 Offer 20. 表示数值的字符串请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以">
+  <meta name="description" content="概述听名字就能大概猜出“有限状态自动机”是干嘛的了。  有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题剑指 Offer 20. 表示数值的字符串请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="有限状态自动机">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/index.html">
@@ -36,15 +36,20 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cyclohexatriene.github.io/images/FSM.png">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/","path":"2022/08/18/有限状态自动机/","title":"有限状态自动机"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>有限状态自动机 | 环己三烯的冬眠舱</title>
+  <title>有限状态自动机 | 环己三烯的冬眠舱</title>
   
 
 
@@ -53,33 +58,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -90,8 +114,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -99,127 +144,63 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-20-%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">剑指 Offer 20. 表示数值的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">示例 4：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E6%89%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">天才操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%A6%81%E6%9D%A5%E6%8A%A5%E5%88%B0%E4%BA%86"><span class="nav-number">4.2.</span> <span class="nav-text">新生要来报到了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Neck-Deep-Serpent%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">没事听点歌（Neck Deep - Serpent）</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="有限状态自动机 | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           有限状态自动机
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-08-18 20:13:41" itemprop="dateCreated datePublished" datetime="2022-08-18T20:13:41+08:00">2022-08-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-08 19:29:51" itemprop="dateModified" datetime="2022-10-08T19:29:51+08:00">2022-10-08</time>
-    </span>
+              <time title="创建时间：2022-08-18 20:13:41" itemprop="dateCreated datePublished" datetime="2022-08-18T20:13:41+08:00">2022-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:29:51" itemprop="dateModified" datetime="2022-10-08T19:29:51+08:00">2022-10-08</time>
+              </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -228,6 +209,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>听名字就能大概猜出“有限状态自动机”是干嘛的了。</p>
 <ul>
 <li><p>有一个当前状态 <code>pre</code> </p>
@@ -291,7 +274,7 @@
 
 <hr>
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>先贴一段我第一次写时的代码，用的是暴力模拟，写半天自己都写晕了，到后面变量名字都开始乱七八糟了，因为不能一次性考虑到所有细节， 所以根据WA给的测试用例缝缝补补勉强通过。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="type">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="keyword">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>而使用有限状态自动机就可以让代码非常清晰。我们可以定义如下的状态：</p>
 <img src="https://cyclohexatriene.github.io/images/FSM.png" width=500 />
@@ -299,7 +282,7 @@
 <center><font size="2">图源：LeetCode @Krahets 前辈的题解</font></center>
 
 <p>在代码中，我们使用数组+字典来储存上图。只有退出后的状态为 <code>2/3/7/8</code> 中的一个时，我们才认为输入的字符串为合法的数值。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        stringstream ss;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        vector&lt;unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&gt; states = &#123;</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">0</span>&#125;,&#123; <span class="string">&#x27;s&#x27;</span>, <span class="number">1</span>&#125;,&#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;, &#123;<span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125; ,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;s&#x27;</span>, <span class="number">6</span>&#125;, &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="type">int</span> pre = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (ss.<span class="built_in">peek</span>() != <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="type">char</span> c = ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="type">char</span> cur;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&#x27;0&#x27;</span> &lt;= c &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) cur = <span class="string">&#x27;d&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>) cur = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;e&#x27;</span> || c == <span class="string">&#x27;E&#x27;</span>) cur = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;.&#x27;</span> || c == <span class="string">&#x27; &#x27;</span>) cur = c;</span><br><span class="line">            <span class="keyword">else</span> cur = <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (states[pre].<span class="built_in">count</span>(cur) &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            pre = states[pre][cur];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre == <span class="number">2</span> || pre == <span class="number">3</span> || pre == <span class="number">7</span> || pre == <span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        stringstream ss;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        vector&lt;unordered_map&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt;&gt; states = &#123;</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">0</span>&#125;,&#123; <span class="string">&#x27;s&#x27;</span>, <span class="number">1</span>&#125;,&#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;, &#123;<span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125; ,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;s&#x27;</span>, <span class="number">6</span>&#125;, &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (ss.<span class="built_in">peek</span>() != <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">char</span> cur;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&#x27;0&#x27;</span> &lt;= c &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) cur = <span class="string">&#x27;d&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>) cur = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;e&#x27;</span> || c == <span class="string">&#x27;E&#x27;</span>) cur = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;.&#x27;</span> || c == <span class="string">&#x27; &#x27;</span>) cur = c;</span><br><span class="line">            <span class="keyword">else</span> cur = <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (states[pre].<span class="built_in">count</span>(cur) &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            pre = states[pre][cur];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre == <span class="number">2</span> || pre == <span class="number">3</span> || pre == <span class="number">7</span> || pre == <span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="天才操作"><a href="#天才操作" class="headerlink" title="天才操作"></a>天才操作</h2><p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
@@ -319,39 +302,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/07/26/%E8%B7%B3%E8%A1%A8/" rel="prev" title="跳表">
-                  <i class="fa fa-chevron-left"></i> 跳表
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/09/12/%E6%AF%8F%E6%97%A5Hard-Day-1/" rel="next" title="每日Hard - Day 1">
-                  每日Hard - Day 1 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/26/%E8%B7%B3%E8%A1%A8/" rel="prev" title="跳表">
+      <i class="fa fa-chevron-left"></i> 跳表
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/12/%E6%AF%8F%E6%97%A5Hard-Day-1/" rel="next" title="每日Hard - Day 1">
+      每日Hard - Day 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-20-%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">剑指 Offer 20. 表示数值的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">示例 4：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E6%89%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">天才操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%A6%81%E6%9D%A5%E6%8A%A5%E5%88%B0%E4%BA%86"><span class="nav-number">4.2.</span> <span class="nav-text">新生要来报到了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Neck-Deep-Serpent%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">没事听点歌（Neck Deep - Serpent）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -359,15 +425,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -375,24 +465,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 

@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="概述没什么好说的，直接看题吧。  例题 1先来道简单的热热身。 LeetCode 713. 乘积小于 K 的子数组给你一个整数数组 nums 和一个整数 k ，请你返回子数组内所有元素的乘积严格小于 k 的连续子数组的数目。 示例 1：1234输入：nums &#x3D; [10,5,2,6], k &#x3D; 100输出：8解释：8 个乘积小于 100 的子数组分别为：[10]、[5]、[2],、[6]、[10,">
+  <meta name="description" content="概述没什么好说的，直接看题吧。  例题 1先来道简单的热热身。 LeetCode 713. 乘积小于 K 的子数组给你一个整数数组 nums 和一个整数 k ，请你返回子数组内所有元素的乘积严格小于 k 的连续子数组的数目。 示例 1：1234输入：nums &#x3D; [10,5,2,6], k &#x3D; 100输出：8解释：8 个乘积小于 100 的子数组分别为：[10]、[5]、[2],、[6]、[10,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="滑动窗口">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/05/05/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/index.html">
@@ -32,15 +32,20 @@
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/05/05/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/05/05/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/","path":"2022/05/05/滑动窗口/","title":"滑动窗口"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>滑动窗口 | 环己三烯的冬眠舱</title>
+  <title>滑动窗口 | 环己三烯的冬眠舱</title>
   
 
 
@@ -49,33 +54,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -86,8 +110,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -95,127 +140,63 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="nav-number">2.</span> <span class="nav-text">例题 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-713-%E4%B9%98%E7%A7%AF%E5%B0%8F%E4%BA%8E-K-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 713. 乘积小于 K 的子数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">3.</span> <span class="nav-text">题解 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.0.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98-2"><span class="nav-number">4.</span> <span class="nav-text">例题 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-30-%E4%B8%B2%E8%81%94%E6%89%80%E6%9C%89%E5%8D%95%E8%AF%8D%E7%9A%84%E5%AD%90%E4%B8%B2"><span class="nav-number">4.1.</span> <span class="nav-text">LeetCode 30. 串联所有单词的子串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">4.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">4.1.3.</span> <span class="nav-text">示例 3：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-number">5.</span> <span class="nav-text">题解 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="nav-number">5.0.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">6.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%98%E7%A3%A8%E6%B0%B8%E5%AD%98"><span class="nav-number">6.1.</span> <span class="nav-text">折磨永存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%8A%91%E4%BA%91%EF%BC%88%E5%AD%99%E7%87%95%E5%A7%BF-%E6%88%91%E6%80%80%E5%BF%B5%E7%9A%84%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">网抑云（孙燕姿 - 我怀念的）</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/05/05/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="滑动窗口 | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           滑动窗口
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-05 21:09:44" itemprop="dateCreated datePublished" datetime="2022-05-05T21:09:44+08:00">2022-05-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-08 19:33:35" itemprop="dateModified" datetime="2022-10-08T19:33:35+08:00">2022-10-08</time>
-    </span>
+              <time title="创建时间：2022-05-05 21:09:44" itemprop="dateCreated datePublished" datetime="2022-05-05T21:09:44+08:00">2022-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:33:35" itemprop="dateModified" datetime="2022-10-08T19:33:35+08:00">2022-10-08</time>
+              </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -224,6 +205,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>没什么好说的，直接看题吧。</p>
 <hr>
 <h1 id="例题-1"><a href="#例题-1" class="headerlink" title="例题 1"></a>例题 1</h1><p>先来道简单的热热身。</p>
@@ -235,7 +218,7 @@
 <hr>
 <h1 id="题解-1"><a href="#题解-1" class="headerlink" title="题解 1"></a>题解 1</h1><p>一开始还以为子数组的定义是中间可以间断的，比如示例 1中 <code>[10,2]</code> 也可以算一个答案，于是第一反应是二进制枚举法，一看数据范围最大有 <code>10⁴</code> 个元素，于是就放弃了。后面看了半天题解才反应过来，原来必须是连续的元素才能叫子数组，太坑了！</p>
 <p>既然必须是连续的元素，那就可以用滑动窗口来枚举。每轮循环窗口右边界向右移动，再一边判断一边把左边界向右移动，得到乘积小于目标值的最大子数组，再进一步计算就可以得到当前右边界下满足条件的子数组数量。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">numSubarrayProductLessThanK</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> l=<span class="number">0</span>;<span class="type">int</span> r=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> n=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> sum=<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(r;r&lt;n;r++)&#123; <span class="comment">//每轮循环将右边界往右滑动一个单位</span></span><br><span class="line">            sum*=nums[r];</span><br><span class="line">            <span class="keyword">while</span>(l&lt;=r &amp;&amp; sum&gt;=k)&#123; <span class="comment">//依据当前右边界滑动左边界</span></span><br><span class="line">                sum/=nums[l];</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            res+=r-l+<span class="number">1</span>; <span class="comment">//比当前子数组小的都满足条件</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSubarrayProductLessThanK</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>;<span class="keyword">int</span> r=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> sum=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(r;r&lt;n;r++)&#123; <span class="comment">//每轮循环将右边界往右滑动一个单位</span></span><br><span class="line">            sum*=nums[r];</span><br><span class="line">            <span class="keyword">while</span>(l&lt;=r &amp;&amp; sum&gt;=k)&#123; <span class="comment">//依据当前右边界滑动左边界</span></span><br><span class="line">                sum/=nums[l];</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            res+=r-l+<span class="number">1</span>; <span class="comment">//比当前子数组小的都满足条件</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="例题-2"><a href="#例题-2" class="headerlink" title="例题 2"></a>例题 2</h1><p>再来一道“稍微”难一点的，其实写起来也差不太多，只是题目绕了点。</p>
@@ -250,7 +233,7 @@
 <hr>
 <h1 id="题解-2"><a href="#题解-2" class="headerlink" title="题解 2"></a>题解 2</h1><p>由于题目说 <code>words</code> 里的单词长度都是相同的（记为<code>len</code> ），那么我们就可以每次滑动 <code>len</code> 的距离。考虑到 <code>s</code> 中的单词不一定是整倍整倍出现的，比如 <code>s=&quot;aababab&quot;</code> ，<code>words=[&quot;ab&quot;,&quot;ab&quot;,&quot;ab&quot;]</code> 如果只从 <code>0</code> 开始构建移动窗口的话会刚好错过全部的 <code>ab</code> 。所以我们应该把 <code>[0,len]</code> 中的全部数都做一遍开头。</p>
 <p>另外一个小tips就是因为题目里是不考虑 <code>words</code> 中元素出现的顺序的，所以可以直接使用哈希表计数，方便统计。</p>
-<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findSubstring</span><span class="params">(string s, vector&lt;string&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> len=words[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> n=s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> limit=words.<span class="built_in">size</span>()*len; <span class="comment">//窗口长度。此处为定长，上面那题是变长。</span></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        unordered_map&lt;string,<span class="type">int</span>&gt; need;</span><br><span class="line">        <span class="keyword">for</span>(string i : words) need[i]++;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123; <span class="comment">//[0,len）每个都当一次开头，避免有单词被拦腰截断。</span></span><br><span class="line">            <span class="type">int</span> l=i; <span class="type">int</span> r=i;</span><br><span class="line">            <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">            unordered_map&lt;string,<span class="type">int</span>&gt; window;</span><br><span class="line">            <span class="keyword">while</span>(r&lt;n)&#123;</span><br><span class="line">                string rightstr=s.<span class="built_in">substr</span>(r,len);</span><br><span class="line">                <span class="keyword">if</span>(need.<span class="built_in">count</span>(rightstr)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                    window[rightstr]++;</span><br><span class="line">                    <span class="keyword">if</span>(window[rightstr]==need[rightstr]) cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">                r+=len;</span><br><span class="line">                <span class="keyword">if</span>(r-l&gt;limit)&#123;</span><br><span class="line">                    string leftstr=s.<span class="built_in">substr</span>(l,len);</span><br><span class="line">                    <span class="keyword">if</span>(need.<span class="built_in">count</span>(leftstr)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(window[leftstr]==need[leftstr]) cnt--;</span><br><span class="line">                        window[leftstr]--; <span class="comment">//先判断是否相等再减。</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    l+=len;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(r-l==limit &amp;&amp; cnt==need.<span class="built_in">size</span>())&#123;</span><br><span class="line">                    res.<span class="built_in">push_back</span>(l);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">findSubstring</span><span class="params">(string s, vector&lt;string&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len=words[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> n=s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">int</span> limit=words.<span class="built_in">size</span>()*len; <span class="comment">//窗口长度。此处为定长，上面那题是变长。</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        unordered_map&lt;string,<span class="keyword">int</span>&gt; need;</span><br><span class="line">        <span class="keyword">for</span>(string i : words) need[i]++;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123; <span class="comment">//[0,len）每个都当一次开头，避免有单词被拦腰截断。</span></span><br><span class="line">            <span class="keyword">int</span> l=i; <span class="keyword">int</span> r=i;</span><br><span class="line">            <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">            unordered_map&lt;string,<span class="keyword">int</span>&gt; window;</span><br><span class="line">            <span class="keyword">while</span>(r&lt;n)&#123;</span><br><span class="line">                string rightstr=s.<span class="built_in">substr</span>(r,len);</span><br><span class="line">                <span class="keyword">if</span>(need.<span class="built_in">count</span>(rightstr)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                    window[rightstr]++;</span><br><span class="line">                    <span class="keyword">if</span>(window[rightstr]==need[rightstr]) cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">                r+=len;</span><br><span class="line">                <span class="keyword">if</span>(r-l&gt;limit)&#123;</span><br><span class="line">                    string leftstr=s.<span class="built_in">substr</span>(l,len);</span><br><span class="line">                    <span class="keyword">if</span>(need.<span class="built_in">count</span>(leftstr)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(window[leftstr]==need[leftstr]) cnt--;</span><br><span class="line">                        window[leftstr]--; <span class="comment">//先判断是否相等再减。</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    l+=len;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(r-l==limit &amp;&amp; cnt==need.<span class="built_in">size</span>())&#123;</span><br><span class="line">                    res.<span class="built_in">push_back</span>(l);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="折磨永存"><a href="#折磨永存" class="headerlink" title="折磨永存"></a>折磨永存</h2><p>从那天开始我就陷入了没有尽头的等待。我还清晰地记得中考那天，因为我已经可以去缙中了可以随便考考，于是慷慨地把手表借给了同学。考场没有闹钟（其实有，但是在教室后面，怕被打成作弊不敢回头看），忘了考的什么科目了，反正我早早地写完了题目，也不知道还剩多久时间，就在教室里干等，那简直是我记忆中最漫长的等待。现在的情况比那个时候更糟，因为那个时候我还知道等待一定是有尽头的，考试是会结束的，而现在我不知道要等多久，不知道等待有没有尽头，想放弃又怕万一再坚持一下下就可以了，而又没有足够的动力和勇气支撑我继续坚持。现在的我只是逃避接受现实所以一直在拖延罢了。情感生活上我从来就不是一个洒脱的人，在认识到这一点之后就愈发不敢轻易地对一个人动心了。</p>
@@ -268,39 +251,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/04/28/LFU-%E7%BC%93%E5%AD%98/" rel="prev" title="LFU 缓存">
-                  <i class="fa fa-chevron-left"></i> LFU 缓存
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/05/21/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" rel="next" title="状态压缩">
-                  状态压缩 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/28/LFU-%E7%BC%93%E5%AD%98/" rel="prev" title="LFU 缓存">
+      <i class="fa fa-chevron-left"></i> LFU 缓存
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/21/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" rel="next" title="状态压缩">
+      状态压缩 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="nav-number">2.</span> <span class="nav-text">例题 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-713-%E4%B9%98%E7%A7%AF%E5%B0%8F%E4%BA%8E-K-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 713. 乘积小于 K 的子数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="nav-number">3.</span> <span class="nav-text">题解 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.0.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98-2"><span class="nav-number">4.</span> <span class="nav-text">例题 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-30-%E4%B8%B2%E8%81%94%E6%89%80%E6%9C%89%E5%8D%95%E8%AF%8D%E7%9A%84%E5%AD%90%E4%B8%B2"><span class="nav-number">4.1.</span> <span class="nav-text">LeetCode 30. 串联所有单词的子串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">4.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">4.1.3.</span> <span class="nav-text">示例 3：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="nav-number">5.</span> <span class="nav-text">题解 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="nav-number">5.0.1.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">6.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%98%E7%A3%A8%E6%B0%B8%E5%AD%98"><span class="nav-number">6.1.</span> <span class="nav-text">折磨永存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%8A%91%E4%BA%91%EF%BC%88%E5%AD%99%E7%87%95%E5%A7%BF-%E6%88%91%E6%80%80%E5%BF%B5%E7%9A%84%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">网抑云（孙燕姿 - 我怀念的）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -308,15 +374,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -324,24 +414,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/05/05/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 

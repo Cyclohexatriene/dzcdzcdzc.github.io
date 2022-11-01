@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="概述哈希化是一种常见的数据存储方式，可以把一堆数据存到一起，并在O(1)复杂度下检索其中的任意一项。而对于字符串来说，普通的unordered_set&lt;string&gt;在哈希的时候会对整个字符串进行遍历，今天做到的这道题会因此TLE。 在需要对某个字符串的子字符串进行哈希时，可以对整个字符串进行一个预处理，使后续的哈希从伪O(1)实O(n)降低为真正的O(1)。  原理字符串哈希将整个字">
+  <meta name="description" content="概述哈希化是一种常见的数据存储方式，可以把一堆数据存到一起，并在O(1)复杂度下检索其中的任意一项。而对于字符串来说，普通的unordered_set&lt;string&gt;在哈希的时候会对整个字符串进行遍历，今天做到的这道题会因此TLE。 在需要对某个字符串的子字符串进行哈希时，可以对整个字符串进行一个预处理，使后续的哈希从伪O(1)实O(n)降低为真正的O(1)。  原理字符串哈希将整个字">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符串哈希">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/index.html">
@@ -32,15 +32,20 @@
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/","path":"2022/09/22/字符串哈希/","title":"字符串哈希"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>字符串哈希 | 环己三烯的冬眠舱</title>
+  <title>字符串哈希 | 环己三烯的冬眠舱</title>
   
 
 
@@ -49,33 +54,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -86,8 +110,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -95,127 +140,63 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-1044-%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 1044. 最长重复子串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E4%B8%8D%E6%89%8D-%E5%A4%9C%E8%88%AA%E6%98%9F"><span class="nav-number">5.1.</span> <span class="nav-text">没事听点歌（不才 - 夜航星)</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="字符串哈希 | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           字符串哈希
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-09-22 19:50:04" itemprop="dateCreated datePublished" datetime="2022-09-22T19:50:04+08:00">2022-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-08 19:37:52" itemprop="dateModified" datetime="2022-10-08T19:37:52+08:00">2022-10-08</time>
-    </span>
+              <time title="创建时间：2022-09-22 19:50:04" itemprop="dateCreated datePublished" datetime="2022-09-22T19:50:04+08:00">2022-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:37:52" itemprop="dateModified" datetime="2022-10-08T19:37:52+08:00">2022-10-08</time>
+              </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -224,6 +205,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>哈希化是一种常见的数据存储方式，可以把一堆数据存到一起，并在<code>O(1)</code>复杂度下检索其中的任意一项。而对于字符串来说，普通的<code>unordered_set&lt;string&gt;</code>在哈希的时候会对整个字符串进行遍历，今天做到的这道题会因此TLE。</p>
 <p>在需要对某个字符串的子字符串进行哈希时，可以对整个字符串进行一个预处理，使后续的哈希从伪<code>O(1)</code>实<code>O(n)</code>降低为真正的<code>O(1)</code>。</p>
 <hr>
@@ -241,7 +224,7 @@
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>刚看到这道题的时候就傻眼了，除了暴力想不到什么可行的办法。一看评论区，<code>&quot;温馨提示, 今天这个打卡题出自136场周赛第四题, 当时国服只有6个人做出来，所以不会做很正常哦&quot;</code>，原来大家都不会做，那我就放心了呀！</p>
 <p>不过其实知道怎么做之后，这题还是没那么难的。虽然本题暴力验证每一个长度的子字符串存不存在重复非常的蠢，但是有了字符串哈希的技巧，验证其中某一个长度的子字符串存不存在重复却可以在<code>O(n)</code>的时间复杂度下完成。而且出现重复的可能性是单调递减的， 即待验证的子字符串长度越长，子字符串出现重复的可能性越小。所以我们可以对答案空间进行二分搜索，免去了大量的无用功。虽然不是第一次见这种技巧了，但有时就差这么tingle一下，想不到可以这么解。</p>
 <p>还有一个技巧就是使用<code>unsigned long long</code>来储存哈希值，这样超过了<code>2^64</code>的时候就会自动取模，省的再做大数处理。（回忆起了周赛做了一个小时大数处理没做出来的恐惧[ac01]）</p>
-<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; h;</span><br><span class="line">    vector&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; p;</span><br><span class="line">    <span class="function"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="title">getHash</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h[r] - h[l - <span class="number">1</span>] * p[r - l + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">longestDupSubstring</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> l = <span class="number">0</span>; <span class="type">int</span> r = n - <span class="number">1</span>;</span><br><span class="line">        <span class="type">const</span> <span class="type">int</span> base = <span class="number">1331</span>;</span><br><span class="line">        h.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        h[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            h[i] = h[i - <span class="number">1</span>] * base + s[i - <span class="number">1</span>] - <span class="string">&#x27;a&#x27;</span> + <span class="number">1</span>;</span><br><span class="line">            p[i] = p[i - <span class="number">1</span>] * base;</span><br><span class="line">        &#125;</span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="type">int</span> len = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            unordered_set&lt;<span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>&gt; set;</span><br><span class="line">            <span class="type">bool</span> find = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - len + <span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> hash = <span class="built_in">getHash</span>(i + <span class="number">1</span>, i + len);</span><br><span class="line">                <span class="keyword">if</span> (set.<span class="built_in">count</span>(hash)) &#123;</span><br><span class="line">                    find = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">if</span> (len &gt; res.<span class="built_in">length</span>()) res = s.<span class="built_in">substr</span>(i, len);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                set.<span class="built_in">insert</span>(hash);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (find) l = len + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (l == r) <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span> r = len;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>&gt; h;</span><br><span class="line">    vector&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>&gt; p;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">getHash</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h[r] - h[l - <span class="number">1</span>] * p[r - l + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">longestDupSubstring</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>; <span class="keyword">int</span> r = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> base = <span class="number">1331</span>;</span><br><span class="line">        h.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">        p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        h[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            h[i] = h[i - <span class="number">1</span>] * base + s[i - <span class="number">1</span>] - <span class="string">&#x27;a&#x27;</span> + <span class="number">1</span>;</span><br><span class="line">            p[i] = p[i - <span class="number">1</span>] * base;</span><br><span class="line">        &#125;</span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">int</span> len = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            unordered_set&lt;<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>&gt; set;</span><br><span class="line">            <span class="keyword">bool</span> find = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - len + <span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> hash = <span class="built_in">getHash</span>(i + <span class="number">1</span>, i + len);</span><br><span class="line">                <span class="keyword">if</span> (set.<span class="built_in">count</span>(hash)) &#123;</span><br><span class="line">                    find = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">if</span> (len &gt; res.<span class="built_in">length</span>()) res = s.<span class="built_in">substr</span>(i, len);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                set.<span class="built_in">insert</span>(hash);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (find) l = len + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (l == r) <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">else</span> r = len;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="没事听点歌（不才-夜航星"><a href="#没事听点歌（不才-夜航星" class="headerlink" title="没事听点歌（不才 - 夜航星)"></a>没事听点歌（不才 - 夜航星)</h2><audio controls>
@@ -255,39 +238,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/09/18/%E6%AF%8F%E6%97%A5Hard-Day-6/" rel="prev" title="每日Hard - Day 6">
-                  <i class="fa fa-chevron-left"></i> 每日Hard - Day 6
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/09/23/%E6%AF%8F%E6%97%A5Hard-Day-7/" rel="next" title="每日Hard - Day 7">
-                  每日Hard - Day 7 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/18/%E6%AF%8F%E6%97%A5Hard-Day-6/" rel="prev" title="每日Hard - Day 6">
+      <i class="fa fa-chevron-left"></i> 每日Hard - Day 6
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/23/%E6%AF%8F%E6%97%A5Hard-Day-7/" rel="next" title="每日Hard - Day 7">
+      每日Hard - Day 7 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-1044-%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 1044. 最长重复子串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E4%B8%8D%E6%89%8D-%E5%A4%9C%E8%88%AA%E6%98%9F"><span class="nav-number">5.1.</span> <span class="nav-text">没事听点歌（不才 - 夜航星)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -295,15 +361,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -311,24 +401,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/09/22/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 

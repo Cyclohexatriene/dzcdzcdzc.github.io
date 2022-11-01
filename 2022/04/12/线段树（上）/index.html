@@ -2,10 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -14,13 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyclohexatriene.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-
-    <meta name="description" content="概述线段树是树状数组的进阶版。说是进阶版，其实效率并没有提高，只是泛用性更广。线段树支持高效的单点查询、单点修改、区间查询、区间修改，但是代码比树状数组更复杂，所以只有迫不得已的时候才写线段树。 线段树就是一层一层地将原数据相加合并，最后形成一棵树的数据结构。用语言可能难以描述，但是看图就懂了：   如此组织数据，就可以将区间查询的时间复杂度降低到 O(log n) ，而单点查询、单点修改的时间复">
+  <meta name="description" content="概述线段树是树状数组的进阶版。说是进阶版，其实效率并没有提高，只是泛用性更广。线段树支持高效的单点查询、单点修改、区间查询、区间修改，但是代码比树状数组更复杂，所以只有迫不得已的时候才写线段树。 线段树就是一层一层地将原数据相加合并，最后形成一棵树的数据结构。用语言可能难以描述，但是看图就懂了：   如此组织数据，就可以将区间查询的时间复杂度降低到 O(log n) ，而单点查询、单点修改的时间复">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线段树（上）">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
@@ -34,15 +34,20 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/04/12/74f30d4cfd73e415.png">
 
-
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"http://cyclohexatriene.github.io/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/","path":"2022/04/12/线段树（上）/","title":"线段树（上）"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>线段树（上） | 环己三烯的冬眠舱</title>
+  <title>线段树（上） | 环己三烯的冬眠舱</title>
   
 
 
@@ -51,33 +56,52 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">环己三烯的冬眠舱</p>
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
-
   </div>
 
   <div class="site-nav-right">
@@ -88,8 +112,29 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li><li class="menu-item menu-item-comment-board"><a href="/comment-board" rel="section">留言板</a></li>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -97,127 +142,63 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-number">2.2.</span> <span class="nav-text">构建线段树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%88%E4%BD%8E%E9%85%8D%E7%89%88%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">修改（低配版）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-1109-%E8%88%AA%E7%8F%AD%E9%A2%84%E8%AE%A2%E7%BB%9F%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 1109. 航班预订统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%80%83%E8%AF%95%E4%B8%AD%E6%89%8D%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%9C%E8%A5%BF"><span class="nav-number">5.1.</span> <span class="nav-text">在考试中才学到的一些东西</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E9%A3%9E%E5%84%BF%E4%B9%90%E5%9B%A2-%E6%9C%88%E7%89%99%E6%B9%BE%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">没事听点歌（飞儿乐团 - 月牙湾）</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="环己三烯"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">环己三烯</p>
-  <div class="site-description" itemprop="description">万里长征人未还</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="环己三烯的冬眠舱">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="线段树（上） | 环己三烯的冬眠舱">
-      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           线段树（上）
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-04-12 22:37:03" itemprop="dateCreated datePublished" datetime="2022-04-12T22:37:03+08:00">2022-04-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-08 19:36:24" itemprop="dateModified" datetime="2022-10-08T19:36:24+08:00">2022-10-08</time>
-    </span>
+              <time title="创建时间：2022-04-12 22:37:03" itemprop="dateCreated datePublished" datetime="2022-04-12T22:37:03+08:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:36:24" itemprop="dateModified" datetime="2022-10-08T19:36:24+08:00">2022-10-08</time>
+              </span>
 
+          
   
   
-  
-</div>
 
         </div>
       </header>
@@ -226,6 +207,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>线段树是树状数组的进阶版。说是进阶版，其实效率并没有提高，只是泛用性更广。线段树支持高效的单点查询、单点修改、区间查询、区间修改，但是代码比树状数组更复杂，所以只有迫不得已的时候才写线段树。</p>
 <p>线段树就是一层一层地将原数据相加合并，最后形成一棵树的数据结构。用语言可能难以描述，但是看图就懂了：</p>
 <img title="" src="https://s3.bmp.ovh/imgs/2022/04/12/74f30d4cfd73e415.png" alt="" align="center" width="349">
@@ -234,13 +217,13 @@
 <p><strong>做题时发现的一个缺点：由于要存储所以数据加起来的和，所以在数据较大时可能溢出。</strong></p>
 <hr>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>由于线段树是类似完美二叉树的形式，所以我们可以使用数组来存储整棵树。对于某个下标为 <code>root</code> 的节点，它的左孩子节点下标为 <code>root*2</code> ，右孩子节点下边为 <code>root*2+1</code> 。由于我们需要在原数组的基础上多储存若干个节点的和，所以线段树需要使用数倍于原数组的空间。一般上来说，我们在初始化线段树时，预留 <code>3 ~ 4</code> 倍于原数组的储存空间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">tree</span><span class="params">(n*<span class="number">4</span>,<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">tree</span><span class="params">(n*<span class="number">4</span>,<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">buildtree</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] = num[start];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//递归地创建左右子树</span></span><br><span class="line">    <span class="built_in">buildtree</span>(leftroot,start,mid);</span><br><span class="line">    <span class="built_in">buildtree</span>(rightroot,mid+<span class="number">1</span>,end);</span><br><span class="line">    <span class="comment">//左右子树创建完毕，根据左右子树根节点的值给当前的根赋值</span></span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="构建线段树"><a href="#构建线段树" class="headerlink" title="构建线段树"></a>构建线段树</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">buildtree</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] = num[start];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//递归地创建左右子树</span></span><br><span class="line">    <span class="built_in">buildtree</span>(leftroot,start,mid);</span><br><span class="line">    <span class="built_in">buildtree</span>(rightroot,mid+<span class="number">1</span>,end);</span><br><span class="line">    <span class="comment">//左右子树创建完毕，根据左右子树根节点的值给当前的根赋值</span></span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询[l,r]区间的和。当l==r时即为单点查询。</span></span><br><span class="line">    <span class="keyword">if</span>(l &lt;= start &amp;&amp; r &gt;= end) <span class="keyword">return</span> tree[root];</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) sum += <span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) sum += <span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询[l,r]区间的和。当l==r时即为单点查询。</span></span><br><span class="line">    <span class="keyword">if</span>(l &lt;= start &amp;&amp; r &gt;= end) <span class="keyword">return</span> tree[root];</span><br><span class="line">    <span class="keyword">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) sum += <span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) sum += <span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="修改（低配版）"><a href="#修改（低配版）" class="headerlink" title="修改（低配版）"></a>修改（低配版）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//将区间[l,r]内全部元素加上k。当l==r时即为单点修改。</span></span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] += k;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改（低配版）"><a href="#修改（低配版）" class="headerlink" title="修改（低配版）"></a>修改（低配版）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//将区间[l,r]内全部元素加上k。当l==r时即为单点修改。</span></span><br><span class="line">    <span class="keyword">if</span>(start == end)&#123;</span><br><span class="line">        tree[root] += k;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> leftroot = root * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> rightroot = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &lt;= mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">    <span class="keyword">if</span>(r &gt; mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">    tree[root] = tree[leftroot] + tree[rightroot];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-1109-航班预订统计"><a href="#LeetCode-1109-航班预订统计" class="headerlink" title="LeetCode 1109. 航班预订统计"></a>LeetCode 1109. 航班预订统计</h2><p>这里有 <code>n</code> 个航班，它们分别从 <code>1</code> 到 <code>n</code> 进行编号。</p>
@@ -253,7 +236,7 @@
 <hr>
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>本题最合适的解法是差分数组（区间修改、单点查询）。但是也可以用线段树（虽然有些杀鸡用牛刀）。</p>
 <p><strong>注意：真正使用线段树的方法解出本题还需要线段树的进阶写法（Lazy Tag，懒标记），我将会在《线段树（下）》中介绍 <del>（如果你还看不到这篇文章，说明我还没写）</del>。以下提供的代码只可以通过约三分之二的测试用例，剩余会超时，原因是目前使用的区间修改方法时间复杂度很高（如果没算错的话，应该是 <code>O(nlog n)</code> ，还没真正达到 <code>O(log n)</code> 的级别。</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">long</span> <span class="type">long</span>&gt; tree;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=start &amp;&amp; r&gt;=end) <span class="keyword">return</span> tree[root];</span><br><span class="line">        <span class="type">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) sum+=<span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) sum+=<span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start==end)&#123;</span><br><span class="line">            tree[root]+=k;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">        tree[root]=tree[leftroot]+tree[rightroot];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">corpFlightBookings</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; bookings, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        tree.<span class="built_in">resize</span>(<span class="number">4</span>*n,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;bookings.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>,<span class="number">1</span>,n,bookings[i][<span class="number">0</span>],bookings[i][<span class="number">1</span>],bookings[i][<span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(<span class="built_in">query</span>(<span class="number">1</span>,<span class="number">1</span>,n,i,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt; tree;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=start &amp;&amp; r&gt;=end) <span class="keyword">return</span> tree[root];</span><br><span class="line">        <span class="keyword">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) sum+=<span class="built_in">query</span>(leftroot,start,mid,l,r);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) sum+=<span class="built_in">query</span>(rightroot,mid+<span class="number">1</span>,end,l,r);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start==end)&#123;</span><br><span class="line">            tree[root]+=k;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> leftroot=root*<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> rightroot=root*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid) <span class="built_in">update</span>(leftroot,start,mid,l,r,k);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid) <span class="built_in">update</span>(rightroot,mid+<span class="number">1</span>,end,l,r,k);</span><br><span class="line">        tree[root]=tree[leftroot]+tree[rightroot];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">corpFlightBookings</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; bookings, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        tree.<span class="built_in">resize</span>(<span class="number">4</span>*n,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;bookings.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>,<span class="number">1</span>,n,bookings[i][<span class="number">0</span>],bookings[i][<span class="number">1</span>],bookings[i][<span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(<span class="built_in">query</span>(<span class="number">1</span>,<span class="number">1</span>,n,i,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="在考试中才学到的一些东西"><a href="#在考试中才学到的一些东西" class="headerlink" title="在考试中才学到的一些东西"></a>在考试中才学到的一些东西</h2><p>昨天晚上考了《诗歌与哲学》这门课的结课考试，就两道题，都跟尼采有关。老师讲了一个学期的尼采，可惜我一个字没听，考到一半才意识到原来尼采不是古希腊的人。翻了半天书，看不太懂，但是看到了一段文字：</p>
@@ -272,39 +255,122 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/04/10/LCS%E9%97%AE%E9%A2%98%E5%92%8CLIS%E9%97%AE%E9%A2%98/" rel="prev" title="LCS问题和LIS问题">
-                  <i class="fa fa-chevron-left"></i> LCS问题和LIS问题
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/04/19/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/" rel="next" title="线段树（下）">
-                  线段树（下） <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/10/LCS%E9%97%AE%E9%A2%98%E5%92%8CLIS%E9%97%AE%E9%A2%98/" rel="prev" title="LCS问题和LIS问题">
+      <i class="fa fa-chevron-left"></i> LCS问题和LIS问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/19/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8B%EF%BC%89/" rel="next" title="线段树（下）">
+      线段树（下） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-number">2.2.</span> <span class="nav-text">构建线段树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.3.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%88%E4%BD%8E%E9%85%8D%E7%89%88%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">修改（低配版）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-1109-%E8%88%AA%E7%8F%AD%E9%A2%84%E8%AE%A2%E7%BB%9F%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">LeetCode 1109. 航班预订统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例 1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">3.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%80%83%E8%AF%95%E4%B8%AD%E6%89%8D%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%9C%E8%A5%BF"><span class="nav-number">5.1.</span> <span class="nav-text">在考试中才学到的一些东西</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88%E9%A3%9E%E5%84%BF%E4%B9%90%E5%9B%A2-%E6%9C%88%E7%89%99%E6%B9%BE%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">没事听点歌（飞儿乐团 - 月牙湾）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-</div>
-  </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-  <footer class="footer">
-    <div class="footer-inner">
-
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
@@ -312,15 +378,39 @@
   </span>
   <span class="author" itemprop="copyrightHolder">环己三烯</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -328,24 +418,46 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+  
+
   
 
 
-
-
-
-
-<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va","appKey":"J83xwqE3YCKgWOy0dIBrad1s","serverURLs":"https://ussnta9g.api.lncldglobal.com","placeholder":"莫西莫西？","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":false,"recordIP":true,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/04/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%EF%BC%88%E4%B8%8A%EF%BC%89/"}</script>
 <script>
-document.addEventListener('page:loaded', () => {
-  NexT.utils.loadComments(CONFIG.valine.el)
-    .then(() => NexT.utils.getScript(
-      'https://fastly.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js',
-      { condition: window.Valine }
-    ))
-    .then(() => {
-      new Valine(CONFIG.valine);
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
     });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
 });
 </script>
 
