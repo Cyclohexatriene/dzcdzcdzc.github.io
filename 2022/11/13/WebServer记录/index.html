@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="好久没来更新了，从上次更新到现在忙了很多事情，而且忙了半天也不知道自己忙了些啥，很丧。做的为数不多的比较扎实的事情就是仿照着GitHub上的开源项目写了一个WebServer，目前已经完成了一个可以传输静态页面的Demo，还需要优化以及添加一些别的功能。先记录一下，免得以后忘了。  基本框架程序采用的是“半同步半反应堆式”的线程池，也就是：  主线程负责监听文件描述符上发生的事件，并针对事件进行I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebServer记录">
+<meta property="og:url" content="http://cyclohexatriene.github.io/2022/11/13/WebServer%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="环己三烯的冬眠舱">
+<meta property="og:description" content="好久没来更新了，从上次更新到现在忙了很多事情，而且忙了半天也不知道自己忙了些啥，很丧。做的为数不多的比较扎实的事情就是仿照着GitHub上的开源项目写了一个WebServer，目前已经完成了一个可以传输静态页面的Demo，还需要优化以及添加一些别的功能。先记录一下，免得以后忘了。  基本框架程序采用的是“半同步半反应堆式”的线程池，也就是：  主线程负责监听文件描述符上发生的事件，并针对事件进行I">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-13T06:37:00.000Z">
+<meta property="article:modified_time" content="2022-11-13T08:05:05.875Z">
+<meta property="article:author" content="环己三烯">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://cyclohexatriene.github.io/2022/11/13/WebServer%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WebServer记录 | 环己三烯的冬眠舱</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">环己三烯的冬眠舱</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">天天网抑云，偶尔读点书。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section">归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section">关于</a>
+
+  </li>
+        <li class="menu-item menu-item-comment-board">
+
+    <a href="/comment-board" rel="section">留言板</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/11/13/WebServer%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WebServer记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-13 14:37:00 / 修改时间：16:05:05" itemprop="dateCreated datePublished" datetime="2022-11-13T14:37:00+08:00">2022-11-13</time>
+            </span>
+
+          
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>好久没来更新了，从上次更新到现在忙了很多事情，而且忙了半天也不知道自己忙了些啥，很丧。做的为数不多的比较扎实的事情就是仿照着GitHub上的<a target="_blank" rel="noopener" href="https://github.com/qinguoyi/TinyWebServer">开源项目</a>写了一个WebServer，目前已经完成了一个可以传输静态页面的Demo，还需要优化以及添加一些别的功能。先记录一下，免得以后忘了。</p>
+<hr>
+<h1 id="基本框架"><a href="#基本框架" class="headerlink" title="基本框架"></a>基本框架</h1><p>程序采用的是“半同步半反应堆式”的线程池，也就是：</p>
+<ul>
+<li><p>主线程负责监听文件描述符上发生的事件，并针对事件进行IO。</p>
+</li>
+<li><p>子线程负责处理逻辑，解析收到的HTTP报文，准备好要发送的数据，并通知主线程可以进行IO了。</p>
+</li>
+</ul>
+<p>具体实现时，程序分为了若干个模块：线程同步模块、日志模块、MySQL连接池模块、HTTP处理模块、mmap模块、线程池模块、epoll监听模块。</p>
+<h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><p>是整个项目最简单的一部分，也是上手完成的第一个部分，就是把Linux底层提供的一些线程同步机制进行了封装，使用的时候会更加方便一些。把<code>init()</code>和<code>destroy()</code>分别写进了构造函数和析构函数，随取随用，让代码更加简洁，应该也属于所谓的<code>RAII</code>机制。</p>
+<blockquote>
+<p>RAII机制：资源获取就是初始化（Resource Acquisition Is Initialization），这是一种管理资源的方式，C++保证任何情况下，已构造的对象最终都会销毁，即它的析构函数一定会被调用。所以只要把资源的获取和释放分别封装进一个类的构造函数和析构函数，就可以保证资源不会发生“泄露”。</p>
+</blockquote>
+<h2 id="声明："><a href="#声明：" class="headerlink" title="声明："></a>声明：</h2><h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">locker</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> mutex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">locker</span>();</span><br><span class="line">    ~<span class="built_in">locker</span>();</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">lock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">unlock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">pthread_mutex_t</span>* <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">cond</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> m_cond;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">cond</span>();</span><br><span class="line">    ~<span class="built_in">cond</span>();</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wait</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">signal</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">broadcast</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sem</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">sem_t</span> m_sem;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">sem</span>();</span><br><span class="line">    <span class="built_in">sem</span>(<span class="keyword">int</span> num);</span><br><span class="line">    ~<span class="built_in">sem</span>();</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wait</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">post</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>条件变量与信号量的区别：个人理解中，信号量sem本质上是一个计数的功能，post就是让信号量加一，wait就是让信号量减一，post和wait调用先后问题不大；而条件变量cond则必须先wait再signal或broadcast，否则就会发生丢失信号的现象，特定情况下甚至会造成死锁。另外，信号量可以在进程之间共享，而条件变量只能在进程内部、线程之间共享。</p>
+</blockquote>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>日志系统实现了同步写日志和异步写日志两种模式。同步写日志就是调用了写日志函数之后就等着写完了才退出函数，异步写日志则是在日志系统中维护了一个“生产者-消费者”模型，写日志的函数只负责生产任务，而真正的写入工作则由异步线程完成。为了实现这个“生产者-消费者”模型，我编写了一个阻塞队列，就是把STL中带有的队列模板进行进一步封装，让它的每一个操作都是线程安全的。这样生产者只管push，消费者只管pop就行了。</p>
+<p>回到日志系统本身。日志类是在单例模式下编写的。所谓的单例模式，就是把这个类的构造函数和析构函数都私有化，只有类自己能调用，程序的其它部分不能创建新的对象；然后在这个类里<strong>静态地</strong>内置一个自己，保证整个程序只有这一个对象，并可通过类的<strong>静态</strong>方法来获取这个唯一对象。</p>
+<h2 id="代码摘录："><a href="#代码摘录：" class="headerlink" title="代码摘录："></a>代码摘录：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Log</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">Log</span>();</span><br><span class="line">    ~<span class="built_in">Log</span>();</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Log *<span class="title">get_instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> Log instance;</span><br><span class="line">        <span class="keyword">return</span> &amp;instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="MySQL连接池"><a href="#MySQL连接池" class="headerlink" title="MySQL连接池"></a>MySQL连接池</h1><p>由于建立和释放MySQL连接是非常消耗资源的，所以用到了临时建立连接太低效了，我们可以维护一个连接池，在初始化时建立一些连接，程序在需要时就可以直接从池里获得一个连接，用完还回来就行。同样采用单例的编写模式。连接池模块有两个类，一个是连接池本体，一个是<code>RAII</code>的接口，接口初始化时从池里获取连接，析构时自动归还。</p>
+<h2 id="连接池本体声明："><a href="#连接池本体声明：" class="headerlink" title="连接池本体声明："></a>连接池本体声明：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">connection_pool</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">connection_pool</span>();</span><br><span class="line">    ~<span class="built_in">connection_pool</span>();</span><br><span class="line">    string user;</span><br><span class="line">    string passwd;</span><br><span class="line">    string DatabaseName;</span><br><span class="line">    <span class="keyword">bool</span> close_log; <span class="comment">/* If true, the connection pool won&#x27;t write logs. */</span></span><br><span class="line">    <span class="keyword">int</span> max_conn;</span><br><span class="line">    locker m_locker;</span><br><span class="line">    list&lt;MYSQL*&gt; connList;</span><br><span class="line">    sem m_sem; <span class="comment">/* sem &gt; 0 means there is free connections. */</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> connection_pool* <span class="title">get_instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> connection_pool instance;</span><br><span class="line">        <span class="keyword">return</span> &amp;instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(string user, string password, string name, <span class="keyword">int</span> maxconn, <span class="keyword">bool</span> close_log = <span class="literal">true</span>)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function">MYSQL* <span class="title">getConnection</span><span class="params">()</span></span>; <span class="comment">/* Get a free connection from pool. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">releaseConnection</span><span class="params">(MYSQL *conn)</span></span>; <span class="comment">/* Return a connection into the pool. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">destroyPool</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="HTTP处理"><a href="#HTTP处理" class="headerlink" title="HTTP处理"></a>HTTP处理</h1><p>这个模块暂时只实现了传输静态页面，图片、文件的传输还有待研究。类里有一个<code>process()</code>函数，用于处理输入、获得待写输出。<code>process()</code>函数由线程池异步调用，处理好再通知主线程进行一个数据的写。</p>
+<h2 id="声明：-1"><a href="#声明：-1" class="headerlink" title="声明："></a>声明：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">http</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>: <span class="comment">/*private*/</span></span><br><span class="line">    <span class="keyword">char</span> state_line[<span class="number">64</span>];</span><br><span class="line">    <span class="keyword">char</span> headers[<span class="number">256</span>];</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">http</span>();</span><br><span class="line">    <span class="built_in">http</span>(<span class="keyword">char</span> pack[], <span class="keyword">int</span> fd);</span><br><span class="line">    ~<span class="built_in">http</span>();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="keyword">int</span> clntfd;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">char</span> package[<span class="number">1024</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">iovec</span> <span class="title">iov</span>[3];</span> <span class="comment">/* iov[0]: state_line; iov[1]: headers; iov[2]: resource to be got */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里用到了<code>iovec</code>，就是分布式IO，可以把需要IO的部分（用起始地址和偏移量表示）存进一个向量里，然后调用<code>readv()</code>或<code>writev()</code>一次性读写多个缓冲区，相当优雅。</p>
+<h1 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h1><p>对底层的mmap API进行了封装。mmap还没用明白，所以暂时还没用进程序里，不过理论上可以大幅度提高程序的IO性能。</p>
+<blockquote>
+<p>mmap是一种内存映射文件的方式。普通的文件读写，需要先open()，把文件在读取进操作系统内核的内存里，然后再read()和write()，将内核的内存拷贝进用户态的内存里，造成了效率的浪费；而使用mmap，则可以让内核和用户共享一块内存，省去了第二步的拷贝，更加高效。</p>
+</blockquote>
+<h2 id="声明：-2"><a href="#声明：-2" class="headerlink" title="声明："></a>声明：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mmap_file</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    <span class="keyword">void</span> *start; <span class="comment">/* The start of mmap. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mmap_file</span>();</span><br><span class="line">    <span class="built_in">mmap_file</span>(string path);</span><br><span class="line">    ~<span class="built_in">mmap_file</span>();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">openFile</span><span class="params">(string path)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span>* <span class="title">getStart</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>输入一个文件路径，获取这个文件mmap后的起始内存和偏移量。不过好像iovec不能直接用，还没来得及研究和调试。</p>
+<h1 id="线程池模块"><a href="#线程池模块" class="headerlink" title="线程池模块"></a>线程池模块</h1><p>复用了日志模块的阻塞队列，将已经完成了读操作的http对象加入到工作队列中，由线程池维护的若干个线程竞争获取任务，然后在子线程中异步地完成处理，并注册对应文件描述符上的写事件，通知主线程进行一个写。同样采用单例模式编写。</p>
+<h2 id="声明：-3"><a href="#声明：-3" class="headerlink" title="声明："></a>声明：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">threadpool</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">threadpool</span>();</span><br><span class="line">    ~<span class="built_in">threadpool</span>();</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span>* <span class="title">worker</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>; <span class="comment">/* Call process() in an infinite loop. */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">pthread_t</span>* m_threads;</span><br><span class="line">    block_queue&lt;http*&gt; workq;</span><br><span class="line">    <span class="keyword">int</span> m_thread_number;</span><br><span class="line">    sem m_sem;</span><br><span class="line">    locker m_locker;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">append</span><span class="params">(http* request)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> thread_number, <span class="keyword">int</span> max_requests)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> threadpool* <span class="title">get_instance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">static</span> threadpool instance;</span><br><span class="line">        <span class="keyword">return</span> &amp;instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="EPOLL-监听"><a href="#EPOLL-监听" class="headerlink" title="EPOLL 监听"></a>EPOLL 监听</h1><p>EPOLL是一种IO多路复用的模型，类似的模型还有SELECT和POLL，但他俩都不如EPOLL好使。在我写的项目里就以单例模式维护了一个EPOLL的监听池，封装了一些API，方便程序直接调用。</p>
+<h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>简单地理解就是在一个线程同时监听一大堆文件描述符是否有可写事件和可读事件发生，这样程序可以同时处理来自多个事件流中的事件。</p>
+<h2 id="SELECT、POLL和EPOLL的区别"><a href="#SELECT、POLL和EPOLL的区别" class="headerlink" title="SELECT、POLL和EPOLL的区别"></a>SELECT、POLL和EPOLL的区别</h2><p>最早被写出来的IO多路复用模型是SELECT，实现思路也非常耿直：就是维护一个数组，调用<code>wait()</code>的时候就去遍历一遍这个数组，看看每个文件描述符是否有事件发生，如果有的话就拎出来告诉调用者。因为用的是数组，所以监听的文件描述符数量有上限，大概是1024个。</p>
+<p>而POLL所作出的改进是用链表代替了普通的数组，突破了1024个的上限。但由于还是采用遍历的方式来判断是否有事件发生，依然是线性的复杂度。</p>
+<p>然后EPOLL就闪亮登场了。EPOLL底层维护了一棵红黑树和一个链表，红黑树用于保存文件描述符，链表用于保存已经发生了事件的文件描述符。与前两代模型不同，EPOLL不是主动地去遍历，而是给每个文件描述符设置一个“回调函数”，当有事件发生时就自动调用，把文件描述符存进链表中，这样就可以不用遍历了，调用<code>wait()</code>时只需要返回那个链表就行，时间复杂度是常量级的。</p>
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="网抑云（五月天、孙燕姿-温柔-MaydayBlue20th）"><a href="#网抑云（五月天、孙燕姿-温柔-MaydayBlue20th）" class="headerlink" title="网抑云（五月天、孙燕姿 - 温柔 #MaydayBlue20th）"></a>网抑云（五月天、孙燕姿 - 温柔 #MaydayBlue20th）</h2><audio controls>
+    <source src="https://cyclohexatriene.github.io/music/温柔.mp3">
+</audio>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/23/%E6%AF%8F%E6%97%A5Hard-Day-12/" rel="prev" title="每日Hard - Day 12">
+      <i class="fa fa-chevron-left"></i> 每日Hard - Day 12
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">基本框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text">线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">声明：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%96%A5%E9%87%8F"><span class="nav-number">2.1.1.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">2.1.3.</span> <span class="nav-text">信号量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%91%98%E5%BD%95%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">代码摘录：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">4.</span> <span class="nav-text">MySQL连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0%E6%9C%AC%E4%BD%93%E5%A3%B0%E6%98%8E%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">连接池本体声明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">HTTP处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%EF%BC%9A-1"><span class="nav-number">5.1.</span> <span class="nav-text">声明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mmap"><span class="nav-number">6.</span> <span class="nav-text">mmap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%EF%BC%9A-2"><span class="nav-number">6.1.</span> <span class="nav-text">声明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%A8%A1%E5%9D%97"><span class="nav-number">7.</span> <span class="nav-text">线程池模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%EF%BC%9A-3"><span class="nav-number">7.1.</span> <span class="nav-text">声明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EPOLL-%E7%9B%91%E5%90%AC"><span class="nav-number">8.</span> <span class="nav-text">EPOLL 监听</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">8.1.</span> <span class="nav-text">IO多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT%E3%80%81POLL%E5%92%8CEPOLL%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.2.</span> <span class="nav-text">SELECT、POLL和EPOLL的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">9.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%8A%91%E4%BA%91%EF%BC%88%E4%BA%94%E6%9C%88%E5%A4%A9%E3%80%81%E5%AD%99%E7%87%95%E5%A7%BF-%E6%B8%A9%E6%9F%94-MaydayBlue20th%EF%BC%89"><span class="nav-number">9.1.</span> <span class="nav-text">网抑云（五月天、孙燕姿 - 温柔 #MaydayBlue20th）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="环己三烯"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">环己三烯</p>
+  <div class="site-description" itemprop="description">万里长征人未还</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">环己三烯</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'UsSNtA9GJ5h8tGViWaV97qbO-9Nh9j0Va',
+      appKey     : 'J83xwqE3YCKgWOy0dIBrad1s',
+      placeholder: "莫西莫西？",
+      avatar     : 'hide',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
