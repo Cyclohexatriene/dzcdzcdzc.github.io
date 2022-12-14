@@ -158,6 +158,156 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/" class="post-title-link" itemprop="url">有限状态自动机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-18 20:13:41" itemprop="dateCreated datePublished" datetime="2022-08-18T20:13:41+08:00">2022-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 19:29:51" itemprop="dateModified" datetime="2022-10-08T19:29:51+08:00">2022-10-08</time>
+              </span>
+
+          
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>听名字就能大概猜出“有限状态自动机”是干嘛的了。</p>
+<ul>
+<li><p>有一个当前状态 <code>pre</code> </p>
+</li>
+<li><p>每轮循环输入一个 <code>cur</code> </p>
+</li>
+<li><p>有限状态自动机可以根据事先的定义来进行状态的转移</p>
+</li>
+</ul>
+<p>有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。</p>
+<hr>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="剑指-Offer-20-表示数值的字符串"><a href="#剑指-Offer-20-表示数值的字符串" class="headerlink" title="剑指 Offer 20. 表示数值的字符串"></a>剑指 Offer 20. 表示数值的字符串</h2><p>请实现一个函数用来判断字符串是否表示<strong>数值</strong>（包括整数和小数）。</p>
+<p><strong>数值</strong>（按顺序）可以分成以下几个部分：</p>
+<ol>
+<li><p>若干空格</p>
+</li>
+<li><p>一个 <strong>小数</strong> 或者 <strong>整数</strong></p>
+</li>
+<li><p>（可选）一个 <code>&#39;e&#39;</code> 或 <code>&#39;E&#39;</code> ，后面跟着一个 <strong>整数</strong></p>
+</li>
+<li><p>若干空格</p>
+</li>
+</ol>
+<p><strong>小数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol>
+<li><p>（可选）一个符号字符（<code>&#39;+&#39;</code> 或 <code>&#39;-&#39;</code>）</p>
+</li>
+<li><p>下述格式之一：</p>
+<ol>
+<li><p>至少一位数字，后面跟着一个点 <code>&#39;.&#39;</code></p>
+</li>
+<li><p>至少一位数字，后面跟着一个点 <code>&#39;.&#39;</code>，后面再跟着至少一位数字</p>
+</li>
+<li><p>一个点 <code>&#39;.&#39;</code> ，后面跟着至少一位数字</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>整数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol>
+<li><p>（可选）一个符号字符（’+’ 或 ‘-‘）</p>
+</li>
+<li><p>至少一位数字</p>
+</li>
+</ol>
+<p>部分<strong>数值</strong>列举如下：</p>
+<ul>
+<li><code>[&quot;+100&quot;, &quot;5e2&quot;, &quot;-123&quot;, &quot;3.1416&quot;, &quot;-1E-16&quot;, &quot;0123&quot;]</code></li>
+</ul>
+<p>部分<strong>非数值</strong>列举如下：</p>
+<ul>
+<li><code>[&quot;12e&quot;, &quot;1a3.14&quot;, &quot;1.2.3&quot;, &quot;+-5&quot;, &quot;12e+5.4&quot;]</code></li>
+</ul>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;0&quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;e&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;.&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-4："><a href="#示例-4：" class="headerlink" title="示例 4："></a>示例 4：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;    .1  &quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>先贴一段我第一次写时的代码，用的是暴力模拟，写半天自己都写晕了，到后面变量名字都开始乱七八糟了，因为不能一次性考虑到所有细节， 所以根据WA给的测试用例缝缝补补勉强通过。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="keyword">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>而使用有限状态自动机就可以让代码非常清晰。我们可以定义如下的状态：</p>
+<img src="https://cyclohexatriene.github.io/images/FSM.png" width=500 />
+
+<center><font size="2">图源：LeetCode @Krahets 前辈的题解</font></center>
+
+<p>在代码中，我们使用数组+字典来储存上图。只有退出后的状态为 <code>2/3/7/8</code> 中的一个时，我们才认为输入的字符串为合法的数值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        stringstream ss;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        vector&lt;unordered_map&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt;&gt; states = &#123;</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">0</span>&#125;,&#123; <span class="string">&#x27;s&#x27;</span>, <span class="number">1</span>&#125;,&#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;, &#123;<span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125; ,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;s&#x27;</span>, <span class="number">6</span>&#125;, &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (ss.<span class="built_in">peek</span>() != <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">char</span> cur;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&#x27;0&#x27;</span> &lt;= c &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) cur = <span class="string">&#x27;d&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>) cur = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;e&#x27;</span> || c == <span class="string">&#x27;E&#x27;</span>) cur = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;.&#x27;</span> || c == <span class="string">&#x27; &#x27;</span>) cur = c;</span><br><span class="line">            <span class="keyword">else</span> cur = <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (states[pre].<span class="built_in">count</span>(cur) &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            pre = states[pre][cur];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre == <span class="number">2</span> || pre == <span class="number">3</span> || pre == <span class="number">7</span> || pre == <span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="天才操作"><a href="#天才操作" class="headerlink" title="天才操作"></a>天才操作</h2><p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
+<img src="https://cyclohexatriene.github.io/images/ticket.png" width=400/>
+
+<h2 id="新生要来报到了"><a href="#新生要来报到了" class="headerlink" title="新生要来报到了"></a>新生要来报到了</h2><p>明天新生就陆续要来报到了，我也该读大三了。没有人永远年轻，但永远有人年轻。</p>
+<img src="https://cyclohexatriene.github.io/images/freshman.jpg" width=400/>
+
+<h2 id="没事听点歌（Neck-Deep-Serpent）"><a href="#没事听点歌（Neck-Deep-Serpent）" class="headerlink" title="没事听点歌（Neck Deep - Serpent）"></a>没事听点歌（Neck Deep - Serpent）</h2><audio controls>
+    <source src="https://cyclohexatriene.github.io/music/Serpent.mp3" type="audio/mpeg">
+</audio>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/07/26/%E8%B7%B3%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1002,102 +1152,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/04/26/LRU-%E7%BC%93%E5%AD%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="环己三烯">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/LRU-%E7%BC%93%E5%AD%98/" class="post-title-link" itemprop="url">LRU 缓存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-26 23:15:35" itemprop="dateCreated datePublished" datetime="2022-04-26T23:15:35+08:00">2022-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:32:10" itemprop="dateModified" datetime="2022-10-08T19:32:10+08:00">2022-10-08</time>
-              </span>
-
-          
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>LRU（Least Recently Used，最近最少使用）算法是地址转换旁路缓冲储存器（TLB）中数据的更新策略。TLB中存储的是虚拟地址到物理地址的映射，可以避免CPU多次在内存中查找页表来将虚拟地址转换为物理地址的时间开销。TLB的容量是有限的，所以在我们存入新的数据且TLB中没有空余容量时应当踢出一些数据。而LRU算法的思想是踢出TLB中上次使用距今最久远的数据，即最近最少使用的数据。</p>
-<hr>
-<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="LeetCode-146-LRU-缓存"><a href="#LeetCode-146-LRU-缓存" class="headerlink" title="LeetCode 146. LRU 缓存"></a>LeetCode 146. LRU 缓存</h2><p>请你设计并实现一个满足  <code>LRU (最近最少使用)</code> 缓存 约束的数据结构。<br>实现 <code>LRUCache</code> 类：</p>
-<ul>
-<li><p><code>LRUCache(int capacity)</code> 以 <strong>正整数</strong> 作为容量 <code>capacity</code> 初始化 LRU 缓存</p>
-</li>
-<li><p><code>int get(int key)</code> 如果关键字 <code>key</code> 存在于缓存中，则返回关键字的值，否则返回 <code>-1</code> 。</p>
-</li>
-<li><p><code>void put(int key, int value)</code>  如果关键字 <code>key</code> 已经存在，则变更其数据值 <code>value</code> ；如果不存在，则向缓存中插入该组 <code>key-value</code> 。如果插入操作导致关键字数量超过 <code>capacity</code> ，则应该 <strong>逐出</strong> 最久未使用的关键字。</p>
-</li>
-</ul>
-<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">输入</span><br><span class="line">[<span class="string">&quot;LRUCache&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;put&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;get&quot;</span>]</span><br><span class="line">[[<span class="number">2</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>], [<span class="number">1</span>], [<span class="number">3</span>, <span class="number">3</span>], [<span class="number">2</span>], [<span class="number">4</span>, <span class="number">4</span>], [<span class="number">1</span>], [<span class="number">3</span>], [<span class="number">4</span>]]</span><br><span class="line">输出</span><br><span class="line">[null, null, null, <span class="number">1</span>, null, <span class="number">-1</span>, null, <span class="number">-1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">解释</span><br><span class="line">LRUCache lRUCache = <span class="keyword">new</span> <span class="built_in">LRUCache</span>(<span class="number">2</span>);</span><br><span class="line">lRUCache.<span class="built_in">put</span>(<span class="number">1</span>, <span class="number">1</span>); <span class="comment">// 缓存是 &#123;1=1&#125;</span></span><br><span class="line">lRUCache.<span class="built_in">put</span>(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 缓存是 &#123;1=1, 2=2&#125;</span></span><br><span class="line">lRUCache.<span class="built_in">get</span>(<span class="number">1</span>); <span class="comment">// 返回 1</span></span><br><span class="line">lRUCache.<span class="built_in">put</span>(<span class="number">3</span>, <span class="number">3</span>); <span class="comment">// 该操作会使得关键字 2 作废，缓存是 &#123;1=1, 3=3&#125;</span></span><br><span class="line">lRUCache.<span class="built_in">get</span>(<span class="number">2</span>); <span class="comment">// 返回 -1 (未找到)</span></span><br><span class="line">lRUCache.<span class="built_in">put</span>(<span class="number">4</span>, <span class="number">4</span>); <span class="comment">// 该操作会使得关键字 1 作废，缓存是 &#123;4=4, 3=3&#125;</span></span><br><span class="line">lRUCache.<span class="built_in">get</span>(<span class="number">1</span>); <span class="comment">// 返回 -1 (未找到)</span></span><br><span class="line">lRUCache.<span class="built_in">get</span>(<span class="number">3</span>); <span class="comment">// 返回 3</span></span><br><span class="line">lRUCache.<span class="built_in">get</span>(<span class="number">4</span>); <span class="comment">// 返回 4</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>因为要以 <code>O(1)</code> 的时间复杂度取得 <code>key</code> 对应的 <code>value</code> ，所以我们使用哈希表来储存数据。而要以 <code>O(1)</code> 的时间复杂度改变节点的数据，不难想到使用链表的数据结构。所以我们可以确认本题使用的数据结构是哈希表+链表，其中哈希表的键就是题目给的键，哈希表的值是我们自定义的Node类指针。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    <span class="keyword">int</span> key;</span><br><span class="line">    Node* prev;</span><br><span class="line">    Node* next;</span><br><span class="line">    <span class="built_in">Node</span>(<span class="keyword">int</span> k, <span class="keyword">int</span> v) :<span class="built_in">val</span>(v), <span class="built_in">key</span>(k), <span class="built_in">prev</span>(<span class="literal">nullptr</span>), <span class="built_in">next</span>(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line">unordered_map&lt;<span class="keyword">int</span>, Node* &gt; map;</span><br></pre></td></tr></table></figure>
-
-<p>当我们查询或修改某一个节点时，我们应该将他移到链表的末尾。这样越靠近链表末尾的节点最后一次访问的时间离现在越近。当链表中的节点数到达容量值时，我们踢出链表的头节点，并将头节点的后一个节点设置为新的头节点。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Node* curr = map[key];</span><br><span class="line"><span class="keyword">if</span> (now == <span class="number">1</span>) <span class="keyword">return</span> curr-&gt;val;</span><br><span class="line"><span class="keyword">if</span> (curr == head) head = head-&gt;next;</span><br><span class="line"><span class="keyword">if</span> (curr == end) end = end-&gt;prev;</span><br><span class="line"><span class="keyword">if</span> (curr-&gt;prev) curr-&gt;prev-&gt;next = curr-&gt;next;</span><br><span class="line"><span class="keyword">if</span> (curr-&gt;next) curr-&gt;next-&gt;prev = curr-&gt;prev;</span><br><span class="line">curr-&gt;prev = end;</span><br><span class="line">curr-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">end-&gt;next = curr;</span><br><span class="line">end = end-&gt;next</span><br></pre></td></tr></table></figure>
-
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> cap;</span><br><span class="line">    <span class="keyword">int</span> now;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> val;</span><br><span class="line">        <span class="keyword">int</span> key;</span><br><span class="line">        Node* prev;</span><br><span class="line">        Node* next;</span><br><span class="line">        <span class="built_in">Node</span>(<span class="keyword">int</span> k, <span class="keyword">int</span> v) :<span class="built_in">val</span>(v), <span class="built_in">key</span>(k), <span class="built_in">prev</span>(<span class="literal">nullptr</span>), <span class="built_in">next</span>(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    Node* head;</span><br><span class="line">    Node* end;</span><br><span class="line">    unordered_map&lt;<span class="keyword">int</span>, Node*&gt; map;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LRUCache</span>(<span class="keyword">int</span> capacity) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;cap = capacity;</span><br><span class="line">        <span class="keyword">this</span>-&gt;now = <span class="number">0</span>;</span><br><span class="line">        head = <span class="keyword">new</span> <span class="built_in">Node</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        end = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* curr = map[key];</span><br><span class="line">            <span class="keyword">if</span> (now == <span class="number">1</span>) <span class="keyword">return</span> curr-&gt;val;</span><br><span class="line">            <span class="keyword">if</span> (curr == head) head = head-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (curr == end) end = end-&gt;prev;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;prev) curr-&gt;prev-&gt;next = curr-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;next) curr-&gt;next-&gt;prev = curr-&gt;prev;</span><br><span class="line">            curr-&gt;prev = end;</span><br><span class="line">            curr-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">            end-&gt;next = curr;</span><br><span class="line">            end = end-&gt;next;</span><br><span class="line">            <span class="keyword">return</span> curr-&gt;val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">count</span>(key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Node* curr = map[key];</span><br><span class="line">            <span class="keyword">if</span> (now == <span class="number">1</span>) &#123;</span><br><span class="line">                curr-&gt;val = value;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (curr == head) head = head-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (curr == end) end = end-&gt;prev;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;prev) curr-&gt;prev-&gt;next = curr-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;next) curr-&gt;next-&gt;prev = curr-&gt;prev;</span><br><span class="line">            curr-&gt;prev = end;</span><br><span class="line">            curr-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">            end-&gt;next = curr;</span><br><span class="line">            end = end-&gt;next;</span><br><span class="line">            curr-&gt;val = value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Node* newnode = <span class="keyword">new</span> <span class="built_in">Node</span>(key, value);</span><br><span class="line">            map[key] = newnode;</span><br><span class="line">            now++;</span><br><span class="line">            <span class="keyword">if</span> (now == <span class="number">1</span>) &#123;</span><br><span class="line">                head = newnode;</span><br><span class="line">                end = newnode;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            end-&gt;next = newnode;</span><br><span class="line">            newnode-&gt;prev = end;</span><br><span class="line">            end = end-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (now &gt; cap) &#123;</span><br><span class="line">                map.<span class="built_in">erase</span>(head-&gt;key);</span><br><span class="line">                head = head-&gt;next;</span><br><span class="line">                head-&gt;prev = <span class="literal">nullptr</span>;</span><br><span class="line">                now--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="今日最佳弔图"><a href="#今日最佳弔图" class="headerlink" title="今日最佳弔图"></a>今日最佳弔图</h2><p>虽然我七选三没选物理，但是高三闲的没事的时候（正经人谁高三闲的没事啊）喜欢翻翻同桌的物理书，平时刷B站的时候也看过介绍相对论的视频，所以我能看懂这张图。太好玩儿了，哈哈！</p>
-<center><img src="https://s3.bmp.ovh/imgs/2022/04/26/41ca9c9eab5e4af4.jpg" title="" alt="" width="342"></center>
-
-<h2 id="开始学习操作系统了"><a href="#开始学习操作系统了" class="headerlink" title="开始学习操作系统了"></a>开始学习操作系统了</h2><p>上周一启动了操作系统的学习，学习资料是《操作系统导论》。今天是第九天，已经看了三百来页了，这应该是我大学以来有效阅读量最大的一段时间了吧。目前学到的知识可能还比较浅，有些地方囫囵吞枣地就过去了，以后还需要多多积累呀。这篇Blog也是在书上看到了LRU算法才想起来之前在LeetCode上好像写到过（后来发现写到过的应该是LFU，过两天也写成博客吧），才重新回去做了一遍写出来的。</p>
-<h2 id="没事听点歌（周杰伦-晴天）"><a href="#没事听点歌（周杰伦-晴天）" class="headerlink" title="没事听点歌（周杰伦 - 晴天）"></a>没事听点歌（周杰伦 - 晴天）</h2><audio controls>
-    <source src="https://cyclohexatriene.github.io/music/晴天.mp3" type="audio/mpeg">
-</audio>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1169,7 +1223,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
