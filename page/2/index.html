@@ -158,6 +158,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/10/13/%E6%AF%8F%E6%97%A5Hard-Day-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/13/%E6%AF%8F%E6%97%A5Hard-Day-11/" class="post-title-link" itemprop="url">每日Hard - Day 11</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-13 22:55:15" itemprop="dateCreated datePublished" datetime="2022-10-13T22:55:15+08:00">2022-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-23 14:18:47" itemprop="dateModified" datetime="2022-10-23T14:18:47+08:00">2022-10-23</time>
+              </span>
+
+          
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
+    <tr>
+        <td>日期</td>
+        <td>2022年10月13日</td>
+    </tr>
+    <tr>
+        <td>是否独立完成</td>
+        <td>否</td>
+    </tr>
+    <tr>
+        <td>涉及算法</td>
+        <td>差分数组、滑动窗口</td>
+    </tr>
+</table>
+
+<hr>
+<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-995-K-连续位的最小翻转次数"><a href="#LeetCode-995-K-连续位的最小翻转次数" class="headerlink" title="LeetCode 995. K 连续位的最小翻转次数"></a>LeetCode 995. K 连续位的最小翻转次数</h2><p>给定一个二进制数组 <code>nums</code> 和一个整数 <code>k</code> 。</p>
+<p><strong>k位翻转</strong> 就是从 <code>nums</code> 中选择一个长度为 <code>k</code> 的 <strong>子数组</strong> ，同时把子数组中的每一个 <code>0</code> 都改成 <code>1</code> ，把子数组中的每一个 <code>1</code> 都改成 <code>0</code> 。</p>
+<p>返回数组中不存在 <code>0</code> 所需的最小 <strong>k位翻转</strong> 次数。如果不可能，则返回 <code>-1</code> 。</p>
+<p><strong>子数组</strong> 是数组的 <strong>连续</strong> 部分。</p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>], K = <span class="number">1</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：先翻转 A[<span class="number">0</span>]，然后翻转 A[<span class="number">2</span>]。</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>], K = <span class="number">2</span></span><br><span class="line">输出：<span class="number">-1</span></span><br><span class="line">解释：无论我们怎样翻转大小为 <span class="number">2</span> 的子数组，我们都不能使数组变为 [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]。</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>], K = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：</span><br><span class="line">翻转 A[<span class="number">0</span>],A[<span class="number">1</span>],A[<span class="number">2</span>]: A变成 [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">翻转 A[<span class="number">4</span>],A[<span class="number">5</span>],A[<span class="number">6</span>]: A变成 [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">翻转 A[<span class="number">5</span>],A[<span class="number">6</span>],A[<span class="number">7</span>]: A变成 [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="差分数组"><a href="#差分数组" class="headerlink" title="差分数组"></a>差分数组</h2><p>当我隐约感觉某道题或许可以用差分做的时候，那道题往往用不了差分；当我想破脑袋都想不到可以用差分做时，差分就来了。</p>
+<p>策略就是当遇到<code>0</code>时进行翻转，否则不翻转。一开始根据这个策略做，暴力模拟，经典超时。后来看了题解才会做。我们可以用差分数组来维护某个位置被翻转的次数，结合这个位置的初始状态，就可以快速得到这个位置目前的状态。</p>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minKBitFlips</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">diff</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            cnt += diff[i];</span><br><span class="line">            <span class="keyword">if</span> ((nums[i] + cnt) % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i + k &gt; n) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                res++;</span><br><span class="line">                cnt++;</span><br><span class="line">                diff[i + k]--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h2><p>当然，差分数组也不是必要的，可以维护一个滑动窗口来将空间复杂度降为<code>O(1)</code>。</p>
+<p>思路就是用一个队列维护对当前仍有影响的取了反的位置，这样队列的长度就反映了当前位置反转的次数了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minKBitFlips</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        queue&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!q.<span class="built_in">empty</span>() &amp;&amp; q.<span class="built_in">front</span>() + k == i) q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span> (q.<span class="built_in">size</span>() % <span class="number">2</span> == nums[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i + k &gt; n) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                q.<span class="built_in">push</span>(i);</span><br><span class="line">                res++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="曙光"><a href="#曙光" class="headerlink" title="曙光"></a>曙光</h2><p>从十一开始就没有闲下来过。国庆过完紧跟着信息政策的pre，然后是毛概，还有计网的实验报告，还有信息检索。后面还要计网写Web Server，还（算是）接过了98勋章系统的活（虽然还啥都不会，得从零开始学）。不过还好都熬过来了，这个周末忙完大概就可以稍微闲一阵子了。微博好友圈里看到的同学们都好用功，怎么每天都能学到凌晨才回寝室的，为什么会有这么多事情要做，合着她们学校不把同学当人似的。或许只是单纯是她们比较有追求，不是我这种咸鱼能理解的。</p>
+<h2 id="gtmdzyh"><a href="#gtmdzyh" class="headerlink" title="gtmdzyh"></a>gtmdzyh</h2><p>章燕华查老师2.2分属于是给高了，嘴碎屁事多也就算了，饭点拖课是真的不能忍，等结课了一定要给她刷1分。这门课爷反正摆了，爱给几分给几分，还能把爷挂了不成。不过话说回来，刷低分也没啥用，专业必修课也没得选。晦气晦气。</p>
+<h2 id="没事听点歌（陈粒-走马）"><a href="#没事听点歌（陈粒-走马）" class="headerlink" title="没事听点歌（陈粒 - 走马）"></a>没事听点歌（陈粒 - 走马）</h2><audio controls>
+    <source src="https://cyclohexatriene.github.io/music/走马.mp3">
+</audio>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/10/08/%E6%AF%8F%E6%97%A5Hard-Day-10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -947,103 +1054,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="环己三烯">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/14/%E6%AF%8F%E6%97%A5Hard-Day-3/" class="post-title-link" itemprop="url">每日Hard - Day 3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-09-14 12:19:17 / 修改时间：12:29:56" itemprop="dateCreated datePublished" datetime="2022-09-14T12:19:17+08:00">2022-09-14</time>
-            </span>
-
-          
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
-    <tr>
-        <td>日期</td>
-        <td>2022年9月14日</td>
-    </tr>
-    <tr>
-        <td>是否独立完成</td>
-        <td>否</td>
-    </tr>
-    <tr>
-        <td>涉及算法</td>
-        <td>暴力枚举、几何</td>
-    </tr>
-</table>
-
-<hr>
-<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-149-直线上最多的点数"><a href="#LeetCode-149-直线上最多的点数" class="headerlink" title="LeetCode 149. 直线上最多的点数"></a>LeetCode 149. 直线上最多的点数</h2><p>给你一个数组 <code>points</code> ，其中 <code>points[i] = [xi, yi]</code> 表示 <strong>X-Y</strong> 平面上的一个点。求最多有多少个点在同一条直线上。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">3</span>]]</span><br><span class="line">输出：<span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：points = [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">5</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">4</span>]]</span><br><span class="line">输出：<span class="number">4</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="暴力枚举"><a href="#暴力枚举" class="headerlink" title="暴力枚举"></a>暴力枚举</h2><p>对于点a,b,c，如果其中任意两点构成的直线斜率相同，则三点共线。我们可以枚举所有的点对，用哈希表记录斜率，则可以判断有多少个点出现在同一条直线上。</p>
-<p>本题难点在于计算斜率需要用到除法，而浮点数的除法是存在误差的。为了避免这个误差，一共有两种思路：</p>
-<ol>
-<li>利用乘法来避免除法（把两个斜率相等的表达式用对角相乘法则化为两个乘法表达式相等）。</li>
-<li>用字符串来哈希。</li>
-</ol>
-<p>本题我选择用第二个思路解。在计算斜率时通过最大公约数把分式约分为最间，保证相同斜率的直线能全部哈希在一起。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">0</span> ? a : <span class="built_in">gcd</span>(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxPoints</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; points.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            unordered_map&lt;string, <span class="keyword">int</span>&gt; map;</span><br><span class="line">            <span class="keyword">int</span> mx = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; points.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> x1 = points[i][<span class="number">0</span>], y1 = points[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">int</span> x2 = points[j][<span class="number">0</span>], y2 = points[j][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">int</span> a = x1 - x2;</span><br><span class="line">                <span class="keyword">int</span> b = y1 - y2;</span><br><span class="line">                <span class="keyword">int</span> g = <span class="built_in">gcd</span>(a, b);</span><br><span class="line">                string key = <span class="built_in">to_string</span>(a / g) + <span class="string">&quot;_&quot;</span> + <span class="built_in">to_string</span>(b / g);</span><br><span class="line">                map[key]++;</span><br><span class="line">                mx = <span class="built_in">max</span>(mx, map[key]);</span><br><span class="line">            &#125;</span><br><span class="line">            res = <span class="built_in">max</span>(res, mx + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1115,7 +1125,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
