@@ -189,7 +189,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:30:34" itemprop="dateModified" datetime="2022-10-08T19:30:34+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:48:45" itemprop="dateModified" datetime="2024-03-25T15:48:45+08:00">2024-03-25</time>
               </span>
 
           
@@ -206,7 +206,7 @@
 
       
           <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>AStar算法是用于寻找图的最短路的算法，它是Dijkstra算法的进阶版。Dijkstra算法采用贪心的策略，每次选取能连接到的节点中离起点最近的一个，而AStar算法则不仅考虑某节点到起点的距离，还把节点到终点的距离纳入到评估标准中。当某节点到起点和到终点的距离之和最小时，我们认为该节点最有构成最短路径的潜力，因此选取该节点进行扩展。但是大多数情况下，我们很难知道某节点到终点的距离是多少，所以我们只能估算。在网格图中，我们常使用曼哈顿距离来估算这个值。</p>
-<h2 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h2><img src="https://s3.bmp.ovh/imgs/2022/05/26/60f362b8fb67e188.png" title="" alt="" width="251">
+<h2 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h2><center><img src="https://cyclohexatriene.github.io/images/manhattan.png"/></center>
 
 <p>A点和B点的曼哈顿距离就是A点沿着格子只能横着或竖着走，到B点的最短距离，它的值是两点的横坐标之差的绝对值加上两点的纵坐标之差的绝对值。例如，在上图中，<code>1</code> 到 <code>6</code> 的曼哈顿距离是 <code>3</code> , <code>1</code> 到 <code>5</code> 的曼哈顿距离是 <code>4</code>.</p>
 <hr>
@@ -223,10 +223,12 @@
 <p>你需要按照树的高度从低向高砍掉所有的树，每砍过一颗树，该单元格的值变为 <code>1</code>（即变为地面）。</p>
 <p>你将从 <code>(0, 0)</code> 点开始工作，返回你砍完所有树需要走的最小步数。 如果你无法砍完所有的树，返回 <code>-1</code> 。</p>
 <p>可以保证的是，没有两棵树的高度是相同的，并且你至少需要砍倒一棵树。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><p><img src="https://s3.bmp.ovh/imgs/2022/05/26/eb4d81565aa173c8.jpg"></p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><center><img src="https://cyclohexatriene.github.io/images/astar1.jpg"/></center>
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>],[<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>]]</span><br><span class="line">输出：<span class="number">6</span></span><br><span class="line">解释：沿着上面的路径，你可以用 <span class="number">6</span> 步，按从最矮到最高的顺序砍掉这些树。</span><br></pre></td></tr></table></figure>
 
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><p><img src="https://s3.bmp.ovh/imgs/2022/05/26/08c148eecf74b40f.jpg"></p>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><center><img src="https://cyclohexatriene.github.io/images/astar2.jpg"/></center>
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>]]</span><br><span class="line">输出：<span class="number">-1</span></span><br><span class="line">解释：由于中间一行被障碍阻塞，无法访问最下面一行中的树。</span><br></pre></td></tr></table></figure>
 
 <h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>],[<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>]]</span><br><span class="line">输出：<span class="number">6</span></span><br><span class="line">解释：可以按与示例 <span class="number">1</span> 相同的路径来砍掉所有的树。</span><br><span class="line">(<span class="number">0</span>,<span class="number">0</span>) 位置的树，可以直接砍去，不用算步数。</span><br></pre></td></tr></table></figure>
@@ -237,12 +239,11 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="在玉泉做核酸拿到了贴纸"><a href="#在玉泉做核酸拿到了贴纸" class="headerlink" title="在玉泉做核酸拿到了贴纸"></a>在玉泉做核酸拿到了贴纸</h2><p>贴贴纸真是可爱爱。</p>
-<img src="https://s3.bmp.ovh/imgs/2022/05/26/cece515aff8ac3e8.jpg" title="" alt="" width="269">
+<center><img src="https://cyclohexatriene.github.io/images/bluehorse.jpg"/></center>
 
 <h2 id="没事听点歌（赵雷-鼓楼）"><a href="#没事听点歌（赵雷-鼓楼）" class="headerlink" title="没事听点歌（赵雷 - 鼓楼）"></a>没事听点歌（赵雷 - 鼓楼）</h2><audio controls>
     <source src="https://cyclohexatriene.github.io/music/鼓楼.mp3" type="audio/mpeg">
 </audio>
-
 
       
     </div>
@@ -293,7 +294,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:37:43" itemprop="dateModified" datetime="2022-10-08T19:37:43+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:46:47" itemprop="dateModified" datetime="2024-03-25T15:46:47+08:00">2024-03-25</time>
               </span>
 
           
@@ -341,18 +342,17 @@
 
 
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="为什么这么久没更新"><a href="#为什么这么久没更新" class="headerlink" title="为什么这么久没更新"></a>为什么这么久没更新</h2><p>最近在忙一些别的事情。具体地说，是在忙着当优秀学长（确实准备的很辛苦！就允许我臭屁一下吧），嘿嘿。一个丹青学生会的同学邀请我去给学弟学妹们  <del>（主要是学妹）</del> 分享一些Python的考试技巧，作为一位热心水友 <del>（好为人师）</del> ，我当然不会推辞了。于是花了一个多星期准备，一边准备一边焦虑怕自己舌头捋不顺或者讲的内容大家不爱听。还好顺利搞定了。临近期末了，可能又有一阵子要肝大作业没闲工夫来更新了。</p>
-<img title="" src="https://s3.bmp.ovh/imgs/2022/05/21/a60678eeb4545409.jpg" alt="" width="261">
+<center><img src="https://cyclohexatriene.github.io/images/dqstar.jpg"/></center>
 
 <h2 id="校庆日"><a href="#校庆日" class="headerlink" title="校庆日"></a>校庆日</h2><p>5月21日是浙江大学的校庆日，<del>学校为了纪念，特地为大家放了一天假</del> 。在这美好的一天，我喝了心心念念已久的芝士椰椰。虽然再一次喝到了椰椰，但是我再也回不到那个第一次喝到椰椰的夏天了。最美好的时代永远是在过去，我一直在怀念曾经无数次想要逃离的生活。然后我在寝室里写了一整天的代码。花了数小时手搓了大数据分析的Apriori算法，虽然在4条测试数据时表现良好，但在面对9000+条的数据集时它卡死了，白忙活，最后还是老老实实地用R语言调包。</p>
 <img title="" src="https://cyclohexatriene.github.io/images/yeye.jpg" alt="" width="301">
 
 <h2 id="那年今日"><a href="#那年今日" class="headerlink" title="那年今日"></a>那年今日</h2><p>去年520我一个人去电影院看了《情书》的重映。第一次接触《情书》是在高中语文书附带的读本上，看到了寻找藤井树的片段。然后就跟同学借来了书，晚上睡觉前在寝室点上灯读个两章，那段时间可能是我最文艺青年的一段时间了。</p>
-<img src="https://s3.bmp.ovh/imgs/2022/05/21/86a4c14560810638.png">
+<center><img src="https://cyclohexatriene.github.io/images/movie.png"/></center>
 
 <h2 id="没事听点歌（李荣浩-王牌冤家）"><a href="#没事听点歌（李荣浩-王牌冤家）" class="headerlink" title="没事听点歌（李荣浩 - 王牌冤家）"></a>没事听点歌（李荣浩 - 王牌冤家）</h2><audio controls>
     <source src="https://cyclohexatriene.github.io/music/王牌冤家.mp3" type="audio/mpeg">
 </audio>
-
 
       
     </div>
@@ -607,7 +607,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:32:10" itemprop="dateModified" datetime="2022-10-08T19:32:10+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:44:32" itemprop="dateModified" datetime="2024-03-25T15:44:32+08:00">2024-03-25</time>
               </span>
 
           
@@ -647,7 +647,7 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="今日最佳弔图"><a href="#今日最佳弔图" class="headerlink" title="今日最佳弔图"></a>今日最佳弔图</h2><p>虽然我七选三没选物理，但是高三闲的没事的时候（正经人谁高三闲的没事啊）喜欢翻翻同桌的物理书，平时刷B站的时候也看过介绍相对论的视频，所以我能看懂这张图。太好玩儿了，哈哈！</p>
-<center><img src="https://s3.bmp.ovh/imgs/2022/04/26/41ca9c9eab5e4af4.jpg" title="" alt="" width="342"></center>
+<center><img src="https://cyclohexatriene.github.io/images/relative.jpg"/></center>
 
 <h2 id="开始学习操作系统了"><a href="#开始学习操作系统了" class="headerlink" title="开始学习操作系统了"></a>开始学习操作系统了</h2><p>上周一启动了操作系统的学习，学习资料是《操作系统导论》。今天是第九天，已经看了三百来页了，这应该是我大学以来有效阅读量最大的一段时间了吧。目前学到的知识可能还比较浅，有些地方囫囵吞枣地就过去了，以后还需要多多积累呀。这篇Blog也是在书上看到了LRU算法才想起来之前在LeetCode上好像写到过（后来发现写到过的应该是LFU，过两天也写成博客吧），才重新回去做了一遍写出来的。</p>
 <h2 id="没事听点歌（周杰伦-晴天）"><a href="#没事听点歌（周杰伦-晴天）" class="headerlink" title="没事听点歌（周杰伦 - 晴天）"></a>没事听点歌（周杰伦 - 晴天）</h2><audio controls>
@@ -791,7 +791,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:36:24" itemprop="dateModified" datetime="2022-10-08T19:36:24+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:43:12" itemprop="dateModified" datetime="2024-03-25T15:43:12+08:00">2024-03-25</time>
               </span>
 
           
@@ -809,7 +809,7 @@
       
           <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>线段树是树状数组的进阶版。说是进阶版，其实效率并没有提高，只是泛用性更广。线段树支持高效的单点查询、单点修改、区间查询、区间修改，但是代码比树状数组更复杂，所以只有迫不得已的时候才写线段树。</p>
 <p>线段树就是一层一层地将原数据相加合并，最后形成一棵树的数据结构。用语言可能难以描述，但是看图就懂了：</p>
-<img title="" src="https://s3.bmp.ovh/imgs/2022/04/12/74f30d4cfd73e415.png" alt="" align="center" width="349">
+<center><img src="https://cyclohexatriene.github.io/images/xianduanshu.png"/></center>
 
 <p>如此组织数据，就可以将区间查询的时间复杂度降低到 <code>O(log n)</code> ，而单点查询、单点修改的时间复杂度也被限制在可以接受的 <code>O(log n)</code> ，所以在数据量很大时可以有理想的效果。</p>
 <p><strong>做题时发现的一个缺点：由于要存储所以数据加起来的和，所以在数据较大时可能溢出。</strong></p>
@@ -845,7 +845,6 @@
 <h2 id="没事听点歌（飞儿乐团-月牙湾）"><a href="#没事听点歌（飞儿乐团-月牙湾）" class="headerlink" title="没事听点歌（飞儿乐团 - 月牙湾）"></a>没事听点歌（飞儿乐团 - 月牙湾）</h2><audio controls>
   <source src="https://cyclohexatriene.github.io/music/月牙湾.mp3" type="audio/mpeg">
 </audio>
-
 
       
     </div>
@@ -896,7 +895,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:30:55" itemprop="dateModified" datetime="2022-10-08T19:30:55+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:41:30" itemprop="dateModified" datetime="2024-03-25T15:41:30+08:00">2024-03-25</time>
               </span>
 
           
@@ -957,14 +956,13 @@
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="小黄鸭调试法"><a href="#小黄鸭调试法" class="headerlink" title="小黄鸭调试法"></a>小黄鸭调试法</h2><p>小黄鸭调试法是软件工程中使用的调试代码方法之一。就是在程序的调试、纠错或测试过程中，耐心地向小黄鸭解释每一行程序的作用，以此来激发灵感。</p>
 <p>将自己学会的东西记录在Blog里，在写博文的过程中就知道什么东西自己已经掌握了，什么东西自己还没搞懂。</p>
-<center><img title="" src="https://s3.bmp.ovh/imgs/2022/04/10/261bd88ccba81736.jpg" alt="" width="354"></center>
+<center><img src="https://cyclohexatriene.github.io/images/duck.jpg"/></center>
 
 <center><b>启真湖边的小鸭鸭</b></center>
 
 <h2 id="没事听点歌（Taylor-Swift-Forever-amp-Always）"><a href="#没事听点歌（Taylor-Swift-Forever-amp-Always）" class="headerlink" title="没事听点歌（Taylor Swift - Forever &amp; Always）"></a>没事听点歌（Taylor Swift - Forever &amp; Always）</h2><audio controls>
   <source src="https://cyclohexatriene.github.io/music/Forever & Always.mp3" type="audio/mpeg">
 </audio>
-
 
       
     </div>

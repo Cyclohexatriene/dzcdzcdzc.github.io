@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="环己三烯的冬眠舱">
 <meta property="og:description" content="概述AStar算法是用于寻找图的最短路的算法，它是Dijkstra算法的进阶版。Dijkstra算法采用贪心的策略，每次选取能连接到的节点中离起点最近的一个，而AStar算法则不仅考虑某节点到起点的距离，还把节点到终点的距离纳入到评估标准中。当某节点到起点和到终点的距离之和最小时，我们认为该节点最有构成最短路径的潜力，因此选取该节点进行扩展。但是大多数情况下，我们很难知道某节点到终点的距离是多少，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/05/26/60f362b8fb67e188.png">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/05/26/eb4d81565aa173c8.jpg">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/05/26/08c148eecf74b40f.jpg">
-<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/05/26/cece515aff8ac3e8.jpg">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/manhattan.png">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/astar1.jpg">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/astar2.jpg">
+<meta property="og:image" content="https://cyclohexatriene.github.io/images/bluehorse.jpg">
 <meta property="article:published_time" content="2022-05-26T12:29:43.000Z">
-<meta property="article:modified_time" content="2022-10-08T11:30:34.279Z">
+<meta property="article:modified_time" content="2024-03-25T07:48:45.577Z">
 <meta property="article:author" content="环己三烯">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/05/26/60f362b8fb67e188.png">
+<meta name="twitter:image" content="https://cyclohexatriene.github.io/images/manhattan.png">
 
 <link rel="canonical" href="http://cyclohexatriene.github.io/2022/05/26/AStar%E7%AE%97%E6%B3%95/">
 
@@ -196,7 +196,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 19:30:34" itemprop="dateModified" datetime="2022-10-08T19:30:34+08:00">2022-10-08</time>
+                <time title="修改时间：2024-03-25 15:48:45" itemprop="dateModified" datetime="2024-03-25T15:48:45+08:00">2024-03-25</time>
               </span>
 
           
@@ -213,7 +213,7 @@
 
       
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>AStar算法是用于寻找图的最短路的算法，它是Dijkstra算法的进阶版。Dijkstra算法采用贪心的策略，每次选取能连接到的节点中离起点最近的一个，而AStar算法则不仅考虑某节点到起点的距离，还把节点到终点的距离纳入到评估标准中。当某节点到起点和到终点的距离之和最小时，我们认为该节点最有构成最短路径的潜力，因此选取该节点进行扩展。但是大多数情况下，我们很难知道某节点到终点的距离是多少，所以我们只能估算。在网格图中，我们常使用曼哈顿距离来估算这个值。</p>
-<h2 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h2><img src="https://s3.bmp.ovh/imgs/2022/05/26/60f362b8fb67e188.png" title="" alt="" width="251">
+<h2 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h2><center><img src="https://cyclohexatriene.github.io/images/manhattan.png"/></center>
 
 <p>A点和B点的曼哈顿距离就是A点沿着格子只能横着或竖着走，到B点的最短距离，它的值是两点的横坐标之差的绝对值加上两点的纵坐标之差的绝对值。例如，在上图中，<code>1</code> 到 <code>6</code> 的曼哈顿距离是 <code>3</code> , <code>1</code> 到 <code>5</code> 的曼哈顿距离是 <code>4</code>.</p>
 <hr>
@@ -230,10 +230,12 @@
 <p>你需要按照树的高度从低向高砍掉所有的树，每砍过一颗树，该单元格的值变为 <code>1</code>（即变为地面）。</p>
 <p>你将从 <code>(0, 0)</code> 点开始工作，返回你砍完所有树需要走的最小步数。 如果你无法砍完所有的树，返回 <code>-1</code> 。</p>
 <p>可以保证的是，没有两棵树的高度是相同的，并且你至少需要砍倒一棵树。</p>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><p><img src="https://s3.bmp.ovh/imgs/2022/05/26/eb4d81565aa173c8.jpg"></p>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><center><img src="https://cyclohexatriene.github.io/images/astar1.jpg"/></center>
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>],[<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>]]</span><br><span class="line">输出：<span class="number">6</span></span><br><span class="line">解释：沿着上面的路径，你可以用 <span class="number">6</span> 步，按从最矮到最高的顺序砍掉这些树。</span><br></pre></td></tr></table></figure>
 
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><p><img src="https://s3.bmp.ovh/imgs/2022/05/26/08c148eecf74b40f.jpg"></p>
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><center><img src="https://cyclohexatriene.github.io/images/astar2.jpg"/></center>
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],[<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>]]</span><br><span class="line">输出：<span class="number">-1</span></span><br><span class="line">解释：由于中间一行被障碍阻塞，无法访问最下面一行中的树。</span><br></pre></td></tr></table></figure>
 
 <h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：forest = [[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>],[<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>]]</span><br><span class="line">输出：<span class="number">6</span></span><br><span class="line">解释：可以按与示例 <span class="number">1</span> 相同的路径来砍掉所有的树。</span><br><span class="line">(<span class="number">0</span>,<span class="number">0</span>) 位置的树，可以直接砍去，不用算步数。</span><br></pre></td></tr></table></figure>
@@ -244,12 +246,11 @@
 
 <hr>
 <h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="在玉泉做核酸拿到了贴纸"><a href="#在玉泉做核酸拿到了贴纸" class="headerlink" title="在玉泉做核酸拿到了贴纸"></a>在玉泉做核酸拿到了贴纸</h2><p>贴贴纸真是可爱爱。</p>
-<img src="https://s3.bmp.ovh/imgs/2022/05/26/cece515aff8ac3e8.jpg" title="" alt="" width="269">
+<center><img src="https://cyclohexatriene.github.io/images/bluehorse.jpg"/></center>
 
 <h2 id="没事听点歌（赵雷-鼓楼）"><a href="#没事听点歌（赵雷-鼓楼）" class="headerlink" title="没事听点歌（赵雷 - 鼓楼）"></a>没事听点歌（赵雷 - 鼓楼）</h2><audio controls>
     <source src="https://cyclohexatriene.github.io/music/鼓楼.mp3" type="audio/mpeg">
 </audio>
-
 
     </div>
 
