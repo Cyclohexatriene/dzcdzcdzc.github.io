@@ -158,6 +158,183 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2024/03/28/JVM-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="环己三烯">
+      <meta itemprop="description" content="万里长征人未还">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="环己三烯的冬眠舱">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/28/JVM-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/" class="post-title-link" itemprop="url">JVM 垃圾收集器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-28 14:19:20" itemprop="dateCreated datePublished" datetime="2024-03-28T14:19:20+08:00">2024-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-30 17:24:52" itemprop="dateModified" datetime="2024-03-30T17:24:52+08:00">2024-03-30</time>
+              </span>
+
+          
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Java与C++之间有一堵由内存动态分配和垃圾收集技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来。</p>
+</blockquote>
+<h3 id="哪些对象需要回收？"><a href="#哪些对象需要回收？" class="headerlink" title="哪些对象需要回收？"></a>哪些对象需要回收？</h3><h4 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h4><p>在对象中添加一个引用计数器用于记录该对象的引用数量。当某对象的引用数量归零时就可以回收这个对象了。</p>
+<p><strong>优势：</strong>实现简单，判定效率高。简单到面试手撕代码时会考<a href="https://cyclohexatriene.github.io/2023/03/10/%E8%85%BE%E8%AE%AF%EF%BC%88%E9%AD%94%E6%96%B9%E5%B7%A5%E4%BD%9C%E5%AE%A4%EF%BC%89%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/#2-%E8%83%BD%E4%B8%8D%E8%83%BD%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAshared-ptr%EF%BC%9F">“使用引用计数算法来实现一个C++智能指针”</a>。</p>
+<p><strong>劣势：</strong>有大量的例外情况需要考虑，例如两个对象互相引用时引用计数器就永远不会为0，导致这两个对象永远不会被回收。</p>
+<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><p>Java的内存管理系统是通过可达性分析算法来判定对象是否存活的。该算法从一组被称为“GC Roots”的根对象作为起始节点集开始，顺着引用链向下搜索，如果某对象与GC Roots之间没有任何引用链相连，说明该对象不可能再被使用，即可以被回收。</p>
+<p>GC Roots主要包括两栈两方法：</p>
+<ul>
+<li>虚拟机栈（栈帧中的本地变量表）中引用的对象</li>
+<li>本地方法栈中 JNI（即一般说的 Native 方法）引用的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+</ul>
+<p>和由具体的垃圾收集器临时性加入的其他对象。</p>
+<h3 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h3><h4 id="基础假说"><a href="#基础假说" class="headerlink" title="基础假说"></a>基础假说</h4><p>分代收集理论建立在两个假说之上：</p>
+<ol>
+<li>弱分代假说：绝大多数对象都是朝生夕灭的。（IBM公司实测，有98%的对象熬不过第一轮GC）</li>
+<li>强分代假说：熬过越多次垃圾收集过程的对象就越难以消亡。</li>
+</ol>
+<p>根据以上假说，收集器设计者一般会将Java堆划分为新生代和老年代，对象在新生代区域创建，若其在若干次GC后依然存活便可晋升至老年代。每次GC可以只对新生代进行回收，也可只对老年代进行回收，以此划分为只回收新生代的“Minor GC”，只回收老年代的“Major GC”和回收整个Java堆的“Full GC”。</p>
+<p>由于不同区域的对象有不同的特征，所以可以针对不同区域设计针对性的垃圾收集算法。</p>
+<p>PS：Major GC只回收老年代的说法存疑，因为很多Major GC是由Minor GC触发的，所以Major GC通常跟Full GC是等价的。但是个人觉得单从分类上还是可以这么说，不用太钻牛角尖。</p>
+<p>PPS：还有一种Mixed GC，目标是收集整个新生代和部分老年代，目前只有G1收集器会有这种行为。</p>
+<h4 id="跨代引用"><a href="#跨代引用" class="headerlink" title="跨代引用"></a>跨代引用</h4><p>假如现在要进行一次Minor GC，由于新生代的对象可能会被老年代中的对象引用，所以GC选择的GC Roots除了新生代本身的GC Roots外，还需要扫描整个老年代中的对象，来确保可达性分析结果的正确性，这就造成了很大的性能负担。于是引入第三条经验法则：</p>
+<ol start="3">
+<li>跨代引用假说：跨代引用相对于同代引用来说仅占极少数。</li>
+</ol>
+<p>如果某个新生代对象被老年代对象引用，由于老年代对象不容易被回收，所以该新生代对象也很容易就能进入老年代，这样就不存在跨代引用了。</p>
+<p>所以我们没必要为了少量的跨代引用去扫描整个老年代，只需要在新生代上维护一个全局的“记忆集”，记忆集会把老年代划分为若干小块，用于标记老年代的哪些块的内存存在跨代引用，此后在发生Minor GC的时候，只需要把被标记的老年代内存块中的对象加入到GC Roots里扫描就可以了。</p>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>顾名思义，标记-清除算法有标记和清除两个阶段。首先标记出所有需要回收（或不需要回收）的对象，然后回收被标记（或未被标记）的对象。</p>
+<p><strong>缺点：</strong>①执行效率不稳定，如果有大量需要清除的对象就会花很多时间。②简单清除之后会产生大量不连续的内存碎片，时间久了会影响较大对象的内存分配。</p>
+<h4 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h4><p>标记-复制算法将内存按容量划分为大小相等的两块，每次只使用其中一块。在GC时，把还存活的对象复制到另一块，然后一次性清理掉一整块内存。</p>
+<p><strong>优点：</strong>①只需要复制存活对象，在存活对象较少时效率比较高。所以适合用于回收新生代。②不用考虑内存碎片问题。</p>
+<p><strong>缺点：</strong>浪费了一半内存。</p>
+<p><strong>优化：</strong>不需要按1:1的比例划分，如Appel式回收。</p>
+<p>Appel式回收把新生代分为一块较大的Eden（伊甸园）空间和两块较小的Survivor空间，每次分配内存只使用Eden和其中一块Survivor空间。GC时，将Eden和Survivor中仍然存活的对象复制到空的Survivor空间里，然后直接清理Eden和刚用完的Survivor空间。HotSpot虚拟机默认Eden和两块Survivor的空间比例是8:1:1，即每次新生代内存中可用内存空间为整个新生代内存容量的90%。这样的内存浪费就比较可以接受了。</p>
+<p>如果Survivor空间不足以容纳一次Minor GC后存活的所有对象，那这些对象就全部直接进入老年代，也就是说此时新生代将不包括任何存活对象。如果老年代空间也不够用了，虚拟机就会触发一次Major GC以尝试释放内存。</p>
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>标记-整理算法在标记完毕后，让所有存活的对象向内存空间的一端移动，然后清除掉边界以外的内存。</p>
+<p><strong>优点：</strong>①不存在内存浪费，也不用额外空间担保，适合用于老年代。②不会产生内存碎片。</p>
+<p><strong>缺点：</strong>①老年代往往会有大量对象存活，整理时需要移动这些存活对象，必须全程暂停用户程序（直到后来发明了移动时不用暂停的垃圾收集器）。</p>
+<p>对于针对老年代的垃圾回收，标记-清除算法只需要清除少量的非存活对象，不需要长时间暂停用户程序，但会带来大量的内存碎片，采用该算法可以带来较低的时延，但同时也会有较低的吞吐量；标记-整理算法需要移动大量的存活对象，所以需要更久地暂停用户程序，但可以消除内存碎片，采用该算法会有较高的时延，但同时也会有较高的吞吐量。当然，也可以把两者结合起来，在平时多数时间使用标记-清除算法，直到内存碎片太多太碎，影响到对象分配时，再进行一次标记-整理。</p>
+<h3 id="一些经典的垃圾收集器"><a href="#一些经典的垃圾收集器" class="headerlink" title="一些经典的垃圾收集器"></a>一些经典的垃圾收集器</h3><h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>顾名思义，Serial收集器是一个单线程工作的收集器。不仅是本身单线程，还得在工作时暂停所有其他用户线程。</p>
+<p>Serial收集器在新生代采用标记-复制算法，有Serial Old收集器作为老年代收集器与之配套。</p>
+<p>虽然要打断用户线程，但是对于内存资源受限的环境，它足够简单而高效，跟其他的花里胡哨的高级收集器相比，它的额外内存消耗最少，也没有线程交互的开销。针对少量的新生代垃圾，Serial收集器的停顿时间完全可控。所以Serial收集器对于运行在客户端模式下的虚拟机来说是一个很好的选择。</p>
+<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>Serial Old收集器采用标记-整理算法，是Serial收集器的老年代版本。</p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器是Serial收集器的多线程并行版本。</p>
+<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>Parallel Scavenge收集器的目标是达到一个可控制的吞吐量。吞吐量指的是运行用户代码的时间与处理器总消耗时间的比值。它可以通过参数-XX:MaxGCPauseMillis来设置内存回收允许的时间。垃圾收集停顿时间缩短的代价是牺牲新生代空间（收集300MB肯定比收集500MB快）和吞吐量（少量多次收集，总收集时间变长，吞吐量就降低了）换的。</p>
+<h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><p>Parallel Old收集器是Parallel Scavenge收集器的老年代版本。</p>
+<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>CMS收集器全名叫Concurrent Mark Sweep，顾名思义就是可以并发地完成标记，而且是标记-清除算法。它的设计目标是获取最短的回收停顿时间。整个回收过程分为四个步骤：</p>
+<ol>
+<li>初始标记（仅仅只是标记一下GC Roots能直接关联到的对象，虽然<strong>需要停顿</strong>但是速度很快）</li>
+<li>并发标记</li>
+<li>重新标记（修正并发标记阶段用户修改的引用关系，<strong>需要停顿</strong>，但时间依然远比并发标记短）</li>
+<li>并发清除（直接清除标记为死亡的对象，不需要移动存活对象，所以可与用户线程并发）</li>
+</ol>
+<p><strong>优点：</strong>大大降低了GC时对用户线程的停顿时间。</p>
+<p><strong>缺点：</strong>①会占用一部分CPU核心，在CPU核心数量不多的设备上运行时会严重影响用户进程。②在清理垃圾的同时用户线程依然在运行，还可能需要更多的内存，所以不能在内存彻底耗尽时才触发GC，需要留有余量。如果余量不足，就会出现并发失败，JVM只能改用停顿时间较长的Serial Old来重新进行GC。③会产生内存碎片，需要定期整理。</p>
+<h4 id="Garbage-First收集器"><a href="#Garbage-First收集器" class="headerlink" title="Garbage First收集器"></a>Garbage First收集器</h4><p>Garbage First收集器简称G1收集器，是一款主要面向服务端应用的垃圾收集器。G1收集器将内存空间划分为若干个大小相等的Region，每个Region都可以当成新生代的Eden空间、Survivor空间或者老年代空间使用。还有一类专门用于处理大对象的Humongous Region，G1一般将这种Region视作老年代的一部分处理。通过这种设计，G1收集器可以避免每次GC都回收像整个新生代这么大的内存空间，而是选择最有性价比的Region进行回收，使得停顿时间可控。回收时，G1收集器采用标记-复制算法，整个回收过程大致可划分为四个步骤：</p>
+<ol>
+<li>初始标记（<strong>需要停顿</strong>）</li>
+<li>并发标记</li>
+<li>最终标记（<strong>需要停顿</strong>）</li>
+<li>筛选回收（把选中Region的存活对象复制到空Region里，然后清理掉整个旧Region。由于涉及存活对象的移动，所以<strong>需要停顿</strong>。）</li>
+</ol>
+<p><strong>优点：</strong>①可以指定最大停顿时间，在不同应用场景中取得吞吐量和延迟的最佳平衡。②不会产生内存碎片。</p>
+<p><strong>缺点：</strong>①需要占用更多额外内存来维护跨Region引用的关系。②存在和CMS收集器一样的并发失败问题。</p>
+<h4 id="Shenandoah收集器"><a href="#Shenandoah收集器" class="headerlink" title="Shenandoah收集器"></a>Shenandoah收集器</h4><p>Shenandoah收集器像是G1收集的下一代继承者，二者之间共享了一部分实现代码。Shenandoah收集器的目标是实现一种能在任何堆内存大小下都可以把垃圾收集的停顿时间限制在十毫秒以内。</p>
+<p>Shenandoah收集器也是使用基于Region的堆内存布局，也是优先处理回收价值最大的Region，但是Shenandoah收集器支持并发的整理算法，默认不使用分代收集，且改用连接矩阵来代替G1中耗费大量内存和计算资源去维护的记忆集。</p>
+<p>Shenandoah收集器的工作过程大致可划分为九个阶段：</p>
+<ul>
+<li>初始标记（<strong>需要停顿</strong>）</li>
+<li>并发标记</li>
+<li>最终标记（<strong>需要停顿</strong>）</li>
+<li>并发清理（清理整个Region里只有死亡对象的Region）</li>
+<li>并发回收（通过读屏障和转发指针来实现可与用户线程并发的对象移动）</li>
+<li>初始引用更新（确保并发回收阶段中的回收线程均已完成对象移动任务，<strong>需要短暂停顿</strong>）</li>
+<li>并发引用更新</li>
+<li>最终引用更新（修正GC Roots中的引用，<strong>需要停顿</strong>）</li>
+<li>并发清理（清理掉所有完成复制的Region）</li>
+</ul>
+<p>为了实现收集器对存活对象的复制和用户线程对存活对象的访问这两件事的并发，Shenandoah回收器在对象头引入了转发指针“Brooks Pointer”。在不处于并发移动的状态下，这个转发指针指向对象自己。</p>
+<p>但是如果不做任何保护措施的话，转发指针可能会发生并发问题。例如：</p>
+<ol>
+<li>收集器线程复制了新的对象副本</li>
+<li>用户线程更新对象的某个字段</li>
+<li>收集器线程更新转发指针的引用值为新副本地址</li>
+</ol>
+<p>如果事件2在事件1和3之间发生的话，线程2的修改就仅仅在旧对象上，无法对新对象生效。而Shenandoah收集器则是通过CAS原子操作来保证并发时对象的访问正确性的。</p>
+<blockquote>
+<p>CAS：Compare And Swap，解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS操作包含三个操作数——内存位置（V）、预期原值（A）和新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在CAS指令之前返回该位置的值。CAS有效地说明了“我认为位置V应该包含值A；如果包含该值，则将B放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。</p>
+</blockquote>
+<p>这块内容存疑，作者没说明CAS具体是在什么操作上应用的。如果是在更新转发指针时使用CAS的话，根据我的理解，CAS的作用是可以在<strong>多个线程同时修改一个变量</strong>的时候保证并发安全，但是这里用户线程只是读取转发指针的引用值，只有收集器线程在修改转发指针的引用值。这么说来，CAS应该不能处理前面提到的那个问题。在这块内容上还有些细节作者在书中没有细说，想了一个下午也没想明白，暂且搁置。如果有人偶然看到这里，欢迎与我讨论。</p>
+<p><strong>优点：</strong>并发收集，可以实现很低的延迟。</p>
+<p><strong>缺点：</strong>需要使用读写屏障，吞吐量会受到影响。</p>
+<h4 id="ZGC收集器"><a href="#ZGC收集器" class="headerlink" title="ZGC收集器"></a>ZGC收集器</h4><p>ZGC收集器的设计目标和Shenandoah收集器是高度相似的，但实现思路却差异显著。</p>
+<p>ZGC也是采用基于Region的堆内存布局，分为小型、中型、大型三类。</p>
+<p>ZGC引入了“染色指针”。染色指针是一种直接将少量额外信息存储在指针上的技术。因为在64位系统中，理论上可以访问2^64B &#x3D; 16EB的内存，但由于需求、性能和成本等考虑，现有的硬件架构和操作系统不会使用全部64位来寻址内存，例如Linux则使用了其中的46位。而ZGC的染色指针技术则从这46位里再抽了高4位出来存储四个标志信息，通过这四个标志位，虚拟机可以直接从指针中看到其引用对象的三色标记状态、是否进入重分配集等状态。由于占用了这4位，所以ZGC能管理的内存不能超过2^42B &#x3D; 4TB。染色指针使用虚拟内存映射来寻址，保证无论染色位的情况如何，都能把指针映射到相同的物理内存。</p>
+<p> ZGC收集器的工作过程大致可划分为四个大阶段，四个大阶段都是可并发执行的，只有两个阶段中间会存在短暂的停顿，如类似G1的初始标记和最终标记。</p>
+<ol>
+<li>并发标记（与G1和Shenandoah的标记类似，不过是通过染色指针来代替直接在对象上标记）</li>
+<li>并发预备重分配（根据标记结和“特定的查询条件”统计得出本次收集过程要清理哪些Region，组成重分配集）</li>
+<li>并发重分配（把重分配集中的存活对象复制到新的Region中）</li>
+<li>并发重映射（修正整个堆中指向旧对象的所有引用）</li>
+</ol>
+<p>ZGC重分配集和G1回收集的区别：G1收集器实现了分代回收功能，回收行为可能局限于新生代或老年代，选出的回收集也就是从局部选出的。由于分代，所以需要维护记忆集来处理跨代引用问题。ZGC收集器没有实现分代回收功能，不需要维护记忆集，省下来的时间用来进行全堆扫描了，重分配集也是从整个堆选出来的。</p>
+<p>在并发重分配阶段，ZGC会为每个旧Region维护一个转发表，记录旧对象和新对象的转发关系。用户线程可以直接从染色指针上看出旧对象是否在重分配集里，如果用户线程发现旧对象在重分配集里，就会立即根据转发表将访问转发到新对象上（通过内存屏障实现），<strong>同时修正更新该引用的值，使其直接指向新对象，这种行为称作指针的“自愈”</strong>。</p>
+<p>由于指针可以自愈，并发重映射阶段并不需要迫切地被执行，清理旧对象的引用主要是为了减少自愈前唯一的那一次转发，以及清理完毕后可以释放转发表。因此，ZGC把并发重映射阶段的工作合并到了下一次GC的并发标记阶段里完成，两次操作只需要在同一次遍历对象图中完成即可。</p>
+<h3 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h3><h4 id="没事听点歌（Lynyrd-Skynyrd-Free-Bird）"><a href="#没事听点歌（Lynyrd-Skynyrd-Free-Bird）" class="headerlink" title="没事听点歌（Lynyrd Skynyrd - Free Bird）"></a>没事听点歌（Lynyrd Skynyrd - Free Bird）</h4><audio controls>
+    <source src="https://cyclohexatriene.github.io/music/Free Bird.mp3" type="audio/mpeg">
+</audio>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2024/03/25/WSL2-CLion-%E7%BC%96%E8%AF%91%E5%B9%B6%E8%B0%83%E8%AF%95JDK12%E6%BA%90%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1173,140 +1350,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cyclohexatriene.github.io/2022/10/22/pthread-h-%E5%BA%93%EF%BC%88%E4%B8%8B%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="环己三烯">
-      <meta itemprop="description" content="万里长征人未还">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="环己三烯的冬眠舱">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/22/pthread-h-%E5%BA%93%EF%BC%88%E4%B8%8B%EF%BC%89/" class="post-title-link" itemprop="url">pthread.h 库（下）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-22 14:48:23 / 修改时间：14:50:20" itemprop="dateCreated datePublished" datetime="2022-10-22T14:48:23+08:00">2022-10-22</time>
-            </span>
-
-          
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><h2 id="互斥量：pthread-mutex系列"><a href="#互斥量：pthread-mutex系列" class="headerlink" title="互斥量：pthread_mutex系列"></a>互斥量：pthread_mutex系列</h2><ul>
-<li><code>int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);</code></li>
-</ul>
-<p>初始化一个互斥量，即第一个参数指向的<code>mutex</code>。一个互斥量必须初始化了之后才能用。</p>
-<ul>
-<li><code>int pthread_mutex_destroy(pthread_mutex_t *mutex);</code></li>
-</ul>
-<p>顾名思义，就是删除一个互斥量，释放它的内存。</p>
-<ul>
-<li><code>int pthread_mutex_lock(pthread_mutex_t *mutex);</code></li>
-<li><code>int pthread_mutex_unlock(pthread_mutex_t *mutex);</code></li>
-</ul>
-<p>给互斥量上锁和解锁。如果需要上锁的互斥量已经被别的线程锁住了，那调用<code>pthread_mutex_lock()</code>的线程就会一直被阻塞直到那个互斥量被解锁，然后这个线程再获得锁。上面三个函数都是成功返回0，否则返回错误编号。如果不希望线程被阻塞，那可以用下面这个函数：</p>
-<ul>
-<li><code>int pthread_mutex_trylock(pthread_mutex_t *mutex);</code></li>
-</ul>
-<p>这个函数会尝试对互斥量加锁，如果锁没被锁上，它就锁上这个锁；如果锁已经被锁住了，那么这个函数就会返回<code>EBUSY</code>。这个函数在避免死锁这件事上有很大帮助（如果不能取得全部的一系列锁，不是干等着而是把已经取得的锁都释放掉，避免跟另一个线程死锁）。</p>
-<ul>
-<li><code>int pthread_mutex_timedlock(pthread_mutex_t *restrict mutex, const struct timespec *restrict tsptr);</code></li>
-</ul>
-<p>在某个时间前阻塞等待获得锁，超过这个时间就返回错误码<code>ETIMEDOUT</code>。</p>
-<h2 id="读写锁：pthread-rwlock系列"><a href="#读写锁：pthread-rwlock系列" class="headerlink" title="读写锁：pthread_rwlock系列"></a>读写锁：pthread_rwlock系列</h2><p>读写锁与互斥量类似，但是它支持更高的并行性。它有三种状态：读模式下加锁、写模式下加锁和不加锁。当读写锁是写加锁时，无法被别的线程读、写加锁；当读写锁是读加锁时，所有试图以读模式对它进行加锁的线程都可以得到访问权，但是任何希望以写模式对此锁进行加锁的线程都会阻塞。读写锁非常适合对数据结构读的次数远大于写的情况。</p>
-<ul>
-<li><code>int pthread_rwlock_init(pthread_rwlock_t *restrict rwlock, const pthread_rwlockattr_t *restrict attr);</code></li>
-<li><code>int pthread_rwlock_destroy(pthread_rwlock_t *rwlock);</code></li>
-</ul>
-<p>这两个函数分别用于初始化一个读写锁和销毁一个读写锁以释放它的内存。如果成功，返回0；否则，返回错误编号。</p>
-<ul>
-<li><code>int pthread_rwlock_rdlock(pthread_rwlock_t *rwlock);</code></li>
-<li><code>int pthread_rwlock_wrlock(pthread_rwlock_t *rwlock);</code></li>
-<li><code>int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);</code></li>
-</ul>
-<p>这三个函数分别对一个读写锁进行读加锁、写加锁和解锁操作。如果成功，返回0；否则，返回错误编号。</p>
-<ul>
-<li><code>int pthread_rwlock_tryrdlock(pthread_rwlock_t *rwlock);</code></li>
-<li><code>int pthread_rwlock_trywrlock(pthread_rwlock_t *rwlock);</code></li>
-<li><code>int pthread_rwlock_timedrdlock(pthread_rwlock_t *restrict rwlock, const struct timespec *restrict tsptr);</code></li>
-<li><code>int pthread_rwlock_timedwrlock(pthread_rwlock_t *restrict rwlock, const struct timespec *restrict tsptr);</code></li>
-</ul>
-<p>就是读写锁版的<code>trylock()</code>和<code>timedlock()</code>。</p>
-<h2 id="条件变量：pthread-cond系列"><a href="#条件变量：pthread-cond系列" class="headerlink" title="条件变量：pthread_cond系列"></a>条件变量：pthread_cond系列</h2><ul>
-<li><code>int pthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr);</code></li>
-<li><code>int pthread_cond_destroy(pthread_cond_t *cond);</code></li>
-</ul>
-<p>这两个函数分别用于初始化和销毁一个条件变量。如果成功，返回0；否则，返回错误编号。</p>
-<ul>
-<li><code>int pthread_cond_wait(pthread_cond_t *restreict cond, pthread_mutex_t *restrict mutex);</code></li>
-<li><code>int pthread_cond_timedwait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, const struct timespec *restrict tsptr);</code></li>
-</ul>
-<p>这两个函数用于等待条件变量变为真。而第二个函数则是带有超时的版本。这两个函数都需要自带一个锁上的互斥量，这是为了保证检查条件变量到线程进入休眠等待条件改变这两个操作之间的操作是原子的。因为发信号的接收信号的进程往往会有一些公共的资源（比如生产者-消费者模型，会有一段任务队列是公用的），为了保证这些线程在访问这些公共资源的时候是原子性的，所以需要上锁。那么就有可能发生这样的情况：</p>
-<blockquote>
-<p>消费者获得锁，然后去读取任务队列，发现是空的，所以要等待生产者生产出任务，然后发送信号；</p>
-<p>而生产者在向任务队列中写入任务前也需要获得锁，这就造成了一个死锁现象。</p>
-</blockquote>
-<p>为了避免这种情况，消费者在进入睡眠等待之前，要释放锁，让生产者去获得锁并生产出任务；生产者生产出任务并唤醒消费者后，消费者要再次获得锁并读取任务队列。</p>
-<p>那么一来二去的，人们就发现还不如直接把这些上锁解锁的操作直接集成进<code>pthread_cond_wait()</code>里来的方便，于是这个函数就多了一个互斥量的参数了。</p>
-<p>就这么干说有点抽象，可以看看<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58838318">这篇文章</a>，写的相当详细，赞。</p>
-<ul>
-<li><code>int pthread_cond_signal(pthread_cond_t *cond);</code></li>
-<li><code>int pthread_cond_broadcast(pthread_cond_t *cond);</code></li>
-</ul>
-<p>这两个函数用于向某个信号量发出条件满足的信号，第一个函数至少能唤醒一个等待该条件的线程，而第二个能唤醒所有等待该条件的所有线程。如果成功，返回0；否则，返回错误编号。</p>
-<p>还有一个要注意的点是我们要用while而不是if来判断条件，因为如果有多个消费者存在的话，可能某个消费者被唤醒后还没来得及获得锁，任务就已经被其它消费者处理完了。</p>
-<h2 id="屏障：pthread-barrier系列"><a href="#屏障：pthread-barrier系列" class="headerlink" title="屏障：pthread_barrier系列"></a>屏障：pthread_barrier系列</h2><p>屏障是用户协调多个线程并行工作的同步机制。屏障允许每个线程等待，直到所有合作的线程都达到某一点，然后从该点继续执行。<code>pthread_join()</code>就是一种屏障，允许一个线程等待，直到另一个线程退出。但是屏障对象的概念更广，它们允许任意数量的线程等待，直到所有的线程完成处理工作，而线程不需要退出，所有线程达到屏障后可以接着工作。</p>
-<ul>
-<li><code>int pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barrierattr_t *restrict attr, unsigned int count);</code></li>
-<li><code>int pthread_barrier_destroy(pthread_barrier_t *barrier);</code></li>
-</ul>
-<p>这两个函数分别用于屏障的初始化和销毁，如果成功，返回0；否则，返回错误编号。在初始化函数中，第三个参数<code>count</code>可以指定允许所有线程继续运行前，必须到达屏障的线程数目。</p>
-<ul>
-<li><code>int pthread_barrier_wait(pthread_barrier_t *barrier);</code></li>
-</ul>
-<p>这个函数表示线程已经完成工作，正在等待其他线程赶上来。如果成功，返回0或者<code>PTHREAD_BARRIER_SERIAL_THREAD</code>；否则，返回错误编号。只有第一个成功返回<code>wait()</code>会返回<code>PTHREAD_BARRIER_SERIAL_THREAD</code>，其余都返回<code>0</code>。这样特殊一点的线程就可以作为主线程工作在其他所有线程已完成的工作上。</p>
-<p>一旦到达屏障计数值，而且线程处于非阻塞状态，屏障就可以被重用。如果需要改变计数值，就需要<code>destroy()</code>后重新<code>init()</code>。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1378,7 +1421,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
