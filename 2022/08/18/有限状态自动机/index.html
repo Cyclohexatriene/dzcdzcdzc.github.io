@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="概述听名字就能大概猜出“有限状态自动机”是干嘛的了。  有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题剑指 Offer 20. 表示数值的字符串请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以">
+  <meta name="description" content="概述 听名字就能大概猜出“有限状态自动机”是干嘛的了。   有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题 ¶剑指 Offer 20. 表示数值的字符串 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="有限状态自动机">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/08/18/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/index.html">
 <meta property="og:site_name" content="环己三烯的冬眠舱">
-<meta property="og:description" content="概述听名字就能大概猜出“有限状态自动机”是干嘛的了。  有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题剑指 Offer 20. 表示数值的字符串请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以">
+<meta property="og:description" content="概述 听名字就能大概猜出“有限状态自动机”是干嘛的了。   有一个当前状态 pre   每轮循环输入一个 cur   有限状态自动机可以根据事先的定义来进行状态的转移   有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。  例题 ¶剑指 Offer 20. 表示数值的字符串 请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cyclohexatriene.github.io/images/FSM.png">
 <meta property="og:image" content="https://cyclohexatriene.github.io/images/ticket.png">
@@ -211,49 +211,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>听名字就能大概猜出“有限状态自动机”是干嘛的了。</p>
+        <h1>概述</h1>
+<p>听名字就能大概猜出“有限状态自动机”是干嘛的了。</p>
 <ul>
-<li><p>有一个当前状态 <code>pre</code> </p>
+<li>
+<p>有一个当前状态 <code>pre</code></p>
 </li>
-<li><p>每轮循环输入一个 <code>cur</code> </p>
+<li>
+<p>每轮循环输入一个 <code>cur</code></p>
 </li>
-<li><p>有限状态自动机可以根据事先的定义来进行状态的转移</p>
+<li>
+<p>有限状态自动机可以根据事先的定义来进行状态的转移</p>
 </li>
 </ul>
 <p>有限状态自动机并不能降低算法的复杂度，但是可以让代码看起来非常简洁清爽，也不会写着写着就晕掉了。</p>
 <hr>
-<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="剑指-Offer-20-表示数值的字符串"><a href="#剑指-Offer-20-表示数值的字符串" class="headerlink" title="剑指 Offer 20. 表示数值的字符串"></a>剑指 Offer 20. 表示数值的字符串</h2><p>请实现一个函数用来判断字符串是否表示<strong>数值</strong>（包括整数和小数）。</p>
+<h1>例题</h1>
+<h2 id="剑指-Offer-20-表示数值的字符串"><a class="header-anchor" href="#剑指-Offer-20-表示数值的字符串">¶</a>剑指 Offer 20. 表示数值的字符串</h2>
+<p>请实现一个函数用来判断字符串是否表示<strong>数值</strong>（包括整数和小数）。</p>
 <p><strong>数值</strong>（按顺序）可以分成以下几个部分：</p>
 <ol>
-<li><p>若干空格</p>
+<li>
+<p>若干空格</p>
 </li>
-<li><p>一个 <strong>小数</strong> 或者 <strong>整数</strong></p>
+<li>
+<p>一个 <strong>小数</strong> 或者 <strong>整数</strong></p>
 </li>
-<li><p>（可选）一个 <code>&#39;e&#39;</code> 或 <code>&#39;E&#39;</code> ，后面跟着一个 <strong>整数</strong></p>
+<li>
+<p>（可选）一个 <code>'e'</code> 或 <code>'E'</code> ，后面跟着一个 <strong>整数</strong></p>
 </li>
-<li><p>若干空格</p>
+<li>
+<p>若干空格</p>
 </li>
 </ol>
 <p><strong>小数</strong>（按顺序）可以分成以下几个部分：</p>
 <ol>
-<li><p>（可选）一个符号字符（<code>&#39;+&#39;</code> 或 <code>&#39;-&#39;</code>）</p>
+<li>
+<p>（可选）一个符号字符（<code>'+'</code> 或 <code>'-'</code>）</p>
 </li>
-<li><p>下述格式之一：</p>
+<li>
+<p>下述格式之一：</p>
 <ol>
-<li><p>至少一位数字，后面跟着一个点 <code>&#39;.&#39;</code></p>
+<li>
+<p>至少一位数字，后面跟着一个点 <code>'.'</code></p>
 </li>
-<li><p>至少一位数字，后面跟着一个点 <code>&#39;.&#39;</code>，后面再跟着至少一位数字</p>
+<li>
+<p>至少一位数字，后面跟着一个点 <code>'.'</code>，后面再跟着至少一位数字</p>
 </li>
-<li><p>一个点 <code>&#39;.&#39;</code> ，后面跟着至少一位数字</p>
+<li>
+<p>一个点 <code>'.'</code> ，后面跟着至少一位数字</p>
 </li>
 </ol>
 </li>
 </ol>
 <p><strong>整数</strong>（按顺序）可以分成以下几个部分：</p>
 <ol>
-<li><p>（可选）一个符号字符（’+’ 或 ‘-‘）</p>
+<li>
+<p>（可选）一个符号字符（‘+’ 或 ‘-’）</p>
 </li>
-<li><p>至少一位数字</p>
+<li>
+<p>至少一位数字</p>
 </li>
 </ol>
 <p>部分<strong>数值</strong>列举如下：</p>
@@ -264,37 +281,35 @@
 <ul>
 <li><code>[&quot;12e&quot;, &quot;1a3.14&quot;, &quot;1.2.3&quot;, &quot;+-5&quot;, &quot;12e+5.4&quot;]</code></li>
 </ul>
-<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;0&quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;e&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-3："><a href="#示例-3：" class="headerlink" title="示例 3："></a>示例 3：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;.&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="示例-4："><a href="#示例-4：" class="headerlink" title="示例 4："></a>示例 4：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;    .1  &quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="示例-1："><a class="header-anchor" href="#示例-1：">¶</a>示例 1：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;0&quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="示例-2："><a class="header-anchor" href="#示例-2：">¶</a>示例 2：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;e&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="示例-3："><a class="header-anchor" href="#示例-3：">¶</a>示例 3：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;.&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="示例-4："><a class="header-anchor" href="#示例-4：">¶</a>示例 4：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;    .1  &quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <hr>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>先贴一段我第一次写时的代码，用的是暴力模拟，写半天自己都写晕了，到后面变量名字都开始乱七八糟了，因为不能一次性考虑到所有细节， 所以根据WA给的测试用例缝缝补补勉强通过。</p>
+<h1>题解</h1>
+<p>先贴一段我第一次写时的代码，用的是暴力模拟，写半天自己都写晕了，到后面变量名字都开始乱七八糟了，因为不能一次性考虑到所有细节， 所以根据WA给的测试用例缝缝补补勉强通过。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    stringstream ss;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">        <span class="keyword">bool</span> hasnum=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            hasnum=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum2=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum2=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum2 &amp;&amp; !hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!hasnum) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;e&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line">            ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">bool</span> hasnum1=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(ss.<span class="built_in">peek</span>()==<span class="string">&#x27;+&#x27;</span> || ss.<span class="built_in">peek</span>()==<span class="string">&#x27;-&#x27;</span>) ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ss.<span class="built_in">peek</span>()))&#123;</span><br><span class="line">                ss.<span class="built_in">get</span>();</span><br><span class="line">                hasnum1=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!hasnum1) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ss &gt;&gt; ws;</span><br><span class="line">        <span class="keyword">return</span> ss.<span class="built_in">peek</span>()==<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>而使用有限状态自动机就可以让代码非常清晰。我们可以定义如下的状态：</p>
 <img src="https://cyclohexatriene.github.io/images/FSM.png" width=500 />
-
 <center><font size="2">图源：LeetCode @Krahets 前辈的题解</font></center>
-
 <p>在代码中，我们使用数组+字典来储存上图。只有退出后的状态为 <code>2/3/7/8</code> 中的一个时，我们才认为输入的字符串为合法的数值。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        stringstream ss;</span><br><span class="line">        ss &lt;&lt; s;</span><br><span class="line">        vector&lt;unordered_map&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt;&gt; states = &#123;</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">0</span>&#125;,&#123; <span class="string">&#x27;s&#x27;</span>, <span class="number">1</span>&#125;,&#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;, &#123;<span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">4</span>&#125; &#125; ,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">2</span>&#125;,&#123; <span class="string">&#x27;.&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125;, &#123;<span class="string">&#x27;e&#x27;</span>, <span class="number">5</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">3</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;s&#x27;</span>, <span class="number">6</span>&#125;, &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27;d&#x27;</span>, <span class="number">7</span>&#125;, &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;,</span><br><span class="line">            &#123; &#123;<span class="string">&#x27; &#x27;</span>, <span class="number">8</span>&#125; &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (ss.<span class="built_in">peek</span>() != <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = ss.<span class="built_in">get</span>();</span><br><span class="line">            <span class="keyword">char</span> cur;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&#x27;0&#x27;</span> &lt;= c &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) cur = <span class="string">&#x27;d&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>) cur = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;e&#x27;</span> || c == <span class="string">&#x27;E&#x27;</span>) cur = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">&#x27;.&#x27;</span> || c == <span class="string">&#x27; &#x27;</span>) cur = c;</span><br><span class="line">            <span class="keyword">else</span> cur = <span class="string">&#x27;?&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (states[pre].<span class="built_in">count</span>(cur) &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            pre = states[pre][cur];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre == <span class="number">2</span> || pre == <span class="number">3</span> || pre == <span class="number">7</span> || pre == <span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <hr>
-<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="天才操作"><a href="#天才操作" class="headerlink" title="天才操作"></a>天才操作</h2><p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
+<h1>有的没的</h1>
+<h2 id="天才操作"><a class="header-anchor" href="#天才操作">¶</a>天才操作</h2>
+<p>13号回的学校。回校前精心挑选了一班快十几分钟的车次，然后当天到了宁波站了才发现终点站是杭州南，不是杭州东，少坐一站可不是快一点嘛。后来找乘务姐姐补了一站路。</p>
 <img src="https://cyclohexatriene.github.io/images/ticket.png" width=400/>
-
-<h2 id="新生要来报到了"><a href="#新生要来报到了" class="headerlink" title="新生要来报到了"></a>新生要来报到了</h2><p>明天新生就陆续要来报到了，我也该读大三了。没有人永远年轻，但永远有人年轻。</p>
+<h2 id="新生要来报到了"><a class="header-anchor" href="#新生要来报到了">¶</a>新生要来报到了</h2>
+<p>明天新生就陆续要来报到了，我也该读大三了。没有人永远年轻，但永远有人年轻。</p>
 <img src="https://cyclohexatriene.github.io/images/freshman.jpg" width=400/>
-
-<h2 id="没事听点歌（Neck-Deep-Serpent）"><a href="#没事听点歌（Neck-Deep-Serpent）" class="headerlink" title="没事听点歌（Neck Deep - Serpent）"></a>没事听点歌（Neck Deep - Serpent）</h2><audio controls>
+<h2 id="没事听点歌（Neck-Deep-Serpent）"><a class="header-anchor" href="#没事听点歌（Neck-Deep-Serpent）">¶</a>没事听点歌（Neck Deep - Serpent）</h2>
+<audio controls>
     <source src="https://cyclohexatriene.github.io/music/Serpent.mp3" type="audio/mpeg">
 </audio>
-
 
     </div>
 
@@ -375,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-20-%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">剑指 Offer 20. 表示数值的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">示例 4：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E6%89%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">天才操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%A6%81%E6%9D%A5%E6%8A%A5%E5%88%B0%E4%BA%86"><span class="nav-number">4.2.</span> <span class="nav-text">新生要来报到了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Neck-Deep-Serpent%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">没事听点歌（Neck Deep - Serpent）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%91%E6%8C%87-Offer-20-%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">剑指 Offer 20. 表示数值的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">示例 3：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">示例 4：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E6%89%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">天才操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E8%A6%81%E6%9D%A5%E6%8A%A5%E5%88%B0%E4%BA%86"><span class="nav-number">4.2.</span> <span class="nav-text">新生要来报到了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Neck-Deep-Serpent%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">没事听点歌（Neck Deep - Serpent）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
