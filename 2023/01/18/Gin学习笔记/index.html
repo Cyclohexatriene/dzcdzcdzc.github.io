@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Gin是基于Go开发的Web微框架，相当简洁好用。 Download Gin 1go get -u -v github.com&#x2F;gin-gonic&#x2F;gin Usage 需要 import &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;。 ¶创建  gin.Default()  生成一个gin实例。 ¶接收请求 HTTP请求中有GET，POST，PUT，PATCH，DELE">
+  <meta name="description" content="Gin是基于Go开发的Web微框架，相当简洁好用。 Download Gin1go get -u -v github.com&#x2F;gin-gonic&#x2F;gin  Usage需要 import &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;。 创建 gin.Default()  生成一个gin实例。 接收请求HTTP请求中有GET，POST，PUT，PATCH，DELETE和OPTIONS等方法，还">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gin学习笔记">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2023/01/18/Gin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="环己三烯的冬眠舱">
-<meta property="og:description" content="Gin是基于Go开发的Web微框架，相当简洁好用。 Download Gin 1go get -u -v github.com&#x2F;gin-gonic&#x2F;gin Usage 需要 import &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;。 ¶创建  gin.Default()  生成一个gin实例。 ¶接收请求 HTTP请求中有GET，POST，PUT，PATCH，DELE">
+<meta property="og:description" content="Gin是基于Go开发的Web微框架，相当简洁好用。 Download Gin1go get -u -v github.com&#x2F;gin-gonic&#x2F;gin  Usage需要 import &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;。 创建 gin.Default()  生成一个gin实例。 接收请求HTTP请求中有GET，POST，PUT，PATCH，DELETE和OPTIONS等方法，还">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-18T07:44:57.000Z">
 <meta property="article:modified_time" content="2023-01-18T08:04:37.440Z">
@@ -76,6 +76,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -202,60 +204,59 @@
 
       
         <p>Gin是基于Go开发的Web微框架，相当简洁好用。</p>
-<h1>Download Gin</h1>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u -v github.com/gin-gonic/gin</span><br></pre></td></tr></table></figure>
-<h1>Usage</h1>
-<p>需要 <code>import &quot;github.com/gin-gonic/gin&quot;</code>。</p>
-<h2 id="创建"><a class="header-anchor" href="#创建">¶</a>创建</h2>
-<ul>
+<h1 id="Download-Gin"><a href="#Download-Gin" class="headerlink" title="Download Gin"></a>Download Gin</h1><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u -v github.com/gin-gonic/gin</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>需要 <code>import "github.com/gin-gonic/gin"</code>。</p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><ul>
 <li><code>gin.Default()</code></li>
 </ul>
 <p>生成一个gin实例。</p>
-<h2 id="接收请求"><a class="header-anchor" href="#接收请求">¶</a>接收请求</h2>
-<p>HTTP请求中有<strong>GET，POST，PUT，PATCH，DELETE</strong>和<strong>OPTIONS</strong>等方法，还有一个<strong>Any</strong>可以匹配所有方法。</p>
+<h2 id="接收请求"><a href="#接收请求" class="headerlink" title="接收请求"></a>接收请求</h2><p>HTTP请求中有<strong>GET，POST，PUT，PATCH，DELETE</strong>和<strong>OPTIONS</strong>等方法，还有一个<strong>Any</strong>可以匹配所有方法。</p>
 <ul>
 <li><code>GET(path, func)</code></li>
 </ul>
 <p>声明一个“路由”（即被请求的路径<code>path</code>），当客户端（浏览器）使用HTTP的GET方法向服务器请求位于<code>path</code>的页面时，触发func所定义的函数进行处理。这个func只有一个参数，即<code>gin.Context</code>类型的指针，这个指针指向的地址空间储存了一些对传来的HTTP报文解析后的信息，解析过程是gin封装好的。<code>POST(path, func)</code> 等也同理。</p>
 <p>此外，Gin还支持分组路由功能。例如有一组路由均为<code>/a</code>打头，则可以写为：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := r.Group(<span class="string">&quot;/a&quot;</span>)</span><br><span class="line">&#123;</span><br><span class="line">	v1.GET(<span class="string">&quot;/b&quot;</span>, defaultHandler) <span class="comment">// GET /a/b</span></span><br><span class="line">	v1.GET(<span class="string">&quot;/c&quot;</span>, defaultHandler) <span class="comment">// GET /a/c</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数据收集"><a class="header-anchor" href="#数据收集">¶</a>数据收集</h2>
-<p>有时请求的URL中会承载一定的信息，这部分信息可以使用<code>Param()</code>或<code>Query()</code>获取。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := r.Group(<span class="string">"/a"</span>)</span><br><span class="line">{</span><br><span class="line">	v1.GET(<span class="string">"/b"</span>, defaultHandler) <span class="comment">// GET /a/b</span></span><br><span class="line">	v1.GET(<span class="string">"/c"</span>, defaultHandler) <span class="comment">// GET /a/c</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h2><p>有时请求的URL中会承载一定的信息，这部分信息可以使用<code>Param()</code>或<code>Query()</code>获取。</p>
 <ul>
 <li><code>Param(string)</code></li>
 </ul>
 <p>如果要使用<code>Param()</code>方法，则声明的URL中需要包含对应的“占位符”（不清楚学名，笔者自己这么称呼的），用冒号来表示。例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">&quot;/user/:name&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	name := c.Param(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">	c.String(http.StatusOK, <span class="string">&quot;hello, %s&quot;</span>, name)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>此时，如果浏览器向服务器请求<code>&quot;/user/dzc&quot;</code>，则服务端会返回字符串<code>&quot;hello, dzc&quot;</code>。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">"/user/:name"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">	name := c.Param(<span class="string">"name"</span>)</span><br><span class="line">	c.String(http.StatusOK, <span class="string">"hello, %s"</span>, name)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此时，如果浏览器向服务器请求<code>"/user/dzc"</code>，则服务端会返回字符串<code>"hello, dzc"</code>。</p>
 <ul>
 <li><code>Query(string)</code></li>
 </ul>
 <p>如果要使用<code>Query()</code>方法，则实际请求的URL中需要包含问号<code>?</code>，将需要发送到服务端的信息以键值对的形式放在问号后面，键值对之间使用<code>&amp;</code>分隔。例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">&quot;/welcome&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	first := c.Query(<span class="string">&quot;first&quot;</span>)</span><br><span class="line">	last := c.Query(<span class="string">&quot;last&quot;</span>)</span><br><span class="line">	out := <span class="string">&quot;hello, &quot;</span> + first + last</span><br><span class="line">	c.String(http.StatusOK, out)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>此时，如果浏览器向服务器请求<code>&quot;/welcome?first=d&amp;last=zc&quot;</code>，则服务器回返回字符串<code>hello, dzc</code>。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r.GET(<span class="string">"/welcome"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">	first := c.Query(<span class="string">"first"</span>)</span><br><span class="line">	last := c.Query(<span class="string">"last"</span>)</span><br><span class="line">	out := <span class="string">"hello, "</span> + first + last</span><br><span class="line">	c.String(http.StatusOK, out)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此时，如果浏览器向服务器请求<code>"/welcome?first=d&amp;last=zc"</code>，则服务器回返回字符串<code>hello, dzc</code>。</p>
 <p>另一些时候，浏览器的数据会以POST方法发送给服务器，这部分数据可以使用<code>PostForm()</code>来解析。</p>
 <ul>
 <li><code>PostForm(string)</code> &amp; <code>DefaultPostForm(string, string)</code></li>
 </ul>
 <p>用POST方法提交的表单数据也是以键值对的形式表示的，可以使用<code>PostForm()</code>将其解析出来，而该方法的另一个变种<code>DefaultPostForm()</code>则允许使用者在未解析到所需字段时设置一个默认结果，例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">&quot;/register&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	login := c.PostForm(<span class="string">&quot;login&quot;</span>)</span><br><span class="line">	passwd := c.DefaultPostForm(<span class="string">&quot;pass&quot;</span>,<span class="string">&quot;defaultpasswd&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> login == <span class="string">&quot;3200104203&quot;</span> &amp;&amp; passwd == <span class="string">&quot;4203&quot;</span> &#123;</span><br><span class="line">		c.String(http.StatusOK, <span class="string">&quot;Login successful.&quot;</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		c.String(http.StatusOK, <span class="string">&quot;Wrong password.&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="返回数据"><a class="header-anchor" href="#返回数据">¶</a>返回数据</h2>
-<p>Gin支持返回多种类型的数据，如字符串、JSON、HTML页面等。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">"/register"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">	login := c.PostForm(<span class="string">"login"</span>)</span><br><span class="line">	passwd := c.DefaultPostForm(<span class="string">"pass"</span>,<span class="string">"defaultpasswd"</span>)</span><br><span class="line">	<span class="keyword">if</span> login == <span class="string">"3200104203"</span> &amp;&amp; passwd == <span class="string">"4203"</span> {</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"Login successful."</span>)</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"Wrong password."</span>)</span><br><span class="line">	}</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="返回数据"><a href="#返回数据" class="headerlink" title="返回数据"></a>返回数据</h2><p>Gin支持返回多种类型的数据，如字符串、JSON、HTML页面等。</p>
 <ul>
 <li><code>String(int, string)</code></li>
 </ul>
-<p><code>String()</code>用于返回一个字符串，第一个参数是返回的HTTP状态码，第二个参数是要返回的字符串内容。例如：<code>c.String(http.StatusOK, &quot;hello world&quot;)</code>。</p>
+<p><code>String()</code>用于返回一个字符串，第一个参数是返回的HTTP状态码，第二个参数是要返回的字符串内容。例如：<code>c.String(http.StatusOK, "hello world")</code>。</p>
 <ul>
 <li><code>JSON(int, gin.H)</code></li>
 </ul>
-<p><code>JSON()</code>用于返回一个JSON对象，第一个参数是返回的HTTP状态码，第二个参数是要返回的JSON内容。<code>gin.H</code>类型实际上就是<code>map[string]interface&#123;&#125;</code>，其中空接口可以代表任何类型（所有类型均视为实现了一个空接口），所以<code>gin.H</code>类的实例相当于一个JSON对象。</p>
+<p><code>JSON()</code>用于返回一个JSON对象，第一个参数是返回的HTTP状态码，第二个参数是要返回的JSON内容。<code>gin.H</code>类型实际上就是<code>map[string]interface{}</code>，其中空接口可以代表任何类型（所有类型均视为实现了一个空接口），所以<code>gin.H</code>类的实例相当于一个JSON对象。</p>
 <ul>
 <li><code>HTML(int, string, gin.H)</code></li>
 </ul>
-<p><code>HTML()</code>用于返回一个HTML页面，第一个参数是返回的HYTTP状态码，第二个参数是要返回的页面的路径，第三个参数是需要嵌入到HTML中的数据（如果HTML中出现<code>&#123;&#123;.msg&#125;&#125;</code>，即Gin的模板语法，则会用<code>&quot;this is a message from server.&quot;</code>代替）。在使用这个函数之前，需要用<code>LoadHTMLGlob()</code>或<code>LoadHTMLFiles()</code>将HTML页面文件从硬盘加载进内存中，其中前者可以一次加载整个目录下的所有文件，而后者则单独加载某一个文件。例如：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r.LoadHTMLFiles(<span class="string">&quot;root/index.html&quot;</span>) <span class="comment">// 或 r.LoadHTMLGlob(&quot;root/*&quot;)</span></span><br><span class="line">r.GET(<span class="string">&quot;/reg&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.HTML(http.StatusOK, <span class="string">&quot;index.html&quot;</span>, gin.H&#123;</span><br><span class="line">        <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;this is a message from server.&quot;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="中间件"><a class="header-anchor" href="#中间件">¶</a>中间件</h2>
-<p>中间件，顾名思义就是在浏览器和服务器中间的一层东西。而这层东西可以对浏览器发来的请求进行拦截并进行一些预处理，例如权限验证等。此外，中间件还可以在服务器完成处理后、向客户端发送响应前进行一些处理（如添加统一的响应头等）。Gin有内置一些中间件，如默认使用的<code>Logger()</code>和<code>Recovery()</code>。</p>
+<p><code>HTML()</code>用于返回一个HTML页面，第一个参数是返回的HYTTP状态码，第二个参数是要返回的页面的路径，第三个参数是需要嵌入到HTML中的数据（如果HTML中出现<code>{{.msg}}</code>，即Gin的模板语法，则会用<code>"this is a message from server."</code>代替）。在使用这个函数之前，需要用<code>LoadHTMLGlob()</code>或<code>LoadHTMLFiles()</code>将HTML页面文件从硬盘加载进内存中，其中前者可以一次加载整个目录下的所有文件，而后者则单独加载某一个文件。例如：</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r.LoadHTMLFiles(<span class="string">"root/index.html"</span>) <span class="comment">// 或 r.LoadHTMLGlob("root/*")</span></span><br><span class="line">r.GET(<span class="string">"/reg"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">    c.HTML(http.StatusOK, <span class="string">"index.html"</span>, gin.H{</span><br><span class="line">        <span class="string">"msg"</span>: <span class="string">"this is a message from server."</span>,</span><br><span class="line">    })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>中间件，顾名思义就是在浏览器和服务器中间的一层东西。而这层东西可以对浏览器发来的请求进行拦截并进行一些预处理，例如权限验证等。此外，中间件还可以在服务器完成处理后、向客户端发送响应前进行一些处理（如添加统一的响应头等）。Gin有内置一些中间件，如默认使用的<code>Logger()</code>和<code>Recovery()</code>。</p>
 <ul>
 <li>全局使用中间件<code>Use(func)</code></li>
 </ul>
@@ -264,20 +265,21 @@
 <li>路由分组使用中间件</li>
 </ul>
 <p>在创建路由分组时可以添加该路由分组使用的中间件。</p>
-<p>例如：<code>user := router.Group(&quot;user&quot;,gin.Recovery())</code> 。</p>
+<p>例如：<code>user := router.Group("user",gin.Recovery())</code> 。</p>
 <ul>
 <li>单个路由使用中间件</li>
 </ul>
 <p>在创建单个路由时也可以添加该路由使用的中间件。</p>
-<p>例如：<code>r.GET(&quot;/&quot;,gin.Recovery(),DefaultHandler)</code> 。</p>
+<p>例如：<code>r.GET("/",gin.Recovery(),DefaultHandler)</code> 。</p>
 <ul>
 <li>自定义中间件</li>
 </ul>
 <p>Gin规范了自定义中间件的方式：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MyMiddleware</span><span class="params">(c *gin.Context)</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MyMiddleware</span><span class="params">(c *gin.Context)</span></span>{</span><br><span class="line">    </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
 <p>在自定义中间件时，如果需要与服务端进行<strong>数据传递</strong>的话，可以使用<code>Set()</code>和<code>Get()</code>方法。</p>
 <ul>
-<li><code>Set(string, interface&#123;&#125;)</code></li>
+<li><code>Set(string, interface{})</code></li>
 </ul>
 <p>使用<code>Set()</code>时，相当于为<code>gin.Context</code>设置了一个键值对。其中键必须是<code>string</code>类型的，而值可以是任意类型的。</p>
 <ul>
@@ -286,17 +288,16 @@
 <p>使用<code>Get()</code>可以将之前<code>Set()</code>的值读取出来，其返回两个值，第一个是键对应的值，第二个是该键是否存在，用布尔类型表示。</p>
 <p><code>Next()</code>方法可以划分中间件的前置和后置功能。<code>Next()</code>调用前的代码将在请求到达服务端之前进行，而<code>Next()</code>调用后的代码则会在服务端处理完毕后、正式向客户端发送响应前运行。</p>
 <p><code>Abort()</code>方法可以拦截请求/响应。</p>
-<h3 id="示例："><a class="header-anchor" href="#示例：">¶</a>示例：</h3>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MyMiddlewareForAuth := <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	login := c.PostForm(<span class="string">&quot;login&quot;</span>)</span><br><span class="line">	passwd := c.PostForm(<span class="string">&quot;pass&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> login == <span class="string">&quot;3200104203&quot;</span> &amp;&amp; passwd == <span class="string">&quot;4203&quot;</span> &#123;</span><br><span class="line">		c.Set(<span class="string">&quot;Authres&quot;</span>, <span class="number">1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		c.Set(<span class="string">&quot;Authres&quot;</span>, <span class="number">0</span>)</span><br><span class="line">		c.Next()</span><br><span class="line">		c.String(http.StatusOK, <span class="string">&quot;Wrong password.&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r.POST(<span class="string">&quot;/register&quot;</span>, MyMiddlewareForAuth, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> val, exists := c.Get(<span class="string">&quot;Authres&quot;</span>); exists &amp;&amp; val == <span class="number">1</span> &#123;</span><br><span class="line">		c.String(http.StatusOK, <span class="string">&quot;Login successful.&quot;</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		c.String(http.StatusOK, <span class="string">&quot;hello?\n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h1>Reference</h1>
-<p><a target="_blank" rel="noopener" href="https://geektutu.com/post/quick-go-gin.html">https://geektutu.com/post/quick-go-gin.html</a></p>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MyMiddlewareForAuth := <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">	login := c.PostForm(<span class="string">"login"</span>)</span><br><span class="line">	passwd := c.PostForm(<span class="string">"pass"</span>)</span><br><span class="line">	<span class="keyword">if</span> login == <span class="string">"3200104203"</span> &amp;&amp; passwd == <span class="string">"4203"</span> {</span><br><span class="line">		c.Set(<span class="string">"Authres"</span>, <span class="number">1</span>)</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		c.Set(<span class="string">"Authres"</span>, <span class="number">0</span>)</span><br><span class="line">		c.Next()</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"Wrong password."</span>)</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">r.POST(<span class="string">"/register"</span>, MyMiddlewareForAuth, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> {</span><br><span class="line">	<span class="keyword">if</span> val, exists := c.Get(<span class="string">"Authres"</span>); exists &amp;&amp; val == <span class="number">1</span> {</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"Login successful."</span>)</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"hello?\n"</span>)</span><br><span class="line">	}</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://geektutu.com/post/quick-go-gin.html">https://geektutu.com/post/quick-go-gin.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151818857">https://zhuanlan.zhihu.com/p/151818857</a></p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1585029">https://cloud.tencent.com/developer/article/1585029</a></p>
-<h1>有的没的</h1>
-<h2 id="没事听点歌（Billie-Eilish-bad-guy）"><a class="header-anchor" href="#没事听点歌（Billie-Eilish-bad-guy）">¶</a>没事听点歌（Billie Eilish - bad guy）</h2>
-<audio controls>
-    <source src = "https://cyclohexatriene.github.io/music/bad guy.mp3">
+<h1 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h1><h2 id="没事听点歌（Billie-Eilish-bad-guy）"><a href="#没事听点歌（Billie-Eilish-bad-guy）" class="headerlink" title="没事听点歌（Billie Eilish - bad guy）"></a>没事听点歌（Billie Eilish - bad guy）</h2><audio controls="">
+    <source src="https://cyclohexatriene.github.io/music/bad guy.mp3">
 </audio>
+
+
 
     </div>
 
@@ -377,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Download Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">2.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E6%94%B6%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">接收请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">2.3.</span> <span class="nav-text">数据收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE"><span class="nav-number">2.4.</span> <span class="nav-text">返回数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">2.5.1.</span> <span class="nav-text">示例：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Billie-Eilish-bad-guy%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">没事听点歌（Billie Eilish - bad guy）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Download-Gin"><span class="nav-number">1.</span> <span class="nav-text">Download Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">2.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E6%94%B6%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">接收请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">2.3.</span> <span class="nav-text">数据收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE"><span class="nav-number">2.4.</span> <span class="nav-text">返回数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">2.5.1.</span> <span class="nav-text">示例：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%9A%84%E6%B2%A1%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">有的没的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E4%BA%8B%E5%90%AC%E7%82%B9%E6%AD%8C%EF%BC%88Billie-Eilish-bad-guy%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">没事听点歌（Billie Eilish - bad guy）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

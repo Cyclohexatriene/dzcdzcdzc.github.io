@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"cyclohexatriene.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Tags           	日期         2022年9月28日               	是否独立完成         否               	涉及算法         动态规划        题面 ¶LeetCode 664. 奇怪的打印机 有台奇怪的打印机有以下两个特殊要求：  打印机每次只能打印由 同一个字符 组成的序列。 每次可以在从起始到结束的任意位置打印新字符">
+  <meta name="description" content="Tags              日期         2022年9月28日                   是否独立完成         否                   涉及算法         动态规划         题面LeetCode 664. 奇怪的打印机有台奇怪的打印机有以下两个特殊要求：  打印机每次只能打印由 同一个字符 组成的序列。 每次可以在从起始到结束的任意位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每日Hard - Day 8">
 <meta property="og:url" content="http://cyclohexatriene.github.io/2022/09/28/%E6%AF%8F%E6%97%A5Hard-Day-8/index.html">
 <meta property="og:site_name" content="环己三烯的冬眠舱">
-<meta property="og:description" content="Tags           	日期         2022年9月28日               	是否独立完成         否               	涉及算法         动态规划        题面 ¶LeetCode 664. 奇怪的打印机 有台奇怪的打印机有以下两个特殊要求：  打印机每次只能打印由 同一个字符 组成的序列。 每次可以在从起始到结束的任意位置打印新字符">
+<meta property="og:description" content="Tags              日期         2022年9月28日                   是否独立完成         否                   涉及算法         动态规划         题面LeetCode 664. 奇怪的打印机有台奇怪的打印机有以下两个特殊要求：  打印机每次只能打印由 同一个字符 组成的序列。 每次可以在从起始到结束的任意位">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-28T15:09:05.000Z">
 <meta property="article:modified_time" content="2022-09-28T15:14:23.290Z">
@@ -76,6 +76,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -201,38 +203,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>Tags</h1>
-<table style="text-align:center">
-    <tr>
-    	<td>日期</td>
+        <h1 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h1><table style="text-align:center">
+    <tbody><tr>
+        <td>日期</td>
         <td>2022年9月28日</td>
     </tr>
     <tr>
-    	<td>是否独立完成</td>
+        <td>是否独立完成</td>
         <td>否</td>
     </tr>
     <tr>
-    	<td>涉及算法</td>
+        <td>涉及算法</td>
         <td>动态规划</td>
     </tr>
-</table>
+</tbody></table>
+
 <hr>
-<h1>题面</h1>
-<h2 id="LeetCode-664-奇怪的打印机"><a class="header-anchor" href="#LeetCode-664-奇怪的打印机">¶</a>LeetCode 664. 奇怪的打印机</h2>
-<p>有台奇怪的打印机有以下两个特殊要求：</p>
+<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><h2 id="LeetCode-664-奇怪的打印机"><a href="#LeetCode-664-奇怪的打印机" class="headerlink" title="LeetCode 664. 奇怪的打印机"></a>LeetCode 664. 奇怪的打印机</h2><p>有台奇怪的打印机有以下两个特殊要求：</p>
 <ul>
 <li>打印机每次只能打印由 <strong>同一个字符</strong> 组成的序列。</li>
 <li>每次可以在从起始到结束的任意位置打印新字符，并且会覆盖掉原来已有的字符。</li>
 </ul>
 <p>给你一个字符串 <code>s</code> ，你的任务是计算这个打印机打印它需要的最少打印次数。</p>
-<h3 id="示例-1："><a class="header-anchor" href="#示例-1：">¶</a>示例 1：</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aaabbb&quot;</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：首先打印 <span class="string">&quot;aaa&quot;</span> 然后打印 <span class="string">&quot;bbb&quot;</span>。</span><br></pre></td></tr></table></figure>
-<h3 id="示例-2："><a class="header-anchor" href="#示例-2：">¶</a>示例 2：</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aba&quot;</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：首先打印 <span class="string">&quot;aaa&quot;</span> 然后在第二个位置打印 <span class="string">&quot;b&quot;</span> 覆盖掉原来的字符 <span class="string">&#x27;a&#x27;</span>。</span><br></pre></td></tr></table></figure>
+<h3 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h3><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaabbb"</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：首先打印 <span class="string">"aaa"</span> 然后打印 <span class="string">"bbb"</span>。</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="示例-2："><a href="#示例-2：" class="headerlink" title="示例 2："></a>示例 2：</h3><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aba"</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：首先打印 <span class="string">"aaa"</span> 然后在第二个位置打印 <span class="string">"b"</span> 覆盖掉原来的字符 <span class="string">'a'</span>。</span><br></pre></td></tr></tbody></table></figure>
+
 <hr>
-<h1>题解</h1>
-<p>动态规划好多题真是不看题解不会做，一看题解就秒懂，这题就是其中之一（还有不少是看了题解也做不来的）。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strangePrinter</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">dp</span>(n, vector&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            dp[i][i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s[i] == s[j]) dp[i][j] = dp[i][j - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">int</span> mini = INT_MAX;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++) </span><br><span class="line">                        mini = <span class="built_in">min</span>(mini, dp[i][k] + dp[k + <span class="number">1</span>][j]);</span><br><span class="line">                    dp[i][j] = mini;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>动态规划好多题真是不看题解不会做，一看题解就秒懂，这题就是其中之一（还有不少是看了题解也做不来的）。</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strangePrinter</span><span class="params">(string s)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">        vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">dp</span>(n, vector&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {</span><br><span class="line">            dp[i][i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) {</span><br><span class="line">                <span class="keyword">if</span> (s[i] == s[j]) dp[i][j] = dp[i][j - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">else</span> {</span><br><span class="line">                    <span class="keyword">int</span> mini = INT_MAX;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++) </span><br><span class="line">                        mini = <span class="built_in">min</span>(mini, dp[i][k] + dp[k + <span class="number">1</span>][j]);</span><br><span class="line">                    dp[i][j] = mini;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
 
     </div>
 
@@ -313,7 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">题面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-664-%E5%A5%87%E6%80%AA%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 664. 奇怪的打印机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tags"><span class="nav-number">1.</span> <span class="nav-text">Tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">题面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-664-%E5%A5%87%E6%80%AA%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 664. 奇怪的打印机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例 1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">示例 2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
